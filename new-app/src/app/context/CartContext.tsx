@@ -31,15 +31,27 @@ export const CartContext = createContext<CartContextValue | undefined>(undefined
 export const CartProvider = ({ children }: { children: React.ReactNode }) => {
   const [showCart, setShowCart] = useState(false);
   const [qty, setQty] = useState(1);
-  const [cartItems, setCartItems] = useState<Product[]>(
-    () => JSON.parse(localStorage.getItem("cartItems") || "[]")
-  );
-  const [totalQuantity, setTotalQuantity] = useState<number>(
-    () => JSON.parse(localStorage.getItem("totalQuantity") || "0")
-  );
-  const [totalPrice, setTotalPrice] = useState<number>(
-    () => JSON.parse(localStorage.getItem("totalPrice") || "0")
-  );
+  const [cartItems, setCartItems] = useState<Product[]>([]);
+  const [totalQuantity, setTotalQuantity] = useState(0);
+  const [totalPrice, setTotalPrice] = useState(0);
+
+  // Load cart data from localStorage on initial render (client-side only)
+  useEffect(() => {
+    const storedCartItems = localStorage.getItem("cartItems");
+    const storedTotalPrice = localStorage.getItem("totalPrice");
+    const storedTotalQuantity = localStorage.getItem("totalQuantity");
+
+    if (storedCartItems) setCartItems(JSON.parse(storedCartItems));
+    if (storedTotalPrice) setTotalPrice(JSON.parse(storedTotalPrice));
+    if (storedTotalQuantity) setTotalQuantity(JSON.parse(storedTotalQuantity));
+  }, []);
+
+  // Save cart data to localStorage whenever it changes
+  useEffect(() => {
+    localStorage.setItem("cartItems", JSON.stringify(cartItems));
+    localStorage.setItem("totalPrice", JSON.stringify(totalPrice));
+    localStorage.setItem("totalQuantity", JSON.stringify(totalQuantity));
+  }, [cartItems, totalPrice, totalQuantity]);
 
   // Increase quantity
   const incQty = () => setQty((prevQty) => prevQty + 1);
@@ -105,13 +117,6 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
     );
     setTotalQuantity((prevQty) => prevQty - (product.quantity || 1));
   };
-
-  // Save cart data to localStorage whenever it changes
-  useEffect(() => {
-    localStorage.setItem("cartItems", JSON.stringify(cartItems));
-    localStorage.setItem("totalPrice", JSON.stringify(totalPrice));
-    localStorage.setItem("totalQuantity", JSON.stringify(totalQuantity));
-  }, [cartItems, totalPrice, totalQuantity]);
 
   return (
     <CartContext.Provider
