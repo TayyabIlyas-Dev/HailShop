@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useState, useEffect, useCallback, useContext } from "react";
+import { createContext, useState, useEffect, useContext } from "react";
 
 // Define the structure of a product
 interface Product {
@@ -31,15 +31,21 @@ export const CartContext = createContext<CartContextValue | undefined>(undefined
 export const CartProvider = ({ children }: { children: React.ReactNode }) => {
   const [showCart, setShowCart] = useState(false);
   const [qty, setQty] = useState(1);
-  const [cartItems, setCartItems] = useState<Product[]>([]);
-  const [totalQuantity, setTotalQuantity] = useState(0);
-  const [totalPrice, setTotalPrice] = useState(0);
+  const [cartItems, setCartItems] = useState<Product[]>(
+    () => JSON.parse(localStorage.getItem("cartItems") || "[]")
+  );
+  const [totalQuantity, setTotalQuantity] = useState<number>(
+    () => JSON.parse(localStorage.getItem("totalQuantity") || "0")
+  );
+  const [totalPrice, setTotalPrice] = useState<number>(
+    () => JSON.parse(localStorage.getItem("totalPrice") || "0")
+  );
 
   // Increase quantity
   const incQty = () => setQty((prevQty) => prevQty + 1);
 
   // Decrease quantity (with safeguard)
-  const decQty = () => setQty((prevQty) => (prevQty - 1 < 1 ? 1 : prevQty - 1));
+  const decQty = () => setQty((prevQty) => (prevQty > 1 ? prevQty - 1 : 1));
 
   // Add product to the cart
   const addProduct = (product: Product, quantity: number) => {
@@ -69,17 +75,17 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
     const updatedCartItems = cartItems.map((cartProduct) => {
       if (cartProduct._id === id) {
         const updatedQuantity =
-          value === "plus" ? (cartProduct.quantity || 1) + 1 : (cartProduct.quantity || 1) - 1;
-
-        if (updatedQuantity < 1) return cartProduct;
+          value === "plus"
+            ? (cartProduct.quantity || 1) + 1
+            : Math.max((cartProduct.quantity || 1) - 1, 1);
 
         setTotalQuantity((prevQty) =>
-          value === "plus" ? prevQty + 1 : prevQty - 1
+          value === "plus" ? prevQty + 1 : Math.max(prevQty - 1, 0)
         );
         setTotalPrice((prevTotal) =>
           value === "plus"
             ? prevTotal + cartProduct.price
-            : prevTotal - cartProduct.price
+            : Math.max(prevTotal - cartProduct.price, 0)
         );
 
         return { ...cartProduct, quantity: updatedQuantity };
@@ -106,17 +112,6 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
     localStorage.setItem("totalPrice", JSON.stringify(totalPrice));
     localStorage.setItem("totalQuantity", JSON.stringify(totalQuantity));
   }, [cartItems, totalPrice, totalQuantity]);
-
-  // Load cart data from localStorage on initial render
-  useEffect(() => {
-    const storedCartItems = localStorage.getItem("cartItems");
-    const storedTotalPrice = localStorage.getItem("totalPrice");
-    const storedTotalQuantity = localStorage.getItem("totalQuantity");
-
-    if (storedCartItems) setCartItems(JSON.parse(storedCartItems));
-    if (storedTotalPrice) setTotalPrice(JSON.parse(storedTotalPrice));
-    if (storedTotalQuantity) setTotalQuantity(JSON.parse(storedTotalQuantity));
-  }, []);
 
   return (
     <CartContext.Provider
