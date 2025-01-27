@@ -1,5 +1,5 @@
 'use client'
-import { heroAirpods, heroBanner } from '@/public'
+import { heroAirpods, heroBanner } from '@/public/index'
 import Image from 'next/image'
 import React from 'react';
 import { motion } from "motion/react"

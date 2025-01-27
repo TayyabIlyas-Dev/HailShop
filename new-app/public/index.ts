@@ -1,5 +1,5 @@
 import heroAirpods from './heroAirpods.png'
-import heroBanner from './heroBanner.png'
+import heroBanner from './herobanner.png'
 import HailLogo from './HailLogo.png'
 
 
