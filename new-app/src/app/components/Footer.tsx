@@ -22,7 +22,7 @@ const Footer = () => {
         </div>
 
         <p className="text-sm mt-8 text-gray-700">
-        Welcome to HAIL, your ultimate destination for premium tech accessories! From the latest laptops and sleek tablets to high-quality AirPods and cutting-edge drones, we bring you the best in technology. Our curated collection combines performance, style, and innovation, offering products that elevate your digital lifestyle. Shop with HAIL and discover the perfect accessory to enhance your tech experience!
+        Welcome to Shop, your ultimate destination for premium tech accessories! From the latest gadets enhance your tech experience!
                {/* <a href='javascript:void(0)' className="text-sm font-semibold text-blue-500">Read more...</a> */}
         </p>
 
