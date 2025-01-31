@@ -1,13 +1,17 @@
 "use client";
 
-import React, { useContext, useState } from "react";
+import React, { useContext,  useEffect,  useState } from "react";
 import { CartContext } from "../context/CartContext";
+import { AiOutlineMinus, AiOutlinePlus } from "react-icons/ai";
 
 import { TiDeleteOutline } from "react-icons/ti";
 import Image from "next/image";
 import { urlForImage } from "@/src/sanity/lib/image";
 
+
 const CheckOut: React.FC = () => {
+  
+
   const {
     onRemove,
     toggleCartItemQty,
@@ -33,6 +37,7 @@ const CheckOut: React.FC = () => {
     postalCode: "",
   });
 
+  
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -63,6 +68,12 @@ const CheckOut: React.FC = () => {
       alert("Order Placed Successfully!");
     }
   };
+
+  const [updatedCart, setUpdatedCart] = useState(cartItems);
+
+  useEffect(() => {
+    setUpdatedCart(cartItems); // Update cart when items change
+  }, [cartItems]);
 
   return (
     <div className="px-8 sm:px-12 max-w-7xl mx-auto p-4 bg-gray-100 min-h-screen">
@@ -203,14 +214,15 @@ const CheckOut: React.FC = () => {
               <li className="flex justify-between mb-2"><span>Item 2</span><span>$15.00</span></li>
               <li className="flex justify-between mb-2"><span>Item 3</span><span>$20.00</span></li>
             </ul> */}
-            {cartItems.map((product: any) => (
+              <div className="product-container  space-y-4 custom-scrollbar overflow-y-auto h-[60vh] xl:h-[78%] p-2 pb-32">
+              {cartItems.map((product: any) => (
               <div
                 key={product._id}
-                className="p-4 bg-white "
-              >
+                className="p-4 bg-white shadow-sm rounded-xl transition-all duration-300 hover:shadow-md hover:scale-[1.02] flex items-center gap-4"
+                >
                 <div className="grid grid-cols-3 gap-4 items-center">
                   {/* Product Image */}
-                  <div className="col-span-1 flex justify-center items-center  hover:scale-105 transition-all duration-500">
+                  <div className="col-span-1 flex justify-center items-center  hover:scale-110 transition-all duration-700">
                     <Image
                       src={urlForImage(product.images[0]).url()}
                       alt={product.name}
@@ -231,6 +243,26 @@ const CheckOut: React.FC = () => {
 
             </div>
 
+          <div className="flex items-center gap-3 mt-2">
+                    <span className="text-xs text-gray-500">Qty:</span>
+                    <div className="flex items-center border border-gray-300 rounded-lg px-3 py-1 bg-gray-50">
+                    <button
+            onClick={() => toggleCartItemQty(product._id, "minus")}
+            className={`text-red-500 text-sm hover:text-red-700 ${product.quantity === 1 ? "opacity-50 cursor-not-allowed" : ""}`}
+            disabled={product.quantity === 1}
+          >
+            <AiOutlineMinus />
+          </button>
+                      <span className="text-sm mx-2 font-medium">{product.quantity}</span>
+                      <button
+                        onClick={() => toggleCartItemQty(product._id, "plus")}
+                        className="text-green-500 text-sm hover:text-green-700"
+                      >
+                        <AiOutlinePlus />
+                      </button>
+                    </div>
+                  </div>
+
                     <button
                       onClick={() => onRemove(product)}
                       className="mt-3 text-red-400 text-sm flex items-center gap-1"
@@ -241,6 +273,7 @@ const CheckOut: React.FC = () => {
                 </div>
               </div>
             ))}
+            </div>
             <hr className="mb-4 border-gray-300" />
             <div className="flex justify-between font-bold text-lg">
               <span>Total</span>

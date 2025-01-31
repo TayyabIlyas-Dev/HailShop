@@ -83,8 +83,8 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
 
   // Toggle quantity of a cart item
   const toggleCartItemQty = (id: string, value: "plus" | "minus") => {
-    setCartItems((prevCartItems) => {
-      return prevCartItems.map((cartProduct) => {
+    setCartItems((prevCartItems) =>
+      prevCartItems.map((cartProduct) => {
         if (cartProduct._id === id) {
           const updatedQuantity =
             value === "plus"
@@ -94,16 +94,17 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
           return { ...cartProduct, quantity: updatedQuantity };
         }
         return cartProduct;
-      });
-    });
+      })
+    );
 
-    setTotalQuantity((prevQty) => (value === "plus" ? prevQty + 1 : Math.max(prevQty - 1, 0)));
+    const product = cartItems.find((item) => item._id === id);
+    if (!product) return;
+
+    setTotalQuantity((prevQty) => (value === "plus" ? prevQty + 1 : Math.max(prevQty - 1, 1))); 
     setTotalPrice((prevTotal) =>
-      cartItems.find((item) => item._id === id)
-        ? value === "plus"
-          ? prevTotal + cartItems.find((item) => item._id === id)!.price
-          : Math.max(prevTotal - cartItems.find((item) => item._id === id)!.price, 0)
-        : prevTotal
+      value === "plus"
+        ? prevTotal + product.price
+        : Math.max(prevTotal - product.price, 0)
     );
   };
 
@@ -114,8 +115,8 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
       return filteredCart;
     });
 
-    setTotalPrice((prevTotal) => prevTotal - product.price * (product.quantity || 1));
-    setTotalQuantity((prevQty) => prevQty - (product.quantity || 1));
+    setTotalPrice((prevTotal) => prevTotal - product.price * (product.quantity || 0));
+    setTotalQuantity((prevQty) => prevQty - (product.quantity || 0));
   };
 
   return (

@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react';
-import { Footer, Hero, Products } from './components';
+import { BrowseCategory, Footer, Hero, IconSlider, Products } from './components';
 import { AppProvider } from './context/AppContext';  // Import AppProvider
 import { CartProvider } from './context/CartContext';  // Import CartProvider
 import { FavouritesProvider } from './context/FavouritesContext';  // Import FavouritesProvider
@@ -17,6 +17,9 @@ export default function Home() {
           <Navbar />
           <Hero />
           <Products />
+          <IconSlider/>
+          <BrowseCategory/>
+    
           <Footer />
         </FavouritesProvider>
       </CartProvider>

@@ -2,7 +2,7 @@
 
 import React, { useContext, useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { Footer, Navbar, Products } from "../components";
+import { Footer, Products } from "../components";
 import Link from "next/link";
 import Image from "next/image";
 import { FavouritesContext } from "../context/FavouritesContext";
@@ -39,7 +39,7 @@ const Favourites = () => {
   }
   return (
     <>
-      <Navbar />
+  
       <div className="my-[80px] text-center flex flex-col items-center px-5 py-8">
         {favourites.length === 0 ? (
           <div className="w-fit text-center min-h-[250px] bg-white shadow-md rounded-2xl p-8 flex flex-col items-center justify-center gap-6">
@@ -153,3 +153,7 @@ const Favourites = () => {
 };
 
 export default Favourites;
+
+
+
+

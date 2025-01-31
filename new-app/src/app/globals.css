@@ -69,7 +69,7 @@ body {
   @apply font-urbanist font-semibold text-2xl p-2
 }
 .cart-icon{
-  @apply relative text-[28px] 
+  @apply relative text-[25px] 
 }
 .fav-icon{
   @apply relative text-[30px] 
@@ -272,7 +272,7 @@ body {
 } 
 
 .checkout-btn{
-  @apply  text-black p-5 text-xl font-bold w-full border border-4 border-black;
+  @apply  text-black p-5 text-xl font-bold w-full mt-5 border-4 border-black;
 }
 
 .checkout-btn:hover{
@@ -280,3 +280,25 @@ body {
 }
 
 /* CART ENDS */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

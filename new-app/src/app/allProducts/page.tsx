@@ -3,7 +3,7 @@ import React, { useContext } from 'react'
 import { groq } from 'next-sanity';
 import { client } from '@/src/sanity/lib/client';
 import Card from '../components/Card';
-import { Footer, Navbar } from '../components';
+import { Footer } from '../components';
 
 const Products = async () => {
 
@@ -12,7 +12,7 @@ const Products = async () => {
     return (
         
         <>
-        <Navbar/>
+      
         <div className='bg-[#f8f8f8]  w-full py-12 pb-20 pt-24 p-10'>
             <div className='container'>
                 <div className='py-4 text-center'>

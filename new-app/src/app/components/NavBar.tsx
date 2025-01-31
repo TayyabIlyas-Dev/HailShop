@@ -1,3 +1,4 @@
+
 "use client";
 
 import Link from "next/link";
@@ -9,7 +10,8 @@ import { FavouritesContext } from "../context/FavouritesContext";
 import Image from "next/image";
 import { HailLogo } from "@/public";
 import { motion } from "framer-motion";
-import { BsSuitHeartFill } from "react-icons/bs";
+import { BsSuitHeartFill, } from "react-icons/bs";
+import { TbCards } from "react-icons/tb";
 
 const Navbar = () => {
   const { totalQuantity: cartQuantity, showCart, setShowCart }: any = useContext(CartContext);
@@ -34,7 +36,7 @@ const Navbar = () => {
                 height="100"
                 width="700"
                 alt="HAIL"
-                className="object-contain w-28 p-3"
+                className="object-contain w-24  p-4"
               />
             </Link>
           </motion.div>
@@ -45,19 +47,23 @@ const Navbar = () => {
             transition={{ type: "spring", stiffness: 100, damping: 10 }}
           >
             <div>
-              <div className="flex items-center gap-6">
-                <div>
+              <div className="flex items-center justify-center gap-4">
+                <div className="pb-1 sm:pb-2">
                   <Link href="/allProducts" className="font-semibold">
-                    Products
+                
+                 <span className="text-[28px]">
+                  <TbCards/>
+                 </span>
                   </Link>
                 </div>
                 <div>
                   {/* Cart Icon */}
+                
                   <button className="cart-icon" onClick={handleCartClick}>
                     <FiShoppingBag />
                     <span className="cart-item-qty">{cartQuantity}</span>
                   </button>
-
+            
                   {/* Favourites Icon */}
                   <Link href="/favourites" className="pr-3 pl-3">
                     <button className="cart-icon">
