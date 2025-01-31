@@ -14,28 +14,28 @@ const IconSlider = () => {
       <div className="relative overflow-hidden bg-[#f5f5f7] py-8 h-32 border-[1px] border-[#ffeed57d] borderLeftNone borderRightNone ">
       <div className=" flex items-center justify-center absolute whitespace-nowrap animate-slide">
        
-        <p className="text-7xl text-[#e09800] inline-block px-8">
+        <p className="text-7xl text-[#272727] inline-block px-8">
          <PiCurrencyBtcFill/>
         </p>
-        <p className="text-7xl text-[#e09900a9] inline-block px-8">
+        <p className="text-7xl text-[#747474a3] inline-block px-8">
          <SiPolygon/>
         </p>
-        <p className="text-7xl text-[#e09800] inline-block px-8">
+        <p className="text-7xl text-[#272727] inline-block px-8">
          <SiEthereum/>
         </p>
-        <p className="text-7xl text-[#e09900a9] inline-block px-8">
+        <p className="text-7xl text-[#747474a3] inline-block px-8">
          <TbBrandAirbnb/>
         </p>
-        <p className="text-7xl text-[#e09800] inline-block px-8">
+        <p className="text-7xl text-[#272727] inline-block px-8">
          <SiDogecoin/>
         </p>
-        <p className="text-7xl text-[#e09900a9] inline-block px-8">
+        <p className="text-7xl text-[#747474a3] inline-block px-8">
          <SiTether/>
         </p>
-        <p className="text-7xl text-[#e09800] inline-block px-8">
+        <p className="text-7xl text-[#272727] inline-block px-8">
          <RiXrpLine/>
         </p>
-        <p className="text-7xl text-[#e09900a9] inline-block px-8">
+        <p className="text-7xl text-[#747474a3] inline-block px-8">
          <SiCardano/>
         </p>
       </div>

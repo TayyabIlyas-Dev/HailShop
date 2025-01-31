@@ -67,7 +67,8 @@ const Cart: React.FC = () => {
               <p className="text-gray-600 text-lg">
                 Your cart is currently empty.
               </p>
-              <Link href="/allProducts">
+              <Link href="/allProducts" 
+              onClick={handleClose}>
                 <p className="mt-6 inline-block border-2 border-black text-black px-6 py-3 rounded-md font-semibold hover:bg-black hover:text-white transition">
                   Continue Shopping
                 </p>
