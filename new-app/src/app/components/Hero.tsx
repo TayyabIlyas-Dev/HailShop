@@ -1,5 +1,5 @@
 'use client'
-import { heroAirpods, heroBanner } from '@/public/index'
+import { djiDrone, heroAirpods, heroBanner } from '@/public/index'
 import Image from 'next/image'
 import React from 'react';
 import { motion } from "motion/react"
@@ -16,7 +16,7 @@ const Hero = () => {
                 <Image 
                     src={heroBanner}
                     height="100"
-                    width="1400"
+                    width="1100"
                     alt="banner"
                 />
             </div>
@@ -29,7 +29,7 @@ const Hero = () => {
                     <Image 
                         src={heroAirpods}
                         height="100"
-                        width="700"
+                        width="640"
                         alt="airpods"
                     />
                 </motion.div>
@@ -37,8 +37,21 @@ const Hero = () => {
             </div>
 
         </div>
+   
     </div>
   )
 }
 
 export default Hero
+
+
+
+
+
+
+
+
+
+
+
+

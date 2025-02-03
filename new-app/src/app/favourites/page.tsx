@@ -2,7 +2,7 @@
 
 import React, { useContext, useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { Footer, Products } from "../components";
+import { Products } from "../components";
 import Link from "next/link";
 import Image from "next/image";
 import { FavouritesContext } from "../context/FavouritesContext";
@@ -11,6 +11,7 @@ import { FiShoppingBag } from "react-icons/fi";
 import { Heart } from "lucide-react";
 import { TiDeleteOutline } from "react-icons/ti";
 import { CartContext } from "../context/CartContext";
+
 
 const Favourites = () => {
   const { favourites, removeProduct,loading }: any = useContext(FavouritesContext);
@@ -37,6 +38,8 @@ const Favourites = () => {
       </div>
     );
   }
+
+
   return (
     <>
   
@@ -81,7 +84,7 @@ const Favourites = () => {
                 <h2 className="text-2xl font-bold text-gray-800">Your Favourites</h2>
               </div>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-10">
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-10">
               {favourites.map((product: any) => (
                 <div
                   key={product._id}
@@ -145,14 +148,18 @@ const Favourites = () => {
           <Products />
         </div>
       )}
-      <span className="pt-2">
-        <Footer />
-      </span>
+      
     </>
   );
 };
 
 export default Favourites;
+
+
+
+
+
+
 
 
 

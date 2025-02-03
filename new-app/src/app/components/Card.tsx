@@ -12,7 +12,7 @@ import { useToast } from "../context/ToastContext";
 
 const Card = ({ product }: { product: any }) => {
   const nameStyle =
-    product.name.length > 16 ? "text-lg md:text-xl" : "text-xl md:text-2xl";
+    product.name.length > 12 ? "text-[17px] sm:text-[20px]" : "text-[20px] sm:text-[23px]";
 
   // Toast Context
   const { showToast } = useToast();
@@ -56,26 +56,26 @@ const Card = ({ product }: { product: any }) => {
   };
 
   return (
-    <div className="bg-white pt-10 pb-3 drop-shadow-md rounded-2xl overflow-hidden hover:shadow-lg hover:scale-105 transition-all duration-300">
+    <div className="bg-white pt-4 pb-2 drop-shadow-md rounded-2xl overflow-hidden hover:shadow-lg hover:scale-[1.04] transition-all duration-300">
       <Link href={`/product/${product.slug.current}`} prefetch={false}>
         <Image
           src={urlForImage(product?.images && product.images[0]).url()}
           alt={product.slug}
           width={220}
           height={100}
-          className="object-contain h-32 mx-auto hover:scale-110 transition-transform duration-500"
+          className="object-contain card-image h-32 mx-auto hover:scale-[1.08] transition-transform duration-700"
           priority={false}
         />
-        <div className="text-center pt-8 pb-4">
+        <div className="text-center pt-4 pb-3">
           <h1 className={`text-2xl font-bold ${nameStyle}`}>{product.name}</h1>
-          <h1 className="text-xl py-2 text-gray-500 font-semibold">
+          <h1 className="text-xl py-1 text-gray-500 font-semibold">
             <span className="text-green-500">$ </span> {product.price}
           </h1>
         </div>
       </Link>
       <div className="flex items-center justify-between">
         <button
-          className="bg-gray-100 hover:bg-gray-200 w-9 h-9 flex items-center justify-center rounded-full ml-4 hover:scale-125 transition-all duration-500"
+          className="bg-gray-100 hover:bg-gray-200 w-9 h-9 flex items-center justify-center rounded-full ml-4 hover:scale-110 transition-all duration-300"
           onClick={handleClickCart}
           id="add-to-cart"
         >
@@ -84,7 +84,7 @@ const Card = ({ product }: { product: any }) => {
         <button
           className={`${
             isFav ? "bg-red-100 text-red-500" : "bg-gray-100 text-gray-700"
-          } hover:bg-gray-200 w-9 h-9 flex items-center justify-center rounded-full cursor-pointer mr-4 hover:scale-125 transition-all duration-500`}
+          } hover:bg-gray-200 w-9 h-9 flex items-center justify-center rounded-full cursor-pointer mr-4 hover:scale-110 transition-all duration-300`}
           onClick={handleClickFav}
           id="add-to-fav"
         >

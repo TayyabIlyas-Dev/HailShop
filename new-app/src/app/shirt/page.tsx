@@ -4,6 +4,7 @@ import { urlFor } from "../lib/sanityClient";
 import Link from "next/link";
 import { AiOutlineHeart, AiOutlineShoppingCart } from "react-icons/ai";
 
+
 interface Product {
   title: string;
   price: number;

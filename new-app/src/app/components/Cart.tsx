@@ -49,7 +49,7 @@ const Cart: React.FC = () => {
         {/* Close Button */}
         <button
           onClick={handleClose}
-          className="sticky top-4 right-4 text-gray-800 hover:text-gray-600 text-2xl"
+          className="sticky top-4 right-4 p-2 backdrop-blur-2xl text-gray-600 hover:text-gray-800 text-2xl"
         >
           <IoMdClose />
         </button>
@@ -97,7 +97,7 @@ const Cart: React.FC = () => {
                     {/* Product Details */}
                     <div className="flex-1 space-y-1">
                       <h3 className="text-sm font-semibold text-gray-800">{product.name}</h3>
-                      <p className="font-semibold text-green-500 text-sm">${product.price}</p>
+                      <p className="font-semibold text-gray-700 text-sm">    <span className="text-green-500">$ </span> {product.price}</p>
 
                       {/* Quantity Controls */}
                       <div className="flex items-center gap-3 mt-2">

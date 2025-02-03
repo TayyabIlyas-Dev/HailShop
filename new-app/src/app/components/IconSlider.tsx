@@ -1,12 +1,14 @@
 import React from 'react'
-import { PiCurrencyBtcFill } from "react-icons/pi";
-import { SiPolygon } from "react-icons/si";
-import { TbBrandAirbnb } from "react-icons/tb";
-import { SiDogecoin } from "react-icons/si";
-import { SiTether } from "react-icons/si";
-import { RiXrpLine } from "react-icons/ri";
-import { SiEthereum } from "react-icons/si";
-import { SiCardano } from "react-icons/si";
+import { IoLogoApple } from "react-icons/io";
+import { SiSony } from "react-icons/si";
+import { SiMsi } from "react-icons/si";
+import { SiGarmin } from "react-icons/si";
+import { SiRazer } from "react-icons/si";
+import { SiCorsair } from "react-icons/si";
+import { MdFitbit } from "react-icons/md";
+import { SiDji } from "react-icons/si";
+import { SiAsus } from "react-icons/si";
+
 
 const IconSlider = () => {
   return (
@@ -15,28 +17,31 @@ const IconSlider = () => {
       <div className=" flex items-center justify-center absolute whitespace-nowrap animate-slide">
        
         <p className="text-7xl text-[#272727] inline-block px-8">
-         <PiCurrencyBtcFill/>
+         <IoLogoApple/>
         </p>
         <p className="text-7xl text-[#747474a3] inline-block px-8">
-         <SiPolygon/>
+         <SiSony/>
         </p>
         <p className="text-7xl text-[#272727] inline-block px-8">
-         <SiEthereum/>
+         <SiMsi/>
         </p>
         <p className="text-7xl text-[#747474a3] inline-block px-8">
-         <TbBrandAirbnb/>
+         <MdFitbit/>
         </p>
         <p className="text-7xl text-[#272727] inline-block px-8">
-         <SiDogecoin/>
+         <SiGarmin/>
         </p>
         <p className="text-7xl text-[#747474a3] inline-block px-8">
-         <SiTether/>
+         <SiRazer/>
         </p>
         <p className="text-7xl text-[#272727] inline-block px-8">
-         <RiXrpLine/>
+         <SiCorsair/>
         </p>
         <p className="text-7xl text-[#747474a3] inline-block px-8">
-         <SiCardano/>
+         <SiDji/>
+        </p>
+        <p className="text-7xl text-[#272727] inline-block px-8">
+         <SiAsus/>
         </p>
       </div>
     </div>

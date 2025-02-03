@@ -13,14 +13,20 @@ body {
     )
     rgb(var(--background-start-rgb)); */
 }
-*{
-  @apply font-urbanist
-}
+*{ 
+  @apply font-urbanist 
+ }
 @media (max-width: 400px) {
   .custom-style {
     @apply h-12 w-16 mt-3;
   }
 }
+@media (max-width: 400px) {
+  .card-image {
+    @apply h-24;
+  }
+}
+
 
 
 @keyframes gradientAnimation {
@@ -130,7 +136,7 @@ body {
 
 
 .add-to-cart{
-  @apply hover:bg-black  hover:text-white;
+  @apply  text-black md:w-1/2 p-3 text-xl font-bold w-full  border-4 hover:text-white hover:bg-black border-black;
 }
 
 /* NEW PRODUCT DETAILS ENDS */

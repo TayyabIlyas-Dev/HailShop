@@ -9,7 +9,7 @@ const Footer = () => {
   return (
     <footer className="bg-gradient-to-r  from-purple-400 to-fuchsia-400 via-cyan-300 animate-gradient-x py-10 px-10 font-sans tracking-wide w-full">
       <div className="max-w-2xl mx-auto text-center">
-        <div className='flex-row justify-center items-center hover:scale-110 transition-all duration-300'>
+        <div className='flex-row justify-center items-center hover:scale-x-110 transition-all duration-700'>
           <Link href="/">
             <Image
               src={HailLogo}
@@ -58,14 +58,12 @@ const Footer = () => {
           <li className="text-sm">
             <a href='javascript:void(0)' className='text-gray-700 font-semibold hover:underline'>Terms of Service</a>
           </li>
-          <li className="text-sm">
-            <a href='javascript:void(0)' className='text-gray-700 font-semibold hover:underline'>Privacy Policy</a>
-          </li>
+      
           <li className="text-sm">
             <a href='javascript:void(0)' className='text-gray-700 font-semibold hover:underline'>Security</a>
           </li>
         </ul>
-        <p className='text-sm text-gray-700 md:ml-auto'>© HAIL. All rights reserved.</p>
+        <p className='text-sm text-gray-700 md:ml-auto'>© HAIL. All rights reserved </p>
       </div>
 
     </footer>

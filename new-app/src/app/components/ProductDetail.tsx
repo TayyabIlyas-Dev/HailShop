@@ -255,8 +255,8 @@ const ProductDetails = ({ product }: any) => {
 
   const descriptionStyle =
     product.description.length > 90
-      ? "text-xl text-gray-500 overflow-hidden rounded-lg pb-2 border-gray-300 max-h-[92px] overflow-y-auto px-1 custom-scrollbar"
-      : "text-xl md:text-2xl";
+      ? "text-xl text-gray-600 overflow-hidden rounded-lg pb-2 border-gray-300 max-h-[92px] overflow-y-auto px-1 custom-scrollbar"
+      : "text-xl md:text-xl";
 
   const toggleShowMore = () => {
     setShowMore((prev) => !prev);
@@ -264,8 +264,8 @@ const ProductDetails = ({ product }: any) => {
 
   // Add to Cart Handler
   const handleAddToCart = () => {
-    const userConfirmed = confirm("Add item to the cart?");
-    if (!userConfirmed) return;
+    // const userConfirmed = confirm("Add item to the cart?");
+    // if (!userConfirmed) return;
 
     addProduct(product, qty);
     showToast("Item added to the cart!");
@@ -298,13 +298,13 @@ const ProductDetails = ({ product }: any) => {
         >
           <div>
             {/* Main Image */}
-            <div className="h-[450px] flex items-center mb-[25px] border rounded-lg mx-5 hover:shadow-md">
+            <div className="h-[320px] flex items-center mb-[24px] border rounded-lg mx-5 hover:shadow-md">
               <Image
                 src={urlForImage(product.images[first]).url()}
                 alt={product.images[first].alt || "Product Image"}
-                width={350}
-                height={350}
-                className="object-cover mx-auto hover:scale-110 transition-transform duration-300"
+                width={300}
+                height={320}
+                className="object-contain mx-auto h-[300px] py-6 px-2 hover:scale-110 transition-transform duration-700"
               />
             </div>
 
@@ -315,9 +315,9 @@ const ProductDetails = ({ product }: any) => {
                   key={i}
                   src={urlForImage(product.images[i]).url()}
                   alt={item.alt || "Product Image"}
-                  width={220}
+                  width={140}
                   height={100}
-                  className="object-cover p-3 h-16 sm:h-32 md:h-20 lg:h-32 border mx-auto rounded-xl hover:cursor-pointer hover:shadow-md hover:scale-105 transition-transform duration-300"
+                  className="object-contain p-3  h-16 sm:h-32 md:h-20 lg:h-32 border mx-auto rounded-xl hover:cursor-pointer hover:shadow-md hover:scale-105 transition-transform duration-500"
                   onClick={() => setIndex(i)}
                 />
               ))}
@@ -331,10 +331,10 @@ const ProductDetails = ({ product }: any) => {
           animate={{ x: 0, opacity: 1 }}
           transition={{ type: "spring", stiffness: 100, damping: 10 }}
         >
-          <div className="flex flex-col gap-8 md:pt-16 pt-0">
+          <div className="flex flex-col gap-8 md:pt-8 pt-0">
             <div className="flex flex-col gap-4">
               <div className="text-3xl p-2 font-bold">{product.name}</div>
-              <div className={`text-xl py-3 font-medium ${descriptionStyle}`}>
+              <div className={`text-xl pb-3 font-medium ${descriptionStyle}`}>
                 {product.description}
               </div>
               <div className="text-xl font-medium">
@@ -359,7 +359,7 @@ const ProductDetails = ({ product }: any) => {
             <div className="flex gap-4">
               {/* Add to Cart Button */}
               <button
-                className="btn add-to-cart hover:px-2 shadow-sm"
+                className=" add-to-cart hover:px-2 ml-3 shadow-sm hover:scale-105 transition-all duration-300"
                 onClick={handleAddToCart}
               >
                 Add To Cart
@@ -371,7 +371,7 @@ const ProductDetails = ({ product }: any) => {
                   isFav
                     ? "bg-red-100 text-red-500 hover:bg-red-100 border-2 border-red-600"
                     : "bg-gray-100 text-gray-600 hover:bg-gray-200 border-2 border-gray-700"
-                }  w-24 h-16 flex items-center mt-1  justify-center rounded-lg cursor-pointer hover:scale-110 transition-all duration-500`}
+                }  w-24 h-16 flex items-center mt-0  justify-center rounded-lg cursor-pointer hover:scale-105 transition-all duration-500`}
                 onClick={handleToggleFavourite}
               >
                 <BsSuitHeartFill />

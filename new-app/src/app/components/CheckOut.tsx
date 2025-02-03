@@ -7,11 +7,11 @@ import { AiOutlineMinus, AiOutlinePlus } from "react-icons/ai";
 import { TiDeleteOutline } from "react-icons/ti";
 import Image from "next/image";
 import { urlForImage } from "@/src/sanity/lib/image";
+import { client } from "@/src/sanity/lib/client";
 
 
 const CheckOut: React.FC = () => {
   
-
   const {
     onRemove,
     toggleCartItemQty,
@@ -37,6 +37,39 @@ const CheckOut: React.FC = () => {
     postalCode: "",
   });
 
+ 
+
+  const handlePlaceOrder = async () => {
+    const orderData = {
+      _type: "order",
+      fullName: formData.fullName,
+      address: formData.address,
+      city: formData.city,
+      zipCode: formData.postalCode,
+      email: formData.email,
+      cartItems: cartItems.map((item: any) => ({
+        _type: "orderItem", // ✅ Isko ek object ki tarah define karein
+        product: { _type: "reference", _ref: item._id }, // ✅ Reference alag rakhein
+        productQty: item.quantity, // ✅ Quantity ko reference se alag rakhein
+        _key: item._id || crypto.randomUUID(), // ✅ Unique key zaroori hai
+      })),
+      totalPrice: totalPrice,
+      totalQuantity: totalQuantity,
+      orderDate: new Date().toISOString(),
+    };
+  
+    try {
+      const response = await client.create(orderData);
+      localStorage.removeItem("cartItems");
+      console.log("Order saved successfully:", response);
+      alert("Order Placed Successfully!");
+    } catch (error) {
+      console.error("Error saving order:", error);
+      alert("Something went wrong!");
+    }
+  };
+  
+  
   
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -198,7 +231,7 @@ const CheckOut: React.FC = () => {
             )}
 
             <button
-              onClick={handleSubmit}
+              onClick={handlePlaceOrder}
               className="mt-6 p-3 bg-white  text-black rounded w-full font-semibold hover:text-white border-black border-2 transition-all hover:bg-black"
             >
               Complete Order
@@ -276,7 +309,7 @@ const CheckOut: React.FC = () => {
             </div>
             <hr className="mb-4 border-gray-300" />
             <div className="flex justify-between font-bold text-lg">
-              <span>Total</span>
+              <span>Total ({totalQuantity})</span>
               <span>
                 {" "}
                 <span className="text-green-500">$ </span>

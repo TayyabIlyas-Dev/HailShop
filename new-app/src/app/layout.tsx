@@ -4,7 +4,7 @@ import { Inter } from "next/font/google";
 import { CartProvider } from "./context/CartContext";
 import { FavouritesProvider } from "./context/FavouritesContext";
 import { ToastProvider } from "./context/ToastContext";
-import { Navbar } from "./components";
+import { Footer, Navbar } from "./components";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -26,6 +26,7 @@ export default function RootLayout({
             <ToastProvider>
               <Navbar/>
             {children}
+            <Footer/>
             </ToastProvider>
           </FavouritesProvider>
         </CartProvider>
