@@ -1,228 +1,3 @@
-// "use client"
-
-// import { urlForImage } from '@/sanity/lib/image'
-// import Image from 'next/image'
-// import React, { useContext, useState } from 'react';
-// import { AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai'
-// import { CartContext } from '../context/CartContext';
-
-// const ProductDetails = ({product}:any) => {
-//     const [index,setIndex] = useState(0);
-//     const { cartItems, addProduct, qty, decQty, incQty}:any = useContext(CartContext);
-//     // console.log(cartItems);
-
-//   return (
-//     <div className='product-details-section'>
-//         <div className='product-details-container'>
-
-//     	    {/* Left */}
-//             <div>
-//                 {/* TOP */}
-//                 <div className='h-[450px] flex items-center mb-[25px]'>
-//                     <Image
-//                         loader={()=>urlForImage(product.images[index]).url()}
-//                         src={urlForImage(product.images[index]).url()}
-//                         alt={product.images[index]}
-//                         width={350}
-//                         height={350}
-//                         className='object-contain mx-auto'
-//                     />
-//                 </div>
-
-//                 {/* BOTTOM */}
-//                 <div className='small-images-container'>
-//                     {product.images?.map((item:any,i:number)=>(
-//                         <Image
-//                             loader={()=>urlForImage(product.images[i]).url()}
-//                             src={urlForImage(product.images[i]).url()}
-//                             alt={product.images[0]}
-//                             width={220}
-//                             height={100}
-//                             className='object-contain h-32 mx-auto border rounded-xl hover:cursor-pointer'
-//                             onClick={()=>setIndex(i)}
-//                         />
-//                     ))}
-
-//                 </div>
-//             </div>
-
-//     	    {/* Right */}
-//             <div className='flex flex-col gap-8 md:pt-32 pt-0'>
-//                 <div className='flex flex-col gap-4'>
-//                     <div className='text-3xl font-bold'>{product.name}</div>
-//                     <div className='text-xl font-medium'>{product.price}</div>
-//                 </div>
-
-//                 <div className='flex gap-2 items-center'>
-//                         <h3>Quantity</h3>
-//                         <p className='quantity-desc flex items-center border-black'>
-//                             <span className='minus'
-//                                 onClick={decQty}
-//                             >
-//                                 <AiOutlineMinus />
-//                             </span>
-//                             <span className='num'>{qty}</span>
-//                             <span className='plus'
-//                                 onClick={incQty}
-//                             >
-//                                 <AiOutlinePlus />
-//                             </span>
-
-//                         </p>
-//                 </div>
-
-//                 <button className='btn add-to-cart'
-//                     onClick={()=>addProduct(product,qty)}
-//                 >
-//                     Add To Cart
-//                 </button>
-
-//             </div>
-
-//         </div>
-
-//     </div>
-//   )
-// }
-
-// // export default ProductDetails
-
-// "use client";
-
-// import { urlForImage } from "../../sanity/lib/image";
-// import Image from "next/image";
-// import React, { useContext, useState } from "react";
-// import { AiOutlineMinus, AiOutlinePlus } from "react-icons/ai";
-// import { CartContext } from "../context/CartContext";
-// import Products from "./Products";
-// import { motion } from "framer-motion";
-// import Footer from "./Footer";
-
-// const ProductDetails = ({ product }: any) => {
-//   const [first, setIndex] = useState(0);
-//   const [showMore, setShowMore] = useState(false); // State to toggle the sliding effect
-//   const { cartItems, addProduct, qty, decQty, incQty }: any =
-//     useContext(CartContext);
-
-//     const descriptionStyle =
-//     product.description.length > 90 
-//     ? "text-xl text-gray-500 overflow-hidden rounded-lg pb-2 border-gray-300 max-h-[92px] overflow-y-auto px-1 custom-scrollbar" 
-//     : "text-xl md:text-2xl";
-
-//   const toggleShowMore = () => {
-//     setShowMore((prev) => !prev);
-//   };
-//   const handleClick = () => {
-//     const userConfirmed = confirm("Add item in the cart?");
-//     if (!userConfirmed) return; // Exit if the user clicks "Cancel"
-
-//     addProduct(product, qty); // Execute only if the user clicks "OK"
-//   };
-
-//   return (
-//     <div className="product-details-section mt-24">
-//       <div className="product-details-container ">
-//         {/* Left Section */}
-//                 <motion.div
-//                     initial={{ x: -100, opacity: 0 }}
-//                     animate={{ x: 0, opacity: 1 }}
-//                     transition={{ type: "spring", stiffness: 100, damping: 10 }}
-//                   >
-//         <div>
-//           {/* Main Image */}
-//           <div className="h-[450px] flex items-center mb-[25px] border rounded-lg mx-5 hover:shadow-md">
-//             <Image
-//               src={urlForImage(product.images[first]).url()}
-//               alt={product.images[first].alt || "Product Image"}
-//               width={350}
-//               height={350}
-//               className="object-cover mx-auto hover:scale-110 transition-transform duration-300"
-//             />
-//           </div>
-
-//           {/* Thumbnails */}
-//           <div className="small-images-container  mx-4">
-//             {product.images?.map((item: any, i: number) => (
-//               <Image
-//                 key={i}
-//                 src={urlForImage(product.images[i]).url()}
-//                 alt={item.alt || "Product Image"}
-//                 width={220}
-//                 height={100}
-//                 className="object-cover p-3 h-16 sm:h-32 md:h-20 lg:h-32 border mx-auto rounded-xl hover:cursor-pointer hover:shadow-md hover:scale-105 transition-transform duration-300"
-//                 onClick={() => setIndex(i)}
-//               />
-//             ))}
-//           </div>
-//         </div>
-//         </motion.div>
-//         {/* Right Section */}
-
-//         <motion.div
-//           initial={{ x: 100, opacity: 0 }}
-//           animate={{ x: 0, opacity: 1 }}
-//           transition={{ type: "spring", stiffness: 100, damping: 10 }}
-//         >
-//           <div className="flex flex-col gap-8 md:pt-16 pt-0">
-//             <div className="flex flex-col gap-4">
-//               <div className="text-3xl p-2 font-bold">{product.name}</div>
-//               <div className={ `text-xl py-3  font-medium ${descriptionStyle} `}>
-//                 {product.description}
-//               </div>
-//               <div className="text-xl font-medium">
-//                 <span className="text-green-600">$ </span> {product.price}
-//               </div>
-//             </div>
-
-//             {/* Quantity Section */}
-//             <div className="flex gap-2 items-center">
-//               <h3>Quantity</h3>
-//               <p className="quantity-desc flex items-center border-black rounded-md hover:shadow-md">
-//                 <span className="minus" onClick={decQty}>
-//                   <AiOutlineMinus />
-//                 </span>
-//                 <span className="num">{qty}</span>
-//                 <span className="plus" onClick={incQty}>
-//                   <AiOutlinePlus />
-//                 </span>
-//               </p>
-//             </div>
-
-//             <div>
-//               {/* Add to Cart Button */}
-//               <button className="btn add-to-cart hover:px-2 shadow-sm" onClick={handleClick}>
-//                 Add To Cart
-//               </button>
-//             </div>
-//           </div>
-//         </motion.div>
-//       </div>
-//       {/* See More Button */}
-//       <div className="flex pt-6 items-center justify-center">
-//         <button
-//           className="relative my-6 mx-10 font-semibold text-gray-800 after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-full after:h-[2px] after:bg-gray-800 after:scale-x-0 after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left"
-//           onClick={toggleShowMore}
-//         >
-//           {showMore ? "See Less " : "See More Products"}
-//         </button>
-//         {/* </> */}
-//       </div>
-
-//       {/* Conditional rendering of extra information, outside the button */}
-//       {showMore && (
-//         <div className="more-info my-1">
-//           <Products />
-//         </div>
-//       )}
-//       <Footer/>
-//     </div>
-//   );
-// };
-
-// export default ProductDetails;
-
-
-
 "use client";
 
 import { urlForImage } from "../../sanity/lib/image";
@@ -235,7 +10,8 @@ import { FavouritesContext } from "../context/FavouritesContext";
 import { useToast } from "../context/ToastContext";
 import Products from "./Products";
 import { motion } from "framer-motion";
-import Footer from "./Footer";
+import { Strikethrough } from "lucide-react";
+// import Footer from "./Footer";
 
 const ProductDetails = ({ product }: any) => {
   const [first, setIndex] = useState(0);
@@ -264,13 +40,16 @@ const ProductDetails = ({ product }: any) => {
 
   // Add to Cart Handler
   const handleAddToCart = () => {
-    // const userConfirmed = confirm("Add item to the cart?");
-    // if (!userConfirmed) return;
-
+    if (qty > product.inventory) {
+      showToast("Not enough inventory available!");
+      return;
+    }
+  
     addProduct(product, qty);
+    product.inventory -= qty; // 🛒 Inventory se qty minus ho jayegi
     showToast("Item added to the cart!");
   };
-
+  
   // Add/Remove from Favourites Handler
   const handleToggleFavourite = () => {
     if (!addToFavourites || !removeFromFavourites) {
@@ -285,6 +64,9 @@ const ProductDetails = ({ product }: any) => {
       addToFavourites(product);
       showToast("Item added to favourites!");
     }
+  };
+  const calculateDiscountedPrice = (price: number) => {
+    return Math.floor(price * 1.05);
   };
 
   return (
@@ -332,29 +114,54 @@ const ProductDetails = ({ product }: any) => {
           transition={{ type: "spring", stiffness: 100, damping: 10 }}
         >
           <div className="flex flex-col gap-8 md:pt-8 pt-0">
-            <div className="flex flex-col gap-4">
+            <div className="flex flex-col gap-2">
               <div className="text-3xl p-2 font-bold">{product.name}</div>
-              <div className={`text-xl pb-3 font-medium ${descriptionStyle}`}>
+              <div className={`text-xl pb-2 font-medium ${descriptionStyle}`}>
                 {product.description}
               </div>
               <div className="text-xl font-medium">
-                <span className="text-green-600">$ </span> {product.price}
+                <span className="text-green-500">$ </span> {product.price}
+                {/* <span className="text-[10px] pl-2   font-medium"> */}
+                <s className="text-gray-400 text-[10px] px-2  ">
+                  <span className="text-green-200">$ </span>
+                  {calculateDiscountedPrice(product.price)}
+                </s>
+                {/* </span> */}
               </div>
             </div>
 
             {/* Quantity Section */}
+            <p
+              className={`mb-1 font-medium ${
+                product.inventory > 8
+                  ? "text-green-600"
+                  : product.inventory > 0
+                    ? "text-orange-500"
+                    : "text-red-600"
+              }`}
+            >
+              {product.inventory > 8
+                ? `Current Inventory: ${product.inventory} items`
+                : product.inventory > 0
+                  ? `Hurry! Only ${product.inventory}items left in inventory`
+                  : "Out of Inventory"}
+            </p>
+
             <div className="flex gap-2 items-center">
-              <h3>Quantity</h3>
-              <p className="quantity-desc flex items-center border-black rounded-md hover:shadow-md">
-                <span className="minus" onClick={decQty}>
-                  <AiOutlineMinus />
-                </span>
-                <span className="num">{qty}</span>
-                <span className="plus" onClick={incQty}>
-                  <AiOutlinePlus />
-                </span>
-              </p>
-            </div>
+  <h3>Quantity</h3>
+  <p className="quantity-desc flex items-center border-black rounded-md hover:shadow-md">
+    <span className="minus" onClick={decQty}>
+      <AiOutlineMinus />
+    </span>
+    <span className="num">{qty}</span>
+    <span
+      className={`plus ${qty >= product.inventory ? "opacity-50 cursor-not-allowed" : ""}`}
+      onClick={qty < product.inventory ? incQty : undefined} // Disable click
+    >
+      <AiOutlinePlus />
+    </span>
+  </p>
+</div>
 
             <div className="flex gap-4">
               {/* Add to Cart Button */}
@@ -394,10 +201,17 @@ const ProductDetails = ({ product }: any) => {
       {/* Conditional rendering of extra information */}
       {showMore && (
         <div className="more-info my-1">
-          <Products />
+          <div>
+            <div className="bg-[#FAFAFA] pt-8 pb-0 mt-10 text-center">
+              <h1 className="text-3xl font-bold">Best Selling Products</h1>
+              <h1 className="">Enjoy Up To 50%</h1>
+            </div>
+
+            <Products />
+          </div>
         </div>
       )}
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 };

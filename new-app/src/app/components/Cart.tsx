@@ -67,8 +67,7 @@ const Cart: React.FC = () => {
               <p className="text-gray-600 text-lg">
                 Your cart is currently empty.
               </p>
-              <Link href="/allProducts" 
-              onClick={handleClose}>
+              <Link href="/allProducts" onClick={handleClose}>
                 <p className="mt-6 inline-block border-2 border-black text-black px-6 py-3 rounded-md font-semibold hover:bg-black hover:text-white transition">
                   Continue Shopping
                 </p>
@@ -96,24 +95,50 @@ const Cart: React.FC = () => {
 
                     {/* Product Details */}
                     <div className="flex-1 space-y-1">
-                      <h3 className="text-sm font-semibold text-gray-800">{product.name}</h3>
-                      <p className="font-semibold text-gray-700 text-sm">    <span className="text-green-500">$ </span> {product.price}</p>
+                      <h3 className="text-sm font-semibold text-gray-800">
+                        {product.name}
+                      </h3>
+                      <p className="font-semibold text-gray-700 text-sm">
+                        {" "}
+                        <span className="text-green-500">$ </span>{" "}
+                        {product.price}
+                      </p>
 
                       {/* Quantity Controls */}
                       <div className="flex items-center gap-3 mt-2">
                         <span className="text-xs text-gray-500">Qty:</span>
                         <div className="flex items-center border border-gray-300 rounded-lg px-3 py-1 bg-gray-50">
+                          {/* Minus Button */}
                           <button
-                            onClick={() => toggleCartItemQty(product._id, "minus")}
-                            className={`text-red-500 text-sm hover:text-red-700 ${product.quantity === 1 ? "opacity-50 cursor-not-allowed" : ""}`}
-                            disabled={product.quantity === 1}
+                            onClick={() =>
+                              toggleCartItemQty(product._id, "minus")
+                            }
+                            className={`text-red-500 text-sm hover:text-red-700 ${
+                              product.quantity === 1
+                                ? "opacity-50 cursor-not-allowed"
+                                : ""
+                            }`}
+                            disabled={product.quantity === 1} // Disable when quantity is 1
                           >
                             <AiOutlineMinus />
                           </button>
-                          <span className="text-sm mx-2 font-medium">{product.quantity}</span>
+
+                          {/* Quantity Display */}
+                          <span className="text-sm mx-2 font-medium">
+                            {product.quantity}
+                          </span>
+
+                          {/* Plus Button */}
                           <button
-                            onClick={() => toggleCartItemQty(product._id, "plus")}
-                            className="text-green-500 text-sm hover:text-green-700"
+                            onClick={() =>
+                              toggleCartItemQty(product._id, "plus")
+                            }
+                            className={`text-green-500 text-sm hover:text-green-700 ${
+                              product.quantity >= product.inventory
+                                ? "opacity-50 cursor-not-allowed"
+                                : ""
+                            }`}
+                            disabled={product.quantity >= product.inventory} // Disable when inventory is reached
                           >
                             <AiOutlinePlus />
                           </button>
@@ -140,7 +165,9 @@ const Cart: React.FC = () => {
 
                 <hr />
                 <div className="flex justify-between mt-4">
-                  <span className="text-lg font-semibold">Total ({totalQuantity})</span>
+                  <span className="text-lg font-semibold">
+                    Total ({totalQuantity})
+                  </span>
                   <span className="text-lg font-semibold">
                     <span className="text-green-500">$ </span> {totalPrice}
                   </span>
@@ -148,12 +175,9 @@ const Cart: React.FC = () => {
 
                 <button
                   onClick={handleClose}
-
                   className="w-full px-6 py-3 mt-2 bg-white text-black border-2 border-black font-bold rounded-lg hover:bg-black hover:text-white transition"
                 >
-                  <Link href={'/checkout'}>
-                    Go To Checkout
-                  </Link>
+                  <Link href={"/checkout"}>Go To Checkout</Link>
                 </button>
               </div>
             </div>
@@ -165,16 +189,6 @@ const Cart: React.FC = () => {
 };
 
 export default Cart;
-
-
-
-
-
-
-
-
-
-
 
 // import React, { useContext } from "react";
 // import { AiOutlineLeft, AiOutlineMinus, AiOutlinePlus } from "react-icons/ai";

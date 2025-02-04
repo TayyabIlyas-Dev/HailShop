@@ -17,7 +17,7 @@ const allProducts = async () => {
             <div className='container'>
                 <div className='py-4 text-center'>
                     <h1 className='text-3xl p-2 font-bold'>Explore Our Collection</h1>
-                    <p className='italic text-[14px]'>Find the perfect products for every occasion, with the best quality and prices.</p>
+                    <p className='font-sans text-[14px]'>Find the perfect products for every occasion, with the best quality and prices.</p>
                 </div>
                 <div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 mt-6'>
                     {products.map((product:any,index:number)=>(

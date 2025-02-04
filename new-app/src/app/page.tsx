@@ -1,6 +1,4 @@
-"use client";
-
-import { useState } from "react";
+"use client"
 import {
   BrowseCategory,
   Footer,
@@ -14,12 +12,11 @@ import { FavouritesProvider } from "./context/FavouritesContext"; // Import Favo
 // import Navbar from './components/NavBar';
 
 export default function Home() {
-  const [showCart, setShowCart] = useState(false);
 
   return (
     <AppProvider>
-      <CartProvider>
-        <FavouritesProvider>
+        
+      
           {/* Hero */}
           <Hero />
           {/* Products */}
@@ -43,8 +40,8 @@ export default function Home() {
           </div>
           {/* footer */}
           {/* <Footer /> */}
-        </FavouritesProvider>
-      </CartProvider>
+    
+        
     </AppProvider>
   );
 }

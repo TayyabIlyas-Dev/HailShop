@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useContext,  useEffect,  useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { CartContext } from "../context/CartContext";
 import { AiOutlineMinus, AiOutlinePlus } from "react-icons/ai";
 
@@ -9,9 +9,7 @@ import Image from "next/image";
 import { urlForImage } from "@/src/sanity/lib/image";
 import { client } from "@/src/sanity/lib/client";
 
-
 const CheckOut: React.FC = () => {
-  
   const {
     onRemove,
     toggleCartItemQty,
@@ -37,8 +35,6 @@ const CheckOut: React.FC = () => {
     postalCode: "",
   });
 
- 
-
   const handlePlaceOrder = async () => {
     const orderData = {
       _type: "order",
@@ -57,7 +53,7 @@ const CheckOut: React.FC = () => {
       totalQuantity: totalQuantity,
       orderDate: new Date().toISOString(),
     };
-  
+
     try {
       const response = await client.create(orderData);
       localStorage.removeItem("cartItems");
@@ -68,9 +64,7 @@ const CheckOut: React.FC = () => {
       alert("Something went wrong!");
     }
   };
-  
-  
-  
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -247,65 +241,75 @@ const CheckOut: React.FC = () => {
               <li className="flex justify-between mb-2"><span>Item 2</span><span>$15.00</span></li>
               <li className="flex justify-between mb-2"><span>Item 3</span><span>$20.00</span></li>
             </ul> */}
-              <div className="product-container  space-y-4 custom-scrollbar overflow-y-auto h-[60vh] xl:h-[78%] p-2 pb-32">
+            <div className="product-container  space-y-4 custom-scrollbar overflow-y-auto h-[60vh] xl:h-[78%] p-2 pb-32">
               {cartItems.map((product: any) => (
-              <div
-                key={product._id}
-                className="p-4 bg-white shadow-sm rounded-xl transition-all duration-300 hover:shadow-md hover:scale-[1.02] flex items-center gap-4"
+                <div
+                  key={product._id}
+                  className="p-4 bg-white shadow-sm rounded-xl transition-all duration-300 hover:shadow-md hover:scale-[1.02] flex items-center gap-4"
                 >
-                <div className="grid grid-cols-3 gap-4 items-center">
-                  {/* Product Image */}
-                  <div className="col-span-1 flex justify-center items-center  hover:scale-110 transition-all duration-700">
-                    <Image
-                      src={urlForImage(product.images[0]).url()}
-                      alt={product.name}
-                      width={80}
-                      height={80}
-                      className="object-contain"
-                    />
-                  </div>
-                  {/* Product Details */}
-                  <div className="col-span-2">
-                    <div>                    <h3 className="text-sm font-bold">{product.name}</h3>
+                  <div className="grid grid-cols-3 gap-4 items-center">
+                    {/* Product Image */}
+                    <div className="col-span-1 flex justify-center items-center  hover:scale-110 transition-all duration-700">
+                      <Image
+                        src={urlForImage(product.images[0]).url()}
+                        alt={product.name}
+                        width={80}
+                        height={80}
+                        className="object-contain"
+                      />
+                    </div>
+                    {/* Product Details */}
+                    <div className="col-span-2">
+                      <div>
+                        {" "}
+                        <h3 className="text-sm font-bold">{product.name}</h3>
+                        <p className="font-semibold pt-2 text-gray-600 text-sm">
+                          {" "}
+                          <span className="text-green-500">$ </span>
+                          {product.price}
+                        </p>
+                      </div>
+                      <div className="flex items-center gap-3 mt-2">
+  <span className="text-xs text-gray-500">Qty:</span>
+  <div className="flex items-center border border-gray-300 rounded-lg px-3 py-1 bg-gray-50">
+    {/* Minus Button */}
+    <button
+      onClick={() => toggleCartItemQty(product._id, "minus")}
+      className={`text-red-500 text-sm hover:text-red-700 ${
+        product.quantity === 1 ? "opacity-50 cursor-not-allowed" : ""
+      }`}
+      disabled={product.quantity === 1} // Disable when quantity is 1
+    >
+      <AiOutlineMinus />
+    </button>
 
-                    <p className="font-semibold pt-2 text-gray-600 text-sm">
-                      {" "}
-                      <span className="text-green-500">$ </span>
-                      {product.price}
-                    </p>
+    {/* Quantity Display */}
+    <span className="text-sm mx-2 font-medium">{product.quantity}</span>
 
-            </div>
+    {/* Plus Button */}
+    <button
+      onClick={() => toggleCartItemQty(product._id, "plus")}
+      className={`text-green-500 text-sm hover:text-green-700 ${
+        product.quantity >= product.inventory ? "opacity-50 cursor-not-allowed" : ""
+      }`}
+      disabled={product.quantity >= product.inventory} // Disable when inventory is reached
+    >
+      <AiOutlinePlus />
+    </button>
+  </div>
+</div>
 
-          <div className="flex items-center gap-3 mt-2">
-                    <span className="text-xs text-gray-500">Qty:</span>
-                    <div className="flex items-center border border-gray-300 rounded-lg px-3 py-1 bg-gray-50">
-                    <button
-            onClick={() => toggleCartItemQty(product._id, "minus")}
-            className={`text-red-500 text-sm hover:text-red-700 ${product.quantity === 1 ? "opacity-50 cursor-not-allowed" : ""}`}
-            disabled={product.quantity === 1}
-          >
-            <AiOutlineMinus />
-          </button>
-                      <span className="text-sm mx-2 font-medium">{product.quantity}</span>
+
                       <button
-                        onClick={() => toggleCartItemQty(product._id, "plus")}
-                        className="text-green-500 text-sm hover:text-green-700"
+                        onClick={() => onRemove(product)}
+                        className="mt-3 text-red-400 text-sm flex items-center gap-1"
                       >
-                        <AiOutlinePlus />
+                        <TiDeleteOutline /> Remove
                       </button>
                     </div>
                   </div>
-
-                    <button
-                      onClick={() => onRemove(product)}
-                      className="mt-3 text-red-400 text-sm flex items-center gap-1"
-                    >
-                      <TiDeleteOutline /> Remove
-                    </button>
-                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
             </div>
             <hr className="mb-4 border-gray-300" />
             <div className="flex justify-between font-bold text-lg">

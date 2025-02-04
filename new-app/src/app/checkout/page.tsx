@@ -1,18 +1,18 @@
 "use client";
 import React, { useContext, useEffect } from "react";
 import CheckOut from "../components/CheckOut";
-import { Footer } from "../components";
+// import { Footer } from "../components";
 import { CartContext } from "../context/CartContext";
 
 const Page = () => {
   const {loading }: any = useContext(CartContext);
     //  Force reload the page on component mount
-    useEffect(() => {
-      if (typeof window !== "undefined" && !window.location.hash) {
-        window.location.hash = "reloaded";
-        window.location.reload();
-      }
-    }, []);
+    // useEffect(() => {
+    //   if (typeof window !== "undefined" && !window.location.hash) {
+    //     window.location.hash = "reloaded";
+    //     window.location.reload();
+    //   }
+    // }, []);
   
     if (loading) {
       return (
@@ -27,7 +27,7 @@ const Page = () => {
       <div className="pt-20 pb-4">
         <CheckOut />
       </div>
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 };

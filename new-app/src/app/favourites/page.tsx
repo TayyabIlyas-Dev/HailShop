@@ -23,13 +23,13 @@ const Favourites = () => {
   };
 
   
-  //  Force reload the page on component mount
-  useEffect(() => {
-    if (typeof window !== "undefined" && !window.location.hash) {
-      window.location.hash = "reloaded";
-      window.location.reload();
-    }
-  }, []);
+  // //  Force reload the page on component mount
+  // useEffect(() => {
+  //   if (typeof window !== "undefined" && !window.location.hash) {
+  //     window.location.hash = "reloaded";
+  //     window.location.reload();
+  //   }
+  // }, []);
 
   if (loading) {
     return (
@@ -88,7 +88,7 @@ const Favourites = () => {
               {favourites.map((product: any) => (
                 <div
                   key={product._id}
-                  className="bg-white pt-10 pb-3 drop-shadow-md rounded-2xl overflow-hidden hover:shadow-lg hover:scale-105 transition-all duration-300"
+                  className="bg-white pt-6 pb-3 drop-shadow-md rounded-2xl overflow-hidden hover:shadow-lg hover:scale-105 transition-all duration-300"
                 >
                   <Link href={`/product/${product.slug.current}`} prefetch={false}>
                     <Image

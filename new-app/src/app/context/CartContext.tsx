@@ -29,31 +29,36 @@ interface CartContextValue {
 export const CartContext = createContext<CartContextValue | undefined>(undefined);
 
 export const CartProvider = ({ children }: { children: React.ReactNode }) => {
+  const [isHydrated, setIsHydrated] = useState(false); // 👈 New state to track hydration
+
+  const [cartItems, setCartItems] = useState<Product[]>([]);
+  const [totalPrice, setTotalPrice] = useState(0);
+  const [totalQuantity, setTotalQuantity] = useState(0);
   const [showCart, setShowCart] = useState(false);
   const [qty, setQty] = useState(1);
-  const [cartItems, setCartItems] = useState<Product[]>([]);
-  const [totalQuantity, setTotalQuantity] = useState(0);
-  const [totalPrice, setTotalPrice] = useState(0);
 
-  // Load cart data from localStorage on initial render (client-side only)
+  // Load cart data from localStorage only on client-side
   useEffect(() => {
-    const storedCartItems = JSON.parse(localStorage.getItem("cartItems") || "[]");
-    const storedTotalPrice = JSON.parse(localStorage.getItem("totalPrice") || "0");
-    const storedTotalQuantity = JSON.parse(localStorage.getItem("totalQuantity") || "0");
+    if (typeof window !== "undefined") {
+      const storedCartItems = JSON.parse(localStorage.getItem("cartItems") || "[]");
+      const storedTotalPrice = JSON.parse(localStorage.getItem("totalPrice") || "0");
+      const storedTotalQuantity = JSON.parse(localStorage.getItem("totalQuantity") || "0");
 
-    setCartItems(storedCartItems);
-    setTotalPrice(storedTotalPrice);
-    setTotalQuantity(storedTotalQuantity);
+      setCartItems(storedCartItems);
+      setTotalPrice(storedTotalPrice);
+      setTotalQuantity(storedTotalQuantity);
+      setIsHydrated(true); // 👈 Now mark hydration as complete
+    }
   }, []);
 
   // Save cart data to localStorage whenever it changes
   useEffect(() => {
-    if (cartItems.length > 0) {
+    if (isHydrated) { // 👈 Only update localStorage after hydration
       localStorage.setItem("cartItems", JSON.stringify(cartItems));
       localStorage.setItem("totalPrice", JSON.stringify(totalPrice));
       localStorage.setItem("totalQuantity", JSON.stringify(totalQuantity));
     }
-  }, [cartItems, totalPrice, totalQuantity]);
+  }, [cartItems, totalPrice, totalQuantity, isHydrated]);
 
   // Increase quantity
   const incQty = () => setQty((prevQty) => prevQty + 1);
@@ -83,40 +88,52 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
 
   // Toggle quantity of a cart item
   const toggleCartItemQty = (id: string, value: "plus" | "minus") => {
-    setCartItems((prevCartItems) =>
-      prevCartItems.map((cartProduct) => {
+    setCartItems((prevCartItems) => {
+      let newTotalPrice = 0;
+      let newTotalQuantity = 0;
+
+      const updatedCart = prevCartItems.map((cartProduct) => {
         if (cartProduct._id === id) {
           const updatedQuantity =
             value === "plus"
               ? (cartProduct.quantity || 1) + 1
               : Math.max((cartProduct.quantity || 1) - 1, 1);
 
+          newTotalPrice += updatedQuantity * cartProduct.price;
+          newTotalQuantity += updatedQuantity;
+
           return { ...cartProduct, quantity: updatedQuantity };
+        } else {
+          newTotalPrice += (cartProduct.quantity || 0) * cartProduct.price;
+          newTotalQuantity += cartProduct.quantity || 0;
+          return cartProduct;
         }
-        return cartProduct;
-      })
-    );
+      });
 
-    const product = cartItems.find((item) => item._id === id);
-    if (!product) return;
-
-    setTotalQuantity((prevQty) => (value === "plus" ? prevQty + 1 : Math.max(prevQty - 1, 1))); 
-    setTotalPrice((prevTotal) =>
-      value === "plus"
-        ? prevTotal + product.price
-        : Math.max(prevTotal - product.price, 0)
-    );
+      setTotalPrice(newTotalPrice);
+      setTotalQuantity(newTotalQuantity);
+      return updatedCart;
+    });
   };
 
   // Remove product from cart
   const onRemove = (product: Product) => {
     setCartItems((prevCartItems) => {
       const filteredCart = prevCartItems.filter((item) => item._id !== product._id);
+
+      let newTotalPrice = 0;
+      let newTotalQuantity = 0;
+
+      filteredCart.forEach((item) => {
+        newTotalPrice += (item.quantity || 0) * item.price;
+        newTotalQuantity += item.quantity || 0;
+      });
+
+      setTotalPrice(newTotalPrice);
+      setTotalQuantity(newTotalQuantity);
+
       return filteredCart;
     });
-
-    setTotalPrice((prevTotal) => prevTotal - product.price * (product.quantity || 0));
-    setTotalQuantity((prevQty) => prevQty - (product.quantity || 0));
   };
 
   return (
@@ -135,7 +152,8 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
         addProduct,
       }}
     >
-      {children}
+      {/* 👇 Fix: Ensure rendering only happens after hydration */}
+      {isHydrated ? children : null}
     </CartContext.Provider>
   );
 };
