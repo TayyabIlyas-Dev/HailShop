@@ -1,5 +1,5 @@
 'use client'
-import { djiDrone, heroAirpods, heroBanner } from '@/public/index'
+import {heroAirpods, heroBanner } from '@/public/index'
 import Image from 'next/image'
 import React from 'react';
 import { motion } from "motion/react"
@@ -10,12 +10,12 @@ const Hero = () => {
         visible:{x:0,y:-10,opacity:1, transition:{delay:0.05}},
     }
   return (
-    <div className='hero-section mt-[80px]'>
+    <div className='hero-section pb-24 mt-[80px]'>
         <div className='hero-contianer'>
-            <div className='object-cover'>
+            <div className='object-cover px-2'>
                 <Image 
                     src={heroBanner}
-                    height="100"
+                    height="140"
                     width="1100"
                     alt="banner"
                 />

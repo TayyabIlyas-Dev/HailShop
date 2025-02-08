@@ -1,4 +1,3 @@
-
 // "use client";
 
 // import Link from "next/link";
@@ -50,7 +49,7 @@
 //               <div className="flex items-center justify-center gap-4">
 //                 <div className="pb-1 sm:pb-2">
 //                   <Link href="/allProducts" className="font-semibold">
-                
+
 //                  <span className="text-[28px]">
 //                   <TbCards/>
 //                  </span>
@@ -58,12 +57,12 @@
 //                 </div>
 //                 <div>
 //                   {/* Cart Icon */}
-                
+
 //                   <button className="cart-icon" onClick={handleCartClick}>
 //                     <FiShoppingBag />
 //                     <span className="cart-item-qty">{cartQuantity}</span>
 //                   </button>
-            
+
 //                   {/* Favourites Icon */}
 //                   <Link href="/favourites" className="pr-3 pl-3">
 //                     <button className="cart-icon">
@@ -85,33 +84,7 @@
 
 // export default Navbar;
 
-
-
-
-
-
-
-
-
-
-
-
-
 // code 2
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -129,10 +102,17 @@ import { HailLogo } from "@/public";
 import { motion } from "framer-motion";
 import { BsSuitHeartFill } from "react-icons/bs";
 import { TbCards } from "react-icons/tb";
+import { UserButton } from "@clerk/nextjs";
+
 
 const Navbar = () => {
-  const { totalQuantity: cartQuantity, showCart, setShowCart }: any = useContext(CartContext);
+  const {
+    totalQuantity: cartQuantity,
+    showCart,
+    setShowCart,
+  }: any = useContext(CartContext);
   const { totalFavourites }: any = useContext(FavouritesContext);
+  
   const [isMobile, setIsMobile] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -140,7 +120,7 @@ const Navbar = () => {
     const handleResize = () => {
       setIsMobile(window.innerWidth <= 500);
     };
-    
+
     handleResize();
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
@@ -173,7 +153,7 @@ const Navbar = () => {
                 height="100"
                 width="700"
                 alt="HAIL"
-                className="object-contain w-24 p-3 hover:scale-x-110 transition-all duration-500"
+                className="object-contain w-24 p-2 hover:scale-x-105 transition-all duration-700"
               />
             </Link>
           </motion.div>
@@ -184,56 +164,58 @@ const Navbar = () => {
             transition={{ type: "spring", stiffness: 100, damping: 10 }}
           >
             <div>
-              <div className="flex items-center justify-center gap-4">
-              <div className="flex items-center gap-4">
-                    <Link href="/allProducts" className="font-semibold">
-                      <span className="text-[28px]">
-                        <TbCards />
-                      </span>
-                    </Link>
-                    <button className="cart-icon" onClick={handleCartClick}>
-                      <FiShoppingBag />
-                      <div className="flex items-center gap-2">
-                        <span className="cart-item-qty">{cartQuantity}</span>
-                      </div>
+              <div className="flex items-center justify-center gap-1">
+                <div className="flex items-center gap-3">
+                  <Link href="/allProducts" className="font-semibold">
+                    <span className="text-[26px]">
+                      <TbCards />
+                    </span>
+                  </Link>
+                  <button className="cart-icon" onClick={handleCartClick}>
+                    <FiShoppingBag />
+                    <div className="flex items-center gap-2">
+                      <span className="cart-item-qty">{cartQuantity}</span>
+                    </div>
+                  </button>
+                  <Link href="/favourites" className="pr-0 pl-0">
+                    <button className="cart-icon flex items-center gap-2">
+                      <BsSuitHeartFill />
+                      <span className="fav-item-qty">{totalFavourites}</span>
                     </button>
-                    <Link href="/favourites" className="pr-3 pl-">
-                      <button className="cart-icon flex items-center gap-2">
-                        <BsSuitHeartFill />
-                        <span className="fav-item-qty">{totalFavourites}</span>
-                      </button>
-                    </Link>
-                  </div>
-                
+                  </Link>
+                <div>
+                <UserButton />
+                </div>
+                </div>
+
+
+
                 {isMobile ? (
-                  <div className="relative">
-                    <button className="text-2xl" onClick={toggleMenu}>
+                  <div className="relative px-0 pt-0">
+                    <button className="text-xl" onClick={toggleMenu}>
                       <HiDotsVertical />
+                      
+                      
                     </button>
                     {menuOpen && (
-                      // <div className="absolute right-0 mt-2 w-40 bg-white shadow-md rounded-lg p-2">
-                      //   <Link href="/allProducts" className="block w-full p-2" onClick={closeMenu}>
-                      //     <button className="cart-icon w-full flex justify-between">
-                      //       <TbCards />
-                      //     </button>
-                      //   </Link>
-                      //   <button className="cart-icon w-full flex justify-between p-2" onClick={() => { handleCartClick(); closeMenu(); }}>
-                      //     <FiShoppingBag />
-                      //     <div className="flex items-center gap-2">
-                      //       <span className="cart-item-qty">{cartQuantity}</span>
-                      //     </div>
-                      //   </button>
-                      //   <Link href="/favourites" className="block w-full p-2" onClick={closeMenu}>
-                      //     <button className="cart-icon w-full flex justify-between">
-                      //       <BsSuitHeartFill />
-                      //       <div className="flex items-center gap-2">
-                      //         <span className="fav-item-qty">{totalFavourites}</span>
-                      //       </div>
-                      //     </button>
-                      //   </Link>
-                      // </div>
-                      <div>ll</div>
-                      
+                      <div className="absolute right-0 mt-2 w-32 bg-white shadow-md rounded-lg p-2">
+                        <Link href="/profile" className="block w-full p-2" onClick={closeMenu}>
+                          <button className="text-xl w-full font-semibold flex justify-between">
+                            Profile
+                          </button>
+                        </Link>
+                        {/* <button className="cart-icon w-full flex justify-between p-2" onClick= { closeMenu }>
+                        About
+                          
+                        </button> */}
+                        <Link href="/about" className="block  w-full p-2" onClick={closeMenu}>
+                          <button className="text-xl w-full font-semibold flex items-center justify-between">
+                          About
+                          </button>
+                        </Link>
+                      </div>
+                
+                
                     )}
                   
                   </div>
@@ -242,7 +224,6 @@ const Navbar = () => {
                     
                   </div>
                 )}
-                
               </div>
             </div>
           </motion.div>
@@ -255,3 +236,11 @@ const Navbar = () => {
 };
 
 export default Navbar;
+
+
+
+
+
+
+
+

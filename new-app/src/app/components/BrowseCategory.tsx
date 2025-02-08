@@ -6,7 +6,6 @@ import {
   FaCamera, 
   FaHeadphones, 
   FaLaptop, 
-  FaGamepad, 
   FaPlug
 } from "react-icons/fa";
 
