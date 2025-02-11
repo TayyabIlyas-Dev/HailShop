@@ -30,9 +30,9 @@ export function Nav({ links, isCollapsed }: NavProps) {
     <TooltipProvider>
       <div
         data-collapsed={isCollapsed}
-        className="group flex flex-col gap-4 py-3 px-3 rounded-lg bg-white text-black"
+        className="group flex flex-col gap-4 py-3 px-3 rounded-lg bg-white text-black h-full"
       >
-        <nav className="grid gap-2 group-[[data-collapsed=true]]:justify-center">
+        <nav className="grid gap-2 group-[[data-collapsed=true]]:justify-center h-full">
           {links.map((link, index) => (
             <Tooltip key={index} delayDuration={0}>
               <TooltipTrigger asChild>
@@ -44,7 +44,9 @@ export function Nav({ links, isCollapsed }: NavProps) {
                       size: isCollapsed ? "icon" : "sm"
                     }),
                     "flex items-center justify-start gap-2 px-4 py-2 rounded-lg transition-all duration-200 hover:bg-gray-200",
-                    link.href === pathName && "bg-gray-200"
+                    link.href === pathName && "bg-gray-200",
+                    link.title === "Logout" ? "text-red-600 absolute top-[90vh] justify-center px-0" : "text-red-500" // Push logout near bottom
+
                   )}
                 >
                   <link.icon className="h-5 w-5 text-black" />

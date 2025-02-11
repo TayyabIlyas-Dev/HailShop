@@ -31,16 +31,16 @@ export function DropdownMenuDemo() {
           <MdOutlineMenu className="text-3xl" />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-56 m-4 p-3 cursor-pointer flex flex-col bg-white gap-1">
+      <DropdownMenuContent className="w-56 m-4 py-3 px-1 cursor-pointer flex flex-col bg-white gap-1">
         <DropdownMenuLabel className=" py-1 ">Menu</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <DropdownMenuItem>
-            <div className="py-1 flex gap-2 items-center ">
+          <DropdownMenuItem >
+            <div className="py-0  px-2 pr-16 flex gap-2 items-center text-black hover:text-white rounded-md transition-all duration-200 hover:bg-[#000000] ">
                 <div>
                     <FaUser/>
                 </div>
-                <div>
+                <div >
                 Profile
                 </div>
                 
@@ -48,7 +48,7 @@ export function DropdownMenuDemo() {
            
           </DropdownMenuItem>
           <DropdownMenuItem>
-          <div className="py-1 flex gap-2 items-center ">
+            <div className="py-0  mt-1 px-2 pr-16 flex gap-2 items-center text-black hover:text-white rounded-md transition-all duration-200 hover:bg-[#000000] ">
                 <div>
                     <HiHome/>
                 </div>
@@ -61,7 +61,7 @@ export function DropdownMenuDemo() {
            
           </DropdownMenuItem>
           <DropdownMenuItem>
-          <div className="py-1 flex gap-2 items-center ">
+            <div className="py-0 px-2 mt-1 pr-16 flex gap-2 items-center text-black hover:text-white rounded-md transition-all duration-200 hover:bg-[#000000] ">
                 <div>
                     <TbLayoutDashboardFilled/>
                 </div>
@@ -73,7 +73,7 @@ export function DropdownMenuDemo() {
          
           </DropdownMenuItem>
           <DropdownMenuItem>
-          <div className="py-1 flex gap-2 items-center ">
+            <div className="py-0 px-2 mt-1 pr-16 flex gap-2 items-center text-black hover:text-white rounded-md transition-all duration-200 hover:bg-[#000000] ">
                 <div>
                     <IoMdSettings/>
                 </div>

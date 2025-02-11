@@ -37,7 +37,7 @@ export default function SideNavbar({ isCollapsed, setIsCollapsed }: SideNavbarPr
     >
       {!mobileWidth && (
         <div
-          className={`absolute top-20 pt-4 transition-all duration-300 ${
+          className={`absolute top-[72px] pt-4 transition-all duration-300 ${
               isCollapsed ? "right-1/2 translate-x-1/2" : "right-[-154px]"
           }`}
         >
@@ -51,7 +51,7 @@ export default function SideNavbar({ isCollapsed, setIsCollapsed }: SideNavbarPr
         </div>
       )}
       
-      <div className="pt-8">
+      <div className="pt-6 ">
         <Nav
           isCollapsed={mobileWidth || isCollapsed}
           links={[
