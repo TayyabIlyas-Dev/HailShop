@@ -12,13 +12,16 @@ import { useToast } from "../context/ToastContext";
 
 const Card = ({ product }: { product: any }) => {
   const nameStyle =
-    product.name.length > 12 ? "text-[17px] sm:text-[20px]" : "text-[20px] sm:text-[23px]";
+    product.name.length > 12
+      ? "text-[17px] sm:text-[20px]"
+      : "text-[20px] sm:text-[23px]";
 
   // Toast Context
   const { showToast } = useToast();
 
   // Accessing contexts
-  const { addProduct: addToCart, qty: cartQty }: any = useContext(CartContext) || {};
+  const { addProduct: addToCart, qty: cartQty }: any =
+    useContext(CartContext) || {};
   const {
     addProduct: addToFavourites,
     removeProduct: removeFromFavourites,
@@ -56,7 +59,7 @@ const Card = ({ product }: { product: any }) => {
   };
 
   return (
-    <div className="bg-white pt-4 pb-2 drop-shadow-md rounded-2xl overflow-hidden hover:shadow-lg hover:scale-[1.04] transition-all duration-300">
+    <div className="bg-white pt-4 pb-2 drop-shadow-md rounded-2xl overflow-hidden sm:hover:shadow-lg hover:scale-[1.04] transition-all duration-300">
       <Link href={`/product/${product.slug.current}`} prefetch={false}>
         <Image
           src={urlForImage(product?.images && product.images[0]).url()}
@@ -75,12 +78,24 @@ const Card = ({ product }: { product: any }) => {
       </Link>
       <div className="flex items-center justify-between">
         <button
-          className="bg-gray-100 hover:bg-gray-200 w-9 h-9 flex items-center justify-center rounded-full ml-4 hover:scale-110 transition-all duration-300"
+          className={`bg-gray-100 hover:bg-gray-200 w-9 h-9 flex items-center justify-center rounded-full ml-4 hover:scale-110 transition-all duration-300"
+          ${product.inventory <= 0 ? "opacity-50 cursor-not-allowed" : ""
+          }`}
           onClick={handleClickCart}
           id="add-to-cart"
         >
           <FiShoppingBag />
         </button>
+        {/* <button
+          className={`add-to-cart hover:px-2 ml-3 shadow-sm hover:scale-105 transition-all duration-300 ${
+            product.inventory <= 0 ? "opacity-50 cursor-not-allowed" : ""
+          }`}
+          onClick={handleClickCart}
+          disabled={product.inventory <= 0}
+        >
+          <FiShoppingBag />
+          </button> */}
+
         <button
           className={`${
             isFav ? "bg-red-100 text-red-500" : "bg-gray-100 text-gray-700"

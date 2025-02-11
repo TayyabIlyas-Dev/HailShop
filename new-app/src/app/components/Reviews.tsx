@@ -8,6 +8,7 @@ import { AiFillStar, AiOutlineStar } from "react-icons/ai";
 const Reviews = () => {
   const { user } = useUser();
   const { slug } = useParams();
+  
   interface Review {
     id: string;
     productId: string;
@@ -21,12 +22,14 @@ const Reviews = () => {
   const [newReview, setNewReview] = useState({ rating: 0, comment: "" });
   const [error, setError] = useState("");
 
+  // Fetch reviews from localStorage when component loads
   useEffect(() => {
     const savedReviews = JSON.parse(localStorage.getItem("reviews") || "[]");
     const filteredReviews = savedReviews.filter((r: any) => r.productId === slug);
     setReviews(filteredReviews);
   }, [slug]);
 
+  // Add a new review
   const addReview = () => {
     if (!user) return alert("Sign in to add a review!");
     if (newReview.rating === 0 || newReview.comment.trim() === "") {
@@ -45,29 +48,38 @@ const Reviews = () => {
 
     const updatedReviews = [...reviews, review];
     setReviews(updatedReviews);
-    localStorage.setItem("reviews", JSON.stringify(updatedReviews));
+    localStorage.setItem("reviews", JSON.stringify(updatedReviews)); // Update localStorage with new review
     setNewReview({ rating: 0, comment: "" });
     setError("");
   };
 
+  // Delete a review
   const deleteReview = (id: string, userId: string) => {
     if (user?.id !== userId) return alert("You can only delete your own reviews!");
     const updatedReviews = reviews.filter((review: any) => review.id !== id);
     setReviews(updatedReviews);
-    localStorage.setItem("reviews", JSON.stringify(updatedReviews));
+    localStorage.setItem("reviews", JSON.stringify(updatedReviews)); // Update localStorage after deletion
   };
 
   return (
     <div className="max-w-lg mx-auto p-6 bg-white/10 backdrop-blur-md rounded-lg shadow-md">
-      <h2 className="text-center text-2xl font-bold mb-4 text-white">Customer Reviews</h2>
+      <h2 className="text-center text-2xl font-bold mb-4 text-black">Customer Reviews</h2>
 
       {/* Review Form */}
       {user && (
         <div className="flex flex-col gap-4 p-4 bg-white/20 rounded-lg">
           <div className="flex gap-2">
             {[1, 2, 3, 4, 5].map((i) => (
-              <span key={i} onClick={() => setNewReview({ ...newReview, rating: i })} className="cursor-pointer text-xl">
-                {i <= newReview.rating ? <AiFillStar className="text-yellow-400" /> : <AiOutlineStar className="text-gray-400" />}
+              <span
+                key={i}
+                onClick={() => setNewReview({ ...newReview, rating: i })}
+                className="cursor-pointer text-xl"
+              >
+                {i <= newReview.rating ? (
+                  <AiFillStar className="text-yellow-400" />
+                ) : (
+                  <AiOutlineStar className="text-gray-400" />
+                )}
               </span>
             ))}
           </div>
@@ -92,12 +104,18 @@ const Reviews = () => {
       <div className="mt-6">
         {reviews.length > 0 ? (
           reviews.map((review: any) => (
-            <div key={review.id} className="p-4 mb-3 bg-white/10 rounded-lg">
+            <div key={review.id} className="p-4 mb-3 border-3 border-red-300 bg-white/10 rounded-lg">
               <div className="flex justify-between items-center">
                 <h4 className="text-gray-800 font-bold">{review.name}</h4>
                 <div className="flex gap-1">
                   {[1, 2, 3, 4, 5].map((i) => (
-                    <span key={i}>{i <= review.rating ? <AiFillStar className="text-yellow-400" /> : <AiOutlineStar className="text-gray-400" />}</span>
+                    <span key={i}>
+                      {i <= review.rating ? (
+                        <AiFillStar className="text-yellow-400" />
+                      ) : (
+                        <AiOutlineStar className="text-gray-400" />
+                      )}
+                    </span>
                   ))}
                 </div>
               </div>

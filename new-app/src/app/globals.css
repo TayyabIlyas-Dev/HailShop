@@ -47,11 +47,12 @@ body {
 }
 
 .custom-scrollbar::-webkit-scrollbar {
-  width: 3px; /* Width of the scrollbar */
+  width: 2px;
+ /* Width of the scrollbar */
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  background: linear-gradient(to bottom, #07464ee4, #07464ee4); /* Stylish gradient */
+  background: linear-gradient(to bottom, #0d6b77e4, #07464ee4); /* Stylish gradient */
   border-radius: 8px; /* Rounded edges */
 }
 
@@ -65,6 +66,7 @@ body {
   background: #f3f4f6; /* Light background for contrast */
   border-radius: 8px; /* Rounded track edges */
 }
+
 .container{
   @apply md:max-w-[1024px] max-w-[600px] px-4 md:px-0 m-auto
 }

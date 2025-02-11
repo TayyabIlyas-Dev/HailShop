@@ -21,7 +21,7 @@ const Footer = () => {
           </Link>
         </div>
 
-        <p className="text-sm mt-8 text-gray-700">
+        <p className="text-sm  mt-8 text-gray-700">
         Welcome to Shop, your ultimate destination for premium tech accessories! From the latest gadets enhance your tech experience!
                {/* <a href='javascript:void(0)' className="text-sm font-semibold text-blue-500">Read more...</a> */}
         </p>

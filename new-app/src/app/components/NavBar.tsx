@@ -103,39 +103,57 @@ import { motion } from "framer-motion";
 import { BsSuitHeartFill } from "react-icons/bs";
 import { TbCards } from "react-icons/tb";
 import { UserButton } from "@clerk/nextjs";
-
+import {
+  ClerkProvider,
+  SignedIn,
+  SignedOut,
+  SignInButton,
+} from "@clerk/nextjs";
 
 const Navbar = () => {
+  console.log("Navbar component mounted");
+
   const {
     totalQuantity: cartQuantity,
     showCart,
     setShowCart,
   }: any = useContext(CartContext);
+  console.log("Cart context: ", { cartQuantity, showCart });
+
   const { totalFavourites }: any = useContext(FavouritesContext);
-  
+  console.log("Favourites context: ", { totalFavourites });
+
   const [isMobile, setIsMobile] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
+    console.log("Setting up resize event listener");
     const handleResize = () => {
       setIsMobile(window.innerWidth <= 500);
+      console.log("Window resized, isMobile: ", window.innerWidth <= 500);
     };
 
     handleResize();
     window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
+    return () => {
+      console.log("Cleaning up resize event listener");
+      window.removeEventListener("resize", handleResize);
+    };
   }, []);
 
   const handleCartClick = () => {
     setShowCart(!showCart);
+    console.log("Cart button clicked, showCart: ", !showCart);
   };
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
+    console.log("Menu button clicked, menuOpen: ", !menuOpen);
   };
 
   const closeMenu = () => {
     setMenuOpen(false);
+    console.log("Menu closed");
   };
 
   return (
@@ -183,47 +201,57 @@ const Navbar = () => {
                       <span className="fav-item-qty">{totalFavourites}</span>
                     </button>
                   </Link>
-                <div>
-                <UserButton />
+                  <div>
+                    <UserButton />
+                  </div>
                 </div>
-                </div>
 
-
-
-                {isMobile ? (
+                {/* {isMobile ? (
                   <div className="relative px-0 pt-0">
                     <button className="text-xl" onClick={toggleMenu}>
                       <HiDotsVertical />
-                      
-                      
                     </button>
                     {menuOpen && (
                       <div className="absolute right-0 mt-2 w-32 bg-white shadow-md rounded-lg p-2">
-                        <Link href="/profile" className="block w-full p-2" onClick={closeMenu}>
+                        <Link
+                          href="/profile"
+                          className="block w-full p-2"
+                          onClick={closeMenu}
+                        >
                           <button className="text-xl w-full font-semibold flex justify-between">
                             Profile
                           </button>
                         </Link>
-                        {/* <button className="cart-icon w-full flex justify-between p-2" onClick= { closeMenu }>
-                        About
-                          
-                        </button> */}
-                        <Link href="/about" className="block  w-full p-2" onClick={closeMenu}>
+                        <Link
+                          href="/about"
+                          className="block w-full p-2"
+                          onClick={closeMenu}
+                        >
                           <button className="text-xl w-full font-semibold flex items-center justify-between">
-                          About
+                            About
                           </button>
                         </Link>
+                        <SignedOut>
+                          <div className="block w-full p-2" onClick={closeMenu}>
+                            <button className="text-xl font-bold">
+                              <SignInButton />
+                            </button>
+                          </div>
+                        </SignedOut>
                       </div>
-                
-                
                     )}
-                  
                   </div>
                 ) : (
-                  <div>
-                    
+                  <div className="flex items-center gap-3">
+                    <Link href="/profile" className="text-sm sm:text-[16px] pl-1 font-semibold">Profile</Link>
+                    <Link href="/about" className="font-semibold px-0 text-sm sm:text-[16px]">About</Link>
+                    <SignedOut>
+                      <div className="font-semibold px-0 text-sm sm:text-[16px]">
+                        <SignInButton />
+                      </div>
+                    </SignedOut>
                   </div>
-                )}
+                )} */}
               </div>
             </div>
           </motion.div>
@@ -236,11 +264,3 @@ const Navbar = () => {
 };
 
 export default Navbar;
-
-
-
-
-
-
-
-

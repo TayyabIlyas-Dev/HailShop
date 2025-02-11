@@ -120,11 +120,146 @@
 
 // export default DashboardCard;
 
+
+
+
+
+
+
+
+// real
+
+
+// "use client";
+// import { ChartComponent } from "@/components/chart";
+// import React, { useEffect, useState } from "react";
+// import Dashboard from "./Dashboard";
+// import { client } from "@/src/sanity/lib/client";
+
+// const DashboardCard = () => {
+//   const [totalRevenue, setTotalRevenue] = useState(0);
+//   const [totalSales, setTotalSales] = useState(0);
+
+//   useEffect(() => {
+//     const fetchOrders = async () => {
+//       try {
+//         const data = await client.fetch(
+//           `*[_type=="order"]{ totalPrice, totalQuantity }`
+//         );
+
+//         // Calculate total revenue
+//         const revenue = data.reduce((acc: number, order: { totalPrice: number }) => acc + order.totalPrice, 0);
+//         setTotalRevenue(revenue);
+
+//         // Calculate total sales
+//         const sales = data.reduce((acc: number, order: { totalQuantity: number }) => acc + order.totalQuantity, 0);
+//         setTotalSales(sales);
+//       } catch (error) {
+//         console.error("Error fetching orders:", error);
+//       }
+//     };
+
+//     fetchOrders();
+//   }, []);
+
+//   return (
+//     <div className="pt-4">
+//       <div>
+//         <h1 className="text-2xl md:text-3xl font-bold px-9 text-start">
+//           Admin Dashboard
+//         </h1>
+//       </div>
+//       <div className="grid grid-cols-1 mx-4 p-3 md:grid-cols-3 lg:grid-cols-4 mt-5 gap-3">
+//         <div className="pl-6 pr-3 py-6 mx-1 my-2 text-2xl shadow-md rounded-xl border border-gray-300 hover:scale-[1.02] transition-all duration-500">
+//           <h1 className="text-xl font-semibold">Total Revenue</h1>
+//           <h4 className="text-2xl font-bold">${totalRevenue.toFixed(2)}</h4>
+//           <h2 className="text-[13px] text-gray-600 font-semibold">
+//             +20.1% from last month
+//           </h2>
+//         </div>
+//         <div className="pl-6 pr-3 py-6 mx-1 my-2 text-2xl shadow-md rounded-xl border border-gray-300 hover:scale-[1.02] transition-all duration-500">
+//           <h1 className="text-xl font-semibold">Subscriptions</h1>
+//           <h4 className="text-2xl font-bold">+2350</h4>
+//           <h2 className="text-[13px] text-gray-600 font-semibold">
+//             +18.1% from last month
+//           </h2>
+//         </div>
+//         <div className="pl-6 pr-3 py-6 mx-1 my-2 text-2xl shadow-md rounded-xl border border-gray-300 hover:scale-[1.02] transition-all duration-500">
+//           <h1 className="text-xl font-semibold">Sales</h1>
+//           <h4 className="text-2xl font-bold">+{totalSales}</h4>
+//           <h2 className="text-[13px] text-gray-600 font-semibold">
+//             +19% from last month
+//           </h2>
+//         </div>
+//         <div className="pl-6 pr-3 py-6 mx-1 my-2 text-2xl shadow-md rounded-xl border border-gray-300 hover:scale-[1.02] transition-all duration-500">
+//           <h1 className="text-xl font-semibold">Active Now</h1>
+//           <h4 className="text-2xl font-bold">+573</h4>
+//           <h2 className="text-[13px] text-gray-600 font-semibold">
+//             +201 since last hour
+//           </h2>
+//         </div>
+//       </div>
+//       <div className="mx-5 py-5 block md:flex">
+//         <div className="w-[400px] p-3">
+//           <ChartComponent />
+//         </div>
+//         <div className="overflow-x-auto pt-1 h-full custom-scrollbar">
+//           <Dashboard />
+//         </div>
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default DashboardCard;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// code 3
 "use client";
 import { ChartComponent } from "@/components/chart";
 import React, { useEffect, useState } from "react";
 import Dashboard from "./Dashboard";
 import { client } from "@/src/sanity/lib/client";
+import RecentSales from "./RecentSales";
 
 const DashboardCard = () => {
   const [totalRevenue, setTotalRevenue] = useState(0);
@@ -138,11 +273,18 @@ const DashboardCard = () => {
         );
 
         // Calculate total revenue
-        const revenue = data.reduce((acc: number, order: { totalPrice: number }) => acc + order.totalPrice, 0);
+        const revenue = data.reduce(
+          (acc: number, order: { totalPrice: number }) => acc + order.totalPrice,
+          0
+        );
         setTotalRevenue(revenue);
 
         // Calculate total sales
-        const sales = data.reduce((acc: number, order: { totalQuantity: number }) => acc + order.totalQuantity, 0);
+        const sales = data.reduce(
+          (acc: number, order: { totalQuantity: number }) =>
+            acc + order.totalQuantity,
+          0
+        );
         setTotalSales(sales);
       } catch (error) {
         console.error("Error fetching orders:", error);
@@ -190,23 +332,17 @@ const DashboardCard = () => {
         </div>
       </div>
       <div className="mx-5 py-5 block md:flex">
-        <div className="w-[400px] p-3">
+        <div className="sm:w-[500px] w-[310px] transition-all hover:scale-[1.015] duration-700 p-3">
           <ChartComponent />
         </div>
-        <div className="overflow-x-auto pt-1 h-full custom-scrollbar">
-          <Dashboard />
+        {/* Dashboard component wrapped in a container with class "limited-view" */}
+        <div className=" px-2 py-1 w-full transition-all hover:scale-[1.01] duration-700 ">
+          <RecentSales />
         </div>
       </div>
+      
     </div>
   );
 };
 
 export default DashboardCard;
-
-<div className="pl-6 pr-3 py-6 mx-1 my-2 text-2xl shadow-md rounded-xl border border-gray-300 hover:scale-[1.02] transition-all duration-500">
-  <h1 className="text-xl font-semibold">Active Now</h1>
-  <h4 className="text-2xl font-bold">+573</h4>
-  <h2 className="text-[13px] text-gray-600 font-semibold">
-    +201 since last hour
-  </h2>
-</div>;

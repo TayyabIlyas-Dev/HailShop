@@ -50,6 +50,8 @@ export const product = defineType({
         ],
       },
     },
+
+ 
     {
       name: "inventory",
       title: "Current Inventory",

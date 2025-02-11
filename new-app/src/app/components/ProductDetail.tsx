@@ -37,7 +37,6 @@ const ProductDetails = ({ product }: any) => {
 
   // const qtySection =
 
-
   const toggleShowMore = () => {
     setShowMore((prev) => !prev);
   };
@@ -166,33 +165,37 @@ const ProductDetails = ({ product }: any) => {
                 </span>
               </p>
             </div> */}
-              {product.inventory > 0 && (
-        <div id="qty-section" className="flex gap-4 items-center">
-          <h3 className="text-lg font-semibold text-gray-700">Quantity</h3>
-          
-          <div className="flex items-center bg-white/40 backdrop-blur-md border border-gray-300 rounded-full px-3 py-2 shadow-md transition-all duration-500 hover:shadow-xl hover:scale-[1.02]">
-            
-            <button
-              className="p-3 rounded-full bg-gray-100 hover:bg-gray-200 transition-transform duration-200 active:scale-90"
-              onClick={decQty}
-            >
-              <AiOutlineMinus size={18} className="text-gray-700" />
-            </button>
+            {product.inventory > 0 && (
+              <div id="qty-section" className="flex gap-3 items-center">
+                <h3 className="text-lg font-semibold text-gray-700">
+                  Quantity
+                </h3>
 
-            <span className="px-5 text-lg font-bold text-gray-800">{qty}</span>
+                <div className="flex items-center bg-white/40 backdrop-blur-md border border-gray-300 rounded-full px-3 py-2 shadow-md transition-all duration-500 hover:shadow-lg hover:scale-[1.01]">
+                  <button
+                    className="p-3 rounded-full bg-gray-100 hover:bg-gray-200 transition-transform duration-200 active:scale-90"
+                    onClick={decQty}
+                  >
+                    <AiOutlineMinus size={12} className="text-gray-700" />
+                  </button>
 
-            <button
-              className={`p-3 rounded-full transition-transform duration-200 active:scale-90 ${
-                qty >= product.inventory ? "opacity-50 cursor-not-allowed" : "bg-gray-100 hover:bg-gray-200"
-              }`}
-              onClick={qty < product.inventory ? incQty : undefined}
-            >
-              <AiOutlinePlus size={18} className="text-gray-700" />
-            </button>
+                  <span className="px-5 text-lg font-bold text-gray-800">
+                    {qty}
+                  </span>
 
-          </div>
-        </div>
-      )}
+                  <button
+                    className={`p-3 rounded-full transition-transform duration-200 active:scale-90 ${
+                      qty >= product.inventory
+                        ? "opacity-50 cursor-not-allowed"
+                        : "bg-gray-100 hover:bg-gray-200"
+                    }`}
+                    onClick={qty < product.inventory ? incQty : undefined}
+                  >
+                    <AiOutlinePlus size={12} className="text-gray-700" />
+                  </button>
+                </div>
+              </div>
+            )}
             <div className="flex gap-3">
               {/* Add to Cart Button */}
               <button
@@ -217,16 +220,15 @@ const ProductDetails = ({ product }: any) => {
           </div>
         </motion.div>
       </div>
-       <div className="my-5 mx-2 p-2">
-       <Reviews/>
-
-       </div>
+      <div className="my-5 mx-2 p-2">
+        <Reviews />
+      </div>
       {/* See More Button */}
       <div className="flex pt-6 items-center justify-center">
         <button
           className="relative my-6 mx-10 font-semibold text-gray-800 after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-full after:h-[2px] after:bg-gray-800 after:scale-x-0 after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left"
           onClick={toggleShowMore}
-         >
+        >
           {showMore ? "See Less " : "See More Products"}
         </button>
       </div>

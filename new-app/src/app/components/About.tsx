@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 
-const developerName = "Developed by [Your Name]";
+const developerName = "Developed by Tayyab Ilyas & Hamza Ilyas";
 const typingSpeed = 40; // Har letter ka delay (ms)
 const eraseSpeed = 50; // Remove hone ka speed (ms)
 const delayBeforeErase = 1200; // Kitni dair name rahe phir erase ho (ms)
@@ -49,14 +49,14 @@ const About = () => {
       </motion.h1>
 
       <motion.p
-        className="text-xs max-w-2xl text-center mb-6"
+        className="text-xs sm:text-sm max-w-2xl text-center mb-6"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.5, duration: 1 }}
       >
-        Hail is committed to providing premium Apple accessories that combine style,  
+        Hail is committed to providing premium  accessories that combine style,  
         durability, and innovation. Our products are designed with precision to  
-        enhance your Apple experience, ensuring compatibility and seamless integration.  
+        enhance your experience, ensuring compatibility and seamless integration.  
         From sleek cases to high-quality charging solutions, every item is crafted  
         to meet the highest standards of performance and aesthetics.
       </motion.p>
