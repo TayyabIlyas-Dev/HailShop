@@ -23,11 +23,12 @@ const PageLoader = () => {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.3 }}
-          className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50"
+          className="fixed inset-0 backdrop-blur-md bg-black/30 flex items-center justify-center z-50"
         >
-          <div className="flex flex-col items-center">
-            <div className="w-12 h-12 border-4 border-t-transparent border-white rounded-full animate-spin"></div>
-            <p className="text-white mt-2">Loading...</p>
+          <div className="flex space-x-2">
+            <div className="w-4 h-4 bg-white rounded-full animate-bounce [animation-delay:-0.3s]"></div>
+            <div className="w-4 h-4 bg-white rounded-full animate-bounce [animation-delay:-0.15s]"></div>
+            <div className="w-4 h-4 bg-white rounded-full animate-bounce"></div>
           </div>
         </motion.div>
       )}

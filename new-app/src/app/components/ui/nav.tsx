@@ -45,7 +45,7 @@ export function Nav({ links, isCollapsed }: NavProps) {
                     }),
                     "flex items-center justify-start gap-2 px-4 py-2 rounded-lg transition-all duration-200 hover:bg-gray-200",
                     link.href === pathName && "bg-gray-200",
-                    link.title === "Logout" ? "text-red-600 absolute top-[90vh] justify-center px-0" : "text-red-500" // Push logout near bottom
+                    link.title === "Logout" ? "text-red-600 absolute top-[90vh] justify-center px-0 hover:rounded-full hover:px-2 hover:bg-red-300" : "text-red-500" // Push logout near bottom
 
                   )}
                 >
