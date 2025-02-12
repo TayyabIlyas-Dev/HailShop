@@ -13,8 +13,10 @@ import { useToast } from "../context/ToastContext";
 const Card = ({ product }: { product: any }) => {
   const nameStyle =
     product.name.length > 12
-      ? "text-[17px] sm:text-[20px]"
-      : "text-[20px] sm:text-[23px]";
+      ? "text-[14px] sm:text-[16px]"
+      : product.name.length > 10
+      ? "text-[16px] sm:text-[19px]"
+      : "text-[19px] sm:text-[22px]";
 
   // Toast Context
   const { showToast } = useToast();
@@ -32,6 +34,11 @@ const Card = ({ product }: { product: any }) => {
 
   // Add to Cart
   const handleClickCart = () => {
+    if (product.inventory <= 0) {
+      showToast("This product is out of stock!");
+      return;
+    }
+
     if (!addToCart) {
       showToast("Cart functionality is unavailable.");
       return;
@@ -78,23 +85,12 @@ const Card = ({ product }: { product: any }) => {
       </Link>
       <div className="flex items-center justify-between">
         <button
-          className={`bg-gray-100 hover:bg-gray-200 w-9 h-9 flex items-center justify-center rounded-full ml-4 hover:scale-110 transition-all duration-300"
-          ${product.inventory <= 0 ? "opacity-50 cursor-not-allowed" : ""
-          }`}
+          className={`bg-gray-100 hover:bg-gray-200 w-9 h-9 flex items-center justify-center rounded-full ml-4 hover:scale-110 transition-all duration-300"`}
           onClick={handleClickCart}
           id="add-to-cart"
         >
           <FiShoppingBag />
         </button>
-        {/* <button
-          className={`add-to-cart hover:px-2 ml-3 shadow-sm hover:scale-105 transition-all duration-300 ${
-            product.inventory <= 0 ? "opacity-50 cursor-not-allowed" : ""
-          }`}
-          onClick={handleClickCart}
-          disabled={product.inventory <= 0}
-        >
-          <FiShoppingBag />
-          </button> */}
 
         <button
           className={`${

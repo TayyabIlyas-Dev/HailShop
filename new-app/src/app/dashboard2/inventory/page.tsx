@@ -48,7 +48,6 @@ const Page = () => {
             if (!response.ok) throw new Error("Failed to delete product");
 
             setProducts(products.filter((p) => p._id !== productId));
-            alert("Product deleted successfully!");
         } catch (error) {
             console.error("Product deletion failed:", error);
             alert("Failed to delete product. Please try again.");
@@ -56,27 +55,30 @@ const Page = () => {
     };
 
     return (
+        <>
         <div className="bg-[#f8f8f8] w-full pb-20 pt-8 p-2">
             <div className="container">
-                <div className="py-4 text-start">
-                    <h1 className="text-4xl  p-2 font-bold">Inventory</h1>
+            <div className="mt-10 p-4 mx-4 bg-white rounded-lg shadow-lg">
+                    <h2 className="text-2xl pt-3 font-bold text-center mb-4">Add New Product</h2>
+                    <AddProductForm onProductAdded={fetchProducts} />
+                </div>
+                <div className="pt-9 px-3 text-start">
+                    <h1 className="text-4xl  px-3 font-bold">Inventory</h1>
                 </div>
                 {loading ? (
                     <p className="text-center text-gray-600">Loading products...</p>
                 ) : (
-                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-3 mt-6">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-3 mx-3 mt-8">
   {products.map((product) => (
     <StockCard key={product._id} product={product} onDelete={handleDeleteProduct} />
   ))}
 </div>
 
                 )}
-                <div className="mt-12 p-6 bg-white rounded-lg shadow-lg">
-                    <h2 className="text-2xl font-bold text-center mb-4">Add New Product</h2>
-                    <AddProductForm onProductAdded={fetchProducts} />
-                </div>
+              
             </div>
         </div>
+        </>
     );
 };
 

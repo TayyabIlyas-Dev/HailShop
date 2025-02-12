@@ -206,14 +206,14 @@ const Navbar = () => {
                   </div>
                 </div>
 
-                {/* {isMobile ? (
+                
                   <div className="relative px-0 pt-0">
                     <button className="text-xl" onClick={toggleMenu}>
                       <HiDotsVertical />
                     </button>
                     {menuOpen && (
                       <div className="absolute right-0 mt-2 w-32 bg-white shadow-md rounded-lg p-2">
-                        <Link
+                        {/* <Link
                           href="/profile"
                           className="block w-full p-2"
                           onClick={closeMenu}
@@ -221,7 +221,7 @@ const Navbar = () => {
                           <button className="text-xl w-full font-semibold flex justify-between">
                             Profile
                           </button>
-                        </Link>
+                        </Link> */}
                         <Link
                           href="/about"
                           className="block w-full p-2"
@@ -241,8 +241,8 @@ const Navbar = () => {
                       </div>
                     )}
                   </div>
-                ) : (
-                  <div className="flex items-center gap-3">
+                
+                  {/* <div className="flex items-center gap-3">
                     <Link href="/profile" className="text-sm sm:text-[16px] pl-1 font-semibold">Profile</Link>
                     <Link href="/about" className="font-semibold px-0 text-sm sm:text-[16px]">About</Link>
                     <SignedOut>
@@ -250,8 +250,8 @@ const Navbar = () => {
                         <SignInButton />
                       </div>
                     </SignedOut>
-                  </div>
-                )} */}
+                  </div> */}
+               
               </div>
             </div>
           </motion.div>

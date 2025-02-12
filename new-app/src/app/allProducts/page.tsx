@@ -1,4 +1,4 @@
-// 'use client'
+'use client'
 import React, { useContext } from 'react'
 import { groq } from 'next-sanity';
 import { client } from '@/src/sanity/lib/client';

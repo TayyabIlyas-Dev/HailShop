@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 
 const developerName = "Developed by Tayyab Ilyas & Hamza Ilyas";
 const typingSpeed = 40; // Har letter ka delay (ms)
-const eraseSpeed = 50; // Remove hone ka speed (ms)
+const eraseSpeed = 40; // Remove hone ka speed (ms)
 const delayBeforeErase = 1200; // Kitni dair name rahe phir erase ho (ms)
 
 const About = () => {

@@ -7,6 +7,7 @@ import { FavouritesProvider } from "@/src/app/context/FavouritesContext";
 import { ToastProvider } from "@/src/app/context/ToastContext";
 import { Toaster } from "react-hot-toast";
 import { ClerkProvider } from "@clerk/nextjs";
+import PageLoader from "./PageLoader";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname(); // Get the current route path
@@ -23,7 +24,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
             {/* Show Navbar only if NOT on a dashboard page */}
             {!isDashboard && <Navbar />}
-
+              <PageLoader/>
             {children}
 
        

@@ -84,7 +84,7 @@ const AddProductForm = ({ onProductAdded }: { onProductAdded: () => void }) => {
     };
 
     return (
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-4  pt-3">
             <input type="text" name="name" placeholder="Product Name" value={newProduct.name} onChange={handleChange} className="w-full p-2 border rounded" required />
             <input type="text" name="description" placeholder="Description" value={newProduct.description} onChange={handleChange} className="w-full p-2 border rounded" required />
             <input type="number" name="price" placeholder="Price" value={newProduct.price} onChange={handleChange} className="w-full p-2 border rounded" required />

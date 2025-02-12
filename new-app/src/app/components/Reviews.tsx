@@ -119,7 +119,7 @@ const Reviews = () => {
                   ))}
                 </div>
               </div>
-              <p className="text-gray-500 mt-2">{review.comment}</p>
+              <p className="text-gray-500 text-sm h-20 overflow-hidden overflow-y-auto custom-scrollbar mt-2">{review.comment}</p>
               {user?.id === review.userId && (
                 <button
                   className="mt-2 bg-red-500 text-white px-3 py-1 rounded-md transition hover:bg-red-600 active:scale-95"

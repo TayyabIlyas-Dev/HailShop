@@ -20,6 +20,13 @@ interface Product {
 
 const StockCard: React.FC<{ product: Product; onDelete: (id: string) => void }> = ({ product, onDelete }) => {
   const { showToast } = useToast();
+  const nameStyle =
+  product.name.length > 12
+    ? "text-[14px] sm:text-[16px]"
+    : product.name.length > 10
+    ? "text-[16px] sm:text-[19px]"
+    : "text-[19px] sm:text-[22px]";
+
 
   const imageUrl =
     product?.images && product.images.length > 0
@@ -35,7 +42,7 @@ const StockCard: React.FC<{ product: Product; onDelete: (id: string) => void }> 
 
   return (
     <div className="bg-white pt-4 pb-2 drop-shadow-md rounded-2xl overflow-hidden sm:hover:shadow-lg hover:scale-[1.04] transition-all duration-300">
-      <Link href={`/product/${product.slug.current}`} prefetch={false}>
+      <Link href={`/dashboard2/stockDetails/${product.slug.current}`} prefetch={false}>
         <Image
           src={imageUrl}
           alt={product.name}
@@ -45,7 +52,7 @@ const StockCard: React.FC<{ product: Product; onDelete: (id: string) => void }> 
           priority={false}
         />
         <div className="text-center pt-4 pb-3">
-          <h1 className="text-2xl font-bold">{product.name}</h1>
+          <h1 className={`text-2xl font-bold ${nameStyle}`}>{product.name}</h1>
           <h1 className="text-xl py-1 text-gray-500 font-semibold">
             <span className="text-green-500">$ </span> {product.price}
           </h1>
@@ -57,7 +64,7 @@ const StockCard: React.FC<{ product: Product; onDelete: (id: string) => void }> 
           className="bg-gray-100 hover:bg-gray-200 w-9 h-9 flex items-center justify-center rounded-full ml-4 hover:scale-110 transition-all duration-300"
           id="view-product"
         >
-          <Link href={`/product/${product.slug.current}`} prefetch={false}>
+          <Link href={`/dashboard2/stockDetails${product.slug.current}`} prefetch={false}>
             <FiEye />
           </Link>
         </button>
