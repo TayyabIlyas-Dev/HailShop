@@ -343,6 +343,7 @@ import { TiDeleteOutline } from "react-icons/ti";
 import Image from "next/image";
 import { urlForImage } from "@/src/sanity/lib/image";
 import { client } from "@/src/sanity/lib/client";
+import { motion } from "framer-motion";
 
 const CheckOut: React.FC = () => {
   const {
@@ -585,7 +586,7 @@ const CheckOut: React.FC = () => {
           <div className="p-6 border border-gray-300 rounded-lg bg-white shadow-md">
             <h2 className="text-xl font-semibold mb-4">Order Summary</h2>
             <div className="product-container space-y-4 custom-scrollbar overflow-y-auto h-[60vh] xl:h-[78%] p-2 pb-32">
-              {cartItems.map((product: any) => (
+              {/* {cartItems.map((product: any) => (
                 <div
                   key={product._id}
                   className="p-4 bg-white shadow-sm rounded-xl transition-all duration-300 hover:shadow-md hover:scale-[1.02] flex items-center gap-4"
@@ -603,10 +604,33 @@ const CheckOut: React.FC = () => {
                     <div className="col-span-2">
                       <div>
                         <h3 className="text-sm font-bold">{product.name}</h3>
-                        <p className="font-semibold pt-2 text-gray-600 text-sm">
-                          <span className="text-green-500">$ </span>
-                          {product.price}
-                        </p>
+                        <div className="text-xl font-medium flex items-center gap-2 relative">
+                <span className="text-green-500">$</span>
+                {Math.floor(withoutDiscountPrice)}
+
+
+                {product.discount > 0 && (
+                  <div className=" ">
+                  
+                    <s className="text-gray-400 text-[10px] px-1 relative">
+                      <span className="text-green-200">$</span>
+                      {product.price}
+                      <span className="absolute -bottom-1 left-1/2 w-8 h-[1px] bg-pink-400 blur-sm"></span>
+                    </s>
+                    <motion.span
+                      className="relative text-[9px] font-bold px-2 py-0 rounded-md"
+                      initial={{ rotate: -5, scale: 0.8, opacity: 0 }}
+                      animate={{ rotate: 0, scale: 1, opacity: 1 }}
+                      transition={{ duration: 0.3, ease: "easeOut" }}
+                    >
+                      <span className="text-gray-700 bg-red-100 px-2 py-[2px] rounded-md shadow-sm shadow-red-300">
+                        {product.discount}% OFF
+                      </span>
+                    </motion.span>
+
+                  </div>
+                )}
+              </div>
                       </div>
                       <div className="flex items-center gap-3 mt-2">
                         <span className="text-xs text-gray-500">Qty:</span>
@@ -643,7 +667,89 @@ const CheckOut: React.FC = () => {
                     </div>
                   </div>
                 </div>
-              ))}
+              ))} */}
+              {cartItems.map((product: any) => {
+  const withoutDiscountPrice = product.discount
+    ? product.price - (product.price * product.discount) / 100
+    : product.price;
+
+  return (
+    <div
+      key={product._id}
+      className="p-4 bg-white shadow-sm rounded-xl transition-all duration-300 hover:shadow-md hover:scale-[1.02] flex items-center gap-4"
+    >
+      <div className="grid grid-cols-3 gap-4 items-center">
+        <div className="col-span-1 flex justify-center items-center hover:scale-110 transition-all duration-700">
+          <Image
+            src={urlForImage(product.images[0]).url()}
+            alt={product.name}
+            width={80}
+            height={80}
+            className="object-contain"
+          />
+        </div>
+        <div className="col-span-2">
+          <div>
+            <h3 className="text-sm font-bold">{product.name}</h3>
+            <div className="text-xl font-medium flex items-center gap-2 relative">
+              {/* Current Price */}
+              <span className="text-green-500">$</span>
+              {Math.floor(withoutDiscountPrice)}
+
+              {/* Original Price with Neon Glow */}
+              {product.discount > 0 && (
+                <div>
+             
+                  <motion.span
+                    className="relative text-[9px] font-bold px-2 py-0 rounded-md"
+                    initial={{ rotate: -5, scale: 0.8, opacity: 0 }}
+                    animate={{ rotate: 0, scale: 1, opacity: 1 }}
+                    transition={{ duration: 0.3, ease: "easeOut" }}
+                  >
+                    <span className="text-gray-700 bg-red-100 px-2 py-[2px] rounded-md shadow-sm shadow-red-300">
+                      {product.discount}% OFF
+                    </span>
+                  </motion.span>
+                </div>
+              )}
+            </div>
+          </div>
+          <div className="flex items-center gap-3 mt-2">
+            <span className="text-xs text-gray-500">Qty:</span>
+            <div className="flex items-center border border-gray-300 rounded-lg px-3 py-1 bg-gray-50">
+              <button
+                onClick={() => toggleCartItemQty(product._id, "minus")}
+                className={`text-red-500 text-sm hover:text-red-700 ${
+                  product.quantity === 1 ? "opacity-50 cursor-not-allowed" : ""
+                }`}
+                disabled={product.quantity === 1}
+              >
+                <AiOutlineMinus />
+              </button>
+              <span className="text-sm mx-2 font-medium">{product.quantity}</span>
+              <button
+                onClick={() => toggleCartItemQty(product._id, "plus")}
+                className={`text-green-500 text-sm hover:text-green-700 ${
+                  product.quantity >= product.inventory ? "opacity-50 cursor-not-allowed" : ""
+                }`}
+                disabled={product.quantity >= product.inventory}
+              >
+                <AiOutlinePlus />
+              </button>
+            </div>
+          </div>
+          <button
+            onClick={() => onRemove(product)}
+            className="mt-3 text-red-400 text-sm flex items-center gap-1"
+          >
+            <TiDeleteOutline /> Remove
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+})}
+
             </div>
             <hr className="mb-4 border-gray-300" />
             <div className="flex justify-between font-bold text-lg">

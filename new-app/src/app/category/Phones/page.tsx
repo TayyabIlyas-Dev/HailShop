@@ -12,7 +12,7 @@ const Phones = () => {
     const fetchProducts = async () => {
       try {
         const query = `*[_type == "product" && productType == "phone"]{
-          name, slug, images, price, productType
+          name, slug, images, price, productType,discount
         }`;
         const products = await client.fetch(query);
         setPhoneProducts(products);

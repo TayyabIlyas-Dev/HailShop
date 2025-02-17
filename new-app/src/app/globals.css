@@ -29,6 +29,8 @@ body {
 
 
 
+
+
 @keyframes gradientAnimation {
   0% {
     background-position: 0% 50%;
@@ -65,6 +67,30 @@ body {
 .custom-scrollbar::-webkit-scrollbar-track {
   background: #f3f4f6; /* Light background for contrast */
   border-radius: 8px; /* Rounded track edges */
+}
+
+
+.custom-scrollbar2::-webkit-scrollbar {
+  width: 3px;
+ /* Width of the scrollbar */
+}
+
+.custom-scrollbar2::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, #9f9f9fe4, #d9d9d9e4); /* Stylish gradient */
+  border-radius: 12px; /* Rounded edges */
+}
+
+.custom-scrollbar2::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(to bottom, #000000, #434343); /* Shiny black gradient */
+  box-shadow: 0 0 10px #000000; /* Adds a glowing shine */
+}
+
+
+.custom-scrollbar2::-webkit-scrollbar-track {
+  background: #f3f4f6; /* Light background for contrast */
+  border-radius: 8px ;
+  margin-top: 9px; 
+  margin-bottom: 9px;/* Rounded track edges */
 }
 
 .container{
@@ -138,7 +164,7 @@ body {
 
 
 .add-to-cart{
-  @apply  text-black md:w-1/2 p-2 text-xl font-bold w-full  border-4 hover:text-white hover:bg-black border-black;
+  @apply  text-black md:w-1/2 p-2 text-lg font-semibold w-full  border-2 hover:text-white hover:bg-black border-black;
 }
 
 /* NEW PRODUCT DETAILS ENDS */

@@ -149,7 +149,7 @@
 //                   ? `Add more! Only ${product.inventory} items left in inventory`
 //                   : "Out of Stock"}
 //             </p>
-//             {/* 
+//             {/*
 //             <div className="flex gap-2 items-center">
 //               <h3>Quantity</h3>
 //               <p className="quantity-desc flex items-center border-black rounded-md hover:shadow-md">
@@ -249,8 +249,158 @@
 
 // export default ProductDetails;
 
+// "use client";
 
+// import { urlForImage } from "../../sanity/lib/image";
+// import Image from "next/image";
+// import React, { useState } from "react";
+// import { motion } from "framer-motion";
+// import Reviews from "./Reviews";
+// import { useConfirmToast } from "../context/ConfirmToastContext";
 
+// const StockDetail = ({ product }: any) => {
+//   const [first, setIndex] = useState(0);
+//   const [isEditing, setIsEditing] = useState(false);
+//   const [updatedProduct, setUpdatedProduct] = useState({
+//     name: product.name,
+//     price: product.price,
+//     inventory: product.inventory,
+//   });
+//   const { showToast } = useConfirmToast();
+
+//   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+//     const { name, value } = e.target;
+//     setUpdatedProduct((prev) => ({
+//       ...prev,
+//       [name]: name === "price" || name === "inventory" ? Number(value) : value,
+//     }));
+//   };
+
+//   const handleSubmit = async (e: React.FormEvent) => {
+//     e.preventDefault();
+//     try {
+//       const response = await fetch(`/api/updateProduct`, {
+//         method: "POST",
+//         headers: { "Content-Type": "application/json" },
+//         body: JSON.stringify({ id: product._id, ...updatedProduct }),
+//       });
+//       if (!response.ok) throw new Error("Failed to update product");
+//       showToast("Product updated successfully!");
+//       setIsEditing(false);
+//     } catch (error) {
+//       console.error("Update failed", error);
+//       showToast("Failed to update product. Please try again.");
+//     }
+//   };
+
+//   return (
+//     <div className="product-details-section mt-20">
+//       {isEditing ? (
+//         <form onSubmit={handleSubmit} className="space-y-4 p-3 border rounded">
+//           <input
+//             type="text"
+//             name="name"
+//             value={updatedProduct.name}
+//             onChange={handleChange}
+//             className="w-full p-2 border rounded"
+//             required
+//           />
+//           <input
+//             type="number"
+//             name="price"
+//             value={updatedProduct.price}
+//             onChange={handleChange}
+//             className="w-full p-2 border rounded"
+//             required
+//           />
+//           <input
+//             type="number"
+//             name="inventory"
+//             value={updatedProduct.inventory}
+//             onChange={handleChange}
+//             className="w-full p-2 border rounded"
+//             required
+//           />
+//           <button
+//             type="submit"
+//             className="w-full bg-blue-600 text-white p-2 rounded hover:bg-blue-700"
+//           >
+//             Update Product
+//           </button>
+//         </form>
+//       ) : (
+//         <div className="product-details-container">
+//           <motion.div
+//             initial={{ x: -100, opacity: 0 }}
+//             animate={{ x: 0, opacity: 1 }}
+//             transition={{ type: "spring", stiffness: 100, damping: 10 }}
+//           >
+//             <div>
+//               <div className="h-[260px] flex items-center mb-[24px] border rounded-lg mx-5 hover:shadow-md">
+//                 <Image
+//                   src={urlForImage(product.images[first]).url()}
+//                   alt={product.images[first].alt || "Product Image"}
+//                   width={300}
+//                   height={320}
+//                   className="object-contain mx-auto h-[240px] py-6 px-2 hover:scale-110 transition-transform duration-700"
+//                 />
+//               </div>
+//               <div className="small-images-container mx-4">
+//                 {product.images?.slice(0, 4).map((item: any, i: number) => (
+//                   <Image
+//                     key={i}
+//                     src={urlForImage(product.images[i]).url()}
+//                     alt={item.alt || "Product Image"}
+//                     width={140}
+//                     height={100}
+//                     className="object-contain p-2 h-16 sm:h-32 md:h-20 lg:h-32 border mx-auto rounded-xl hover:cursor-pointer hover:shadow-md hover:scale-105 transition-transform duration-500"
+//                     onClick={() => setIndex(i)}
+//                   />
+//                 ))}
+//               </div>
+//             </div>
+//           </motion.div>
+//           <motion.div
+//             initial={{ x: 100, opacity: 0 }}
+//             animate={{ x: 0, opacity: 1 }}
+//             transition={{ type: "spring", stiffness: 100, damping: 10 }}
+//           >
+//             <div className="flex flex-col gap-8 md:pt-3 pt-0">
+//               <div className="text-3xl p-1 font-bold">{product.name}</div>
+//               <div className="text-xl font-medium">
+//                 <span className="text-green-500">$ </span> {product.price}
+//                 <s className="text-gray-400 text-[10px] px-2">
+//                   <span className="text-green-200">$ </span>
+//                   {Math.floor(product.price * 1.05)}
+//                 </s>
+//               </div>
+//               <p className="mb-1 font-medium text-[12px]">
+//                 {product.inventory > 8
+//                   ? `Current Inventory: ${product.inventory} items`
+//                   : product.inventory > 0
+//                   ? `Hurry! Only ${product.inventory} items left in inventory`
+//                   : "Out of Stock"}
+//               </p>
+//               <div className="flex gap-3">
+//                 <button
+//                   onClick={() => setIsEditing(true)}
+//                   className="add-to-cart"
+//                 >
+//                   Update Product
+//                 </button>
+//               </div>
+//             </div>
+//           </motion.div>
+//         </div>
+//       )}
+//       <div className="my-5 mx-2 p-2">
+//         <Reviews />
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default StockDetail;
 
 "use client";
 
@@ -259,19 +409,43 @@ import Image from "next/image";
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import Reviews from "./Reviews";
-import { useConfirmToast } from "../context/ConfirmToastContext";
+import { useToast } from "../context/ToastContext";
+import UpdateProductForm from "./UpdateProductDetails";
 
 const StockDetail = ({ product }: any) => {
+  // ✅ Hooks sabse pehle define karo  
   const [first, setIndex] = useState(0);
   const [isEditing, setIsEditing] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const { showToast } = useToast();
+
   const [updatedProduct, setUpdatedProduct] = useState({
     name: product.name,
     price: product.price,
     inventory: product.inventory,
+    description: product.description,
+    productType: product.productType,
+    images: product.images || [],
   });
-  const { showToast } = useConfirmToast();
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  if (!product) {
+    return <div className="text-center text-red-500">Product not found</div>;
+  }
+
+ 
+
+
+  const descriptionStyle =
+    product.description.length > 40
+      ? "text-[13px] text-gray-600 overflow-hidden rounded-lg pb-2 border-gray-300 max-h-[160px] overflow-y-auto px-1 custom-scrollbar"
+      : "text-[12px]";
+
+  // Handle input changes
+  const handleChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
+  ) => {
     const { name, value } = e.target;
     setUpdatedProduct((prev) => ({
       ...prev,
@@ -279,58 +453,44 @@ const StockDetail = ({ product }: any) => {
     }));
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  // Update Product
+  const handleSubmit = async (updatedData: any) => {
+    setLoading(true);
     try {
-      const response = await fetch(`/api/updateProduct`, {
+      const response = await fetch("/api/updateProduct", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ id: product._id, ...updatedProduct }),
+        body: JSON.stringify({ id: product._id, ...updatedData }),
       });
       if (!response.ok) throw new Error("Failed to update product");
+
       showToast("Product updated successfully!");
       setIsEditing(false);
+
+      // ✅ Page refresh after successful update
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000); // 1-second delay for smooth UX
     } catch (error) {
       console.error("Update failed", error);
       showToast("Failed to update product. Please try again.");
+    } finally {
+      setLoading(false);
     }
   };
 
+  const withoutDiscountPrice: number = product.discount
+    ? product.price - (product.price * product.discount) / 100
+    : product.price;
+
   return (
-    <div className="product-details-section mt-20">
+    <div className="product-details-section mt-5">
       {isEditing ? (
-        <form onSubmit={handleSubmit} className="space-y-4 p-3 border rounded">
-          <input
-            type="text"
-            name="name"
-            value={updatedProduct.name}
-            onChange={handleChange}
-            className="w-full p-2 border rounded"
-            required
-          />
-          <input
-            type="number"
-            name="price"
-            value={updatedProduct.price}
-            onChange={handleChange}
-            className="w-full p-2 border rounded"
-            required
-          />
-          <input
-            type="number"
-            name="inventory"
-            value={updatedProduct.inventory}
-            onChange={handleChange}
-            className="w-full p-2 border rounded"
-            required
-          />
-          <button
-            type="submit"
-            className="w-full bg-blue-600 text-white p-2 rounded hover:bg-blue-700"
-          >
-            Update Product
-          </button>
-        </form>
+        <UpdateProductForm
+          product={updatedProduct}
+          onUpdate={(updatedData) => handleSubmit(updatedData)}
+          onCancel={() => setIsEditing(false)}
+        />
       ) : (
         <div className="product-details-container">
           <motion.div
@@ -349,17 +509,19 @@ const StockDetail = ({ product }: any) => {
                 />
               </div>
               <div className="small-images-container mx-4">
-                {product.images?.slice(0, 4).map((item: any, i: number) => (
-                  <Image
-                    key={i}
-                    src={urlForImage(product.images[i]).url()}
-                    alt={item.alt || "Product Image"}
-                    width={140}
-                    height={100}
-                    className="object-contain p-2 h-16 sm:h-32 md:h-20 lg:h-32 border mx-auto rounded-xl hover:cursor-pointer hover:shadow-md hover:scale-105 transition-transform duration-500"
-                    onClick={() => setIndex(i)}
-                  />
-                ))}
+                {product.images
+                  ?.slice(0, 4)
+                  .map((item: any, i: number) => (
+                    <Image
+                      key={i}
+                      src={urlForImage(product.images[i]).url()}
+                      alt={item.alt || "Product Image"}
+                      width={140}
+                      height={100}
+                      className="object-contain p-2 h-16 sm:h-32 md:h-20 lg:h-32 border mx-auto rounded-xl hover:cursor-pointer hover:shadow-md hover:scale-105 transition-transform duration-500"
+                      onClick={() => setIndex(i)}
+                    />
+                  ))}
               </div>
             </div>
           </motion.div>
@@ -371,18 +533,54 @@ const StockDetail = ({ product }: any) => {
             <div className="flex flex-col gap-8 md:pt-3 pt-0">
               <div className="text-3xl p-1 font-bold">{product.name}</div>
               <div className="text-xl font-medium">
-                <span className="text-green-500">$ </span> {product.price}
-                <s className="text-gray-400 text-[10px] px-2">
-                  <span className="text-green-200">$ </span>
-                  {Math.floor(product.price * 1.05)}
-                </s>
+                <div className={` pb-2 font-medium ${descriptionStyle}`}>
+                  {product.description}
+                </div>{" "}
+                <div className="text-xl font-medium flex items-center gap-2 relative">
+                  {/* Current Price */}
+                  <span className="text-green-500">$</span>
+                  {Math.floor(withoutDiscountPrice)}
+
+                  {/* Unique Discount Design */}
+                  {/* <motion.div
+                    className="relative text-[12px] font-bold px-0 py-1 rounded-md"
+                    initial={{ rotate: -5, scale: 0.8, opacity: 0 }}
+                    animate={{ rotate: 0, scale: 1, opacity: 1 }}
+                    transition={{ duration: 0.3, ease: "easeOut" }}
+                  >
+                    <span className="absolute -top-1 -right-2 w-4 h-4 bg-red-300 rounded-full animate-ping"></span>
+                    <span className="text-red-500 bg-yellow-200 px-2 py-[2px] rounded-md shadow-md shadow-red-300">
+                      {product.discount}% OFF
+                    </span>
+                  </motion.div> */}
+                  {/* Original Price with Neon Glow */}
+                  {product.discount > 0 && (
+                    <div className=" ">
+                      <s className="text-gray-400 text-[10px] px-1 relative">
+                        <span className="text-green-200">$</span>
+                        {product.price}
+                        <span className="absolute -bottom-1 left-1/2 w-8 h-[1px] bg-pink-400 blur-sm"></span>
+                      </s>
+                      <motion.span
+                        className="relative text-[9px] font-bold px-2 py-0 rounded-md"
+                        initial={{ rotate: -5, scale: 0.8, opacity: 0 }}
+                        animate={{ rotate: 0, scale: 1, opacity: 1 }}
+                        transition={{ duration: 0.3, ease: "easeOut" }}
+                      >
+                        <span className="text-gray-700 bg-red-100 px-2 py-[2px] rounded-md shadow-sm shadow-red-300">
+                          {product.discount}% OFF
+                        </span>
+                      </motion.span>
+                    </div>
+                  )}
+                </div>
               </div>
               <p className="mb-1 font-medium text-[12px]">
                 {product.inventory > 8
                   ? `Current Inventory: ${product.inventory} items`
                   : product.inventory > 0
-                  ? `Hurry! Only ${product.inventory} items left in inventory`
-                  : "Out of Stock"}
+                    ? `Hurry! Only ${product.inventory} items left`
+                    : "Out of Stock"}
               </p>
               <div className="flex gap-3">
                 <button

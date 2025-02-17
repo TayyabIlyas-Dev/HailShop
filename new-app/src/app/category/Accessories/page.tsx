@@ -12,7 +12,7 @@ const Accessories = () => {
     const fetchProducts = async () => {
       try {
         const query = `*[_type == "product" && productType == "accessories"]{
-          name, slug, images, price, productType
+          name, slug, images, price, productType,discount
         }`;
         const products = await client.fetch(query);
         setAccessoryProducts(products);
@@ -27,7 +27,7 @@ const Accessories = () => {
   }, []);
 
   return (
-    <div className="container mx-auto px-4 py-32">
+    <div className="container  mx-auto px-4 py-32">
       <h1 className="text-4xl font-bold text-center mb-3">Accessories</h1>
       <h1 className="text-[14px] font-semibold text-gray-500 text-center  mb-5">Discover top-rated products from various categories to suit your needs and preferences.</h1>
 

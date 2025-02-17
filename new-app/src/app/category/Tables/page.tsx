@@ -11,7 +11,7 @@ const SmartWatches = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const query = `*[_type == "product" && productType == "smart-watch"]{
+        const query = `*[_type == "product" && productType == "table"]{
           name, slug, images, price, productType ,discount
         }`;
         const products = await client.fetch(query);
@@ -28,8 +28,9 @@ const SmartWatches = () => {
 
   return (
     <div className="container  mx-auto px-4 py-32">
-      <h1 className="text-4xl font-bold text-center mb-3">Smart Watches</h1>
-      <h1 className="text-[14px] text-gray-500 font-semibold text-center  mb-5">Discover top-rated products from various categories to suit your needs and preferences.</h1>
+      <h1 className="text-3xl font-bold text-center mb-3">Elegant Table Designs
+      </h1>
+      <h1 className="text-[13px] text-gray-500 font-semibold text-center  mb-5">Discover top-rated products from various categories to suit your needs and preferences.</h1>
 
       {loading ? (
         <p className="text-center text-gray-500">Loading smart watches...</p>

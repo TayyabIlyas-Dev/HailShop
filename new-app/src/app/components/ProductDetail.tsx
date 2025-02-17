@@ -10,7 +10,6 @@ import { FavouritesContext } from "../context/FavouritesContext";
 import { useToast } from "../context/ToastContext";
 import Products from "./Products";
 import { motion } from "framer-motion";
-import { Strikethrough } from "lucide-react";
 import Reviews from "./Reviews";
 // import Footer from "./Footer";
 
@@ -68,9 +67,9 @@ const ProductDetails = ({ product }: any) => {
       showToast("Item added to favourites!");
     }
   };
-  const calculateDiscountedPrice = (price: number) => {
-    return Math.floor(price * 1.05);
-  };
+  const withoutDiscountPrice = product.discount
+    ? product.price - (product.price * product.discount) / 100
+    : product.price;
 
   return (
     <div className="product-details-section mt-20">
@@ -119,15 +118,58 @@ const ProductDetails = ({ product }: any) => {
           <div className="flex flex-col gap-8 md:pt-3 pt-0">
             <div className="flex flex-col gap-2">
               <div className="text-3xl p-1 font-bold">{product.name}</div>
-              <div className="text-xl font-medium">
-                <span className="text-green-500">$ </span> {product.price}
-                {/* <span className="text-[10px] pl-2   font-medium"> */}
+              {/* <div className="text-xl font-medium">
+                <span className="text-green-500">$ </span>{" "}
+                {Math.floor(withoutDiscountPrice)}
+                <span className= " mb-3 text-[11px] text-red-400">&nbsp; {product.discount}% off</span> 
+
                 <s className="text-gray-400 text-[10px] px-2  ">
                   <span className="text-green-200">$ </span>
-                  {calculateDiscountedPrice(product.price)}
+                  {product.price}
                 </s>
-                {/* </span> */}
+              </div> */}
+
+              <div className="text-xl font-medium flex items-center gap-2 relative">
+                {/* Current Price */}
+                <span className="text-green-500">$</span>
+                {Math.floor(withoutDiscountPrice)}
+
+                {/* Unique Discount Design */}
+                {/* <motion.div
+    className="relative text-[12px] font-bold px-0 py-1 rounded-md"
+    initial={{ rotate: -5, scale: 0.8, opacity: 0 }}
+    animate={{ rotate: 0, scale: 1, opacity: 1 }}
+    transition={{ duration: 0.3, ease: "easeOut" }}
+  >
+    <span className="absolute -top-1 -right-2 w-4 h-4 bg-red-300 rounded-full animate-ping"></span>
+    <span className="text-red-500 bg-yellow-200 px-2 py-[2px] rounded-md shadow-md shadow-red-300">
+      {product.discount}% OFF
+    </span>
+  </motion.div> */}
+                {/* Original Price with Neon Glow */}
+                {product.discount > 0 && (
+                  <div className=" ">
+                  
+                    <s className="text-gray-400 text-[10px] px-1 relative">
+                      <span className="text-green-200">$</span>
+                      {product.price}
+                      <span className="absolute -bottom-1 left-1/2 w-8 h-[1px] bg-pink-400 blur-sm"></span>
+                    </s>
+                    <motion.span
+                      className="relative text-[9px] font-bold px-2 py-0 rounded-md"
+                      initial={{ rotate: -5, scale: 0.8, opacity: 0 }}
+                      animate={{ rotate: 0, scale: 1, opacity: 1 }}
+                      transition={{ duration: 0.3, ease: "easeOut" }}
+                    >
+                      <span className="text-gray-700 bg-red-100 px-2 py-[2px] rounded-md shadow-sm shadow-red-300">
+                        {product.discount}% OFF
+                      </span>
+                    </motion.span>
+
+                  </div>
+                )}
               </div>
+
               <div className={` pb-2 font-medium ${descriptionStyle}`}>
                 {product.description}
               </div>
@@ -211,7 +253,7 @@ const ProductDetails = ({ product }: any) => {
                   isFav
                     ? "bg-red-100 text-red-500 hover:bg-red-100 border-2 border-red-600"
                     : "bg-gray-100 text-gray-600 hover:bg-gray-200 border-2 border-gray-700"
-                }  w-24 h-16 flex items-center mt-0  justify-center rounded-lg cursor-pointer hover:scale-105 transition-all duration-500`}
+                }  w-24 h-16 flex items-center mt-0  justify-center  cursor-pointer hover:scale-105 transition-all duration-500`}
                 onClick={handleToggleFavourite}
               >
                 <BsSuitHeartFill />

@@ -1,5 +1,5 @@
-'use client'
-import React, { useContext } from 'react'
+// 'use client'
+import React from 'react'
 import { groq } from 'next-sanity';
 import { client } from '@/src/sanity/lib/client';
 import Card from '../components/Card';

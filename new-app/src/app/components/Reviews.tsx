@@ -91,7 +91,7 @@ const Reviews = () => {
             onChange={(e) => setNewReview({ ...newReview, comment: e.target.value })}
           />
           <button
-            className="bg-black text-white p-2 rounded-md transition hover:bg-gray-700 active:scale-95"
+            className="bg-black text-white p-2 font-semibold transition hover:bg-white hover:text-black border-black border-2 active:scale-95"
             onClick={addReview}
           >
             Add Review

@@ -260,41 +260,59 @@ import React, { useEffect, useState } from "react";
 import Dashboard from "./Dashboard";
 import { client } from "@/src/sanity/lib/client";
 import RecentSales from "./RecentSales";
+import { order } from "@/src/sanity/schemaTypes/order";
+
 
 const DashboardCard = () => {
   const [totalRevenue, setTotalRevenue] = useState(0);
   const [totalSales, setTotalSales] = useState(0);
+  const [activeOrders, setActiveOrders] = useState(0);
+
+  // ✅ Fetch All Orders
+  const fetchOrders = async () => {
+    try {
+      // ✅ Fetch All Orders (For Total Sales & Revenue)
+      const allOrders = await client.fetch(
+        `*[_type=="order"]{ totalPrice, totalQuantity, productStatus }`
+      );
+
+      // ✅ Fetch Only Active Orders (Not Delivered)
+      const activeOrdersData = await client.fetch(
+        `*[_type=="order" && productStatus != "Delivered"]{ productStatus }`
+      );
+
+      // ✅ Calculate Total Revenue
+      setTotalRevenue(
+        allOrders.reduce((acc: number, order: { totalPrice: number }) => acc + order.totalPrice, 0)
+      );
+
+      // ✅ Calculate Total Sales (All Orders Counted)
+      setTotalSales(
+        allOrders.reduce((acc: number, order: { totalQuantity: number }) => acc + order.totalQuantity, 0)
+      );
+
+      // ✅ Set Active Orders (Only Orders Not Delivered)
+      setActiveOrders(activeOrdersData.length);
+
+    } catch (error) {
+      console.error("Error fetching orders:", error);
+    }
+  };
 
   useEffect(() => {
-    const fetchOrders = async () => {
-      try {
-        const data = await client.fetch(
-          `*[_type=="order"]{ totalPrice, totalQuantity }`
-        );
+    fetchOrders(); // ✅ Initial Fetch
 
-        // Calculate total revenue
-        const revenue = data.reduce(
-          (acc: number, order: { totalPrice: number }) => acc + order.totalPrice,
-          0
-        );
-        setTotalRevenue(revenue);
+    // ✅ Real-time Listener (Auto-update on any change)
+    const subscription = client.listen(`*[_type == "order"]`).subscribe(() => {
+      fetchOrders(); // ✅ Fetch Latest Orders when any change happens
+    });
 
-        // Calculate total sales
-        const sales = data.reduce(
-          (acc: number, order: { totalQuantity: number }) =>
-            acc + order.totalQuantity,
-          0
-        );
-        setTotalSales(sales);
-      } catch (error) {
-        console.error("Error fetching orders:", error);
-      }
-    };
-
-    fetchOrders();
+    return () => subscription.unsubscribe(); // ✅ Cleanup
   }, []);
-
+  
   return (
+
+
     <div className="pt-4">
       <div>
         <h1 className="text-2xl md:text-3xl font-bold px-9 text-start">
@@ -304,7 +322,8 @@ const DashboardCard = () => {
       <div className="grid grid-cols-1 mx-4 p-3 md:grid-cols-3 lg:grid-cols-4 mt-5 gap-3">
         <div className="pl-6 pr-3 py-6 mx-1 my-2 text-2xl shadow-md rounded-xl border border-gray-300 hover:scale-[1.02] transition-all duration-500">
           <h1 className="text-xl font-semibold">Total Revenue</h1>
-          <h4 className="text-2xl font-bold">${totalRevenue.toFixed(2)}</h4>
+          <h4 className="text-2xl font-bold">${Math.floor(totalRevenue)}</h4>
+
           <h2 className="text-[13px] text-gray-600 font-semibold">
             +20.1% from last month
           </h2>
@@ -325,9 +344,9 @@ const DashboardCard = () => {
         </div>
         <div className="pl-6 pr-3 py-6 mx-1 my-2 text-2xl shadow-md rounded-xl border border-gray-300 hover:scale-[1.02] transition-all duration-500">
           <h1 className="text-xl font-semibold">Active Now</h1>
-          <h4 className="text-2xl font-bold">+573</h4>
+          <h4 className="text-2xl font-bold">{activeOrders}</h4>
           <h2 className="text-[13px] text-gray-600 font-semibold">
-            +201 since last hour
+            201 since last month
           </h2>
         </div>
       </div>

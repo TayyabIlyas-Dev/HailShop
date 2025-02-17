@@ -1,5 +1,6 @@
 "use client";
 import { BrowseCategory, Hero, IconSlider, Products } from "./components";
+import FeaturedProducts from "./components/FeaturedProducts";
 // import Footer from '@/components/Footer';
 import HeroTwo from "./components/HeroTwo";
 import { AppProvider } from "./context/AppContext"; // Import AppProvider
@@ -32,6 +33,15 @@ export default function Home() {
       </div>
       {/* footer */}
       {/* <Footer /> */}
+
+       <div>    <div className="bg-[#fafafacd] pt-24 pb-0 mt-0 text-center">
+        <h1 className="text-3xl py-2 font-bold">Featured Products</h1>
+        <h1 className=""> Upgrade Your Lifestyle with These Gadgets
+
+</h1>
+      </div>
+        <FeaturedProducts/>
+       </div>
 
       <div>
         <HeroTwo />

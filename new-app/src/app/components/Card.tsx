@@ -9,14 +9,15 @@ import { FiShoppingBag } from "react-icons/fi";
 import { CartContext } from "../context/CartContext";
 import { FavouritesContext } from "../context/FavouritesContext";
 import { useToast } from "../context/ToastContext";
+import { motion } from "framer-motion";
 
 const Card = ({ product }: { product: any }) => {
   const nameStyle =
     product.name.length > 12
       ? "text-[14px] sm:text-[16px]"
       : product.name.length > 10
-      ? "text-[16px] sm:text-[19px]"
-      : "text-[19px] sm:text-[22px]";
+        ? "text-[16px] sm:text-[19px]"
+        : "text-[19px] sm:text-[22px]";
 
   // Toast Context
   const { showToast } = useToast();
@@ -68,6 +69,21 @@ const Card = ({ product }: { product: any }) => {
   return (
     <div className="bg-white pt-4 pb-2 drop-shadow-md rounded-2xl overflow-hidden sm:hover:shadow-lg hover:scale-[1.04] transition-all duration-300">
       <Link href={`/product/${product.slug.current}`} prefetch={false}>
+      {product.discount > 0 && (
+  <div className="absolute z-10 top-2 right-1 ">
+    <motion.span
+      className="relative text-[7px] font-bold px-2 py-0 rounded-md"
+      initial={{ rotate: -5, scale: 0.8, opacity: 0 }}
+      animate={{ rotate: 0, scale: 1, opacity: 1 }}
+      transition={{ duration: 0.3, ease: "easeOut" }}
+    >
+                      <span className="text-gray-700 bg-red-100 px-2 py-[2px] rounded-md shadow-sm shadow-red-300">
+                      {product.discount}% OFF
+      </span>
+    </motion.span>
+  </div>
+)}
+
         <Image
           src={urlForImage(product?.images && product.images[0]).url()}
           alt={product.slug}
@@ -78,8 +94,9 @@ const Card = ({ product }: { product: any }) => {
         />
         <div className="text-center pt-4 pb-3">
           <h1 className={`text-2xl font-bold ${nameStyle}`}>{product.name}</h1>
-          <h1 className="text-xl py-1 text-gray-500 font-semibold">
+          <h1 className="text-xl py-2 text-center text-gray-500 font-semibold">
             <span className="text-green-500">$ </span> {product.price}
+            {/* <span className= " mb-3 text-xs text-red-400"> {product.discount}% off</span>  */}
           </h1>
         </div>
       </Link>

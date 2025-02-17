@@ -1,73 +1,103 @@
 'use client'
-import { HailLogo } from '@/public'
-import Image from 'next/image'
-import Link from 'next/link'
-import { FaFacebookF, FaTwitter, FaInstagram, FaLinkedinIn } from 'react-icons/fa'
-import React from 'react'
+import React from 'react';
+import Image from 'next/image';
+import Link from 'next/link';
+import { BiSupport } from "react-icons/bi";
+import { LiaQuestionCircle } from "react-icons/lia";
+import { CiLinkedin, CiInstagram, CiTwitter } from "react-icons/ci";
+import { FaFacebookF, FaTwitter, FaInstagram, FaLinkedinIn } from 'react-icons/fa';
+import { HailLogo } from '@/public';
 
 const Footer = () => {
   return (
-    <footer className="bg-gradient-to-r  from-purple-400 to-fuchsia-400 via-cyan-300 animate-gradient-x py-10 px-10 font-sans tracking-wide w-full">
-      <div className="max-w-2xl mx-auto text-center">
-        <div className='flex-row justify-center items-center hover:scale-x-110 transition-all duration-700'>
-          <Link href="/">
-            <Image
-              src={HailLogo}
-              height="100"
-              width="700"
-              alt="HAIL"
-              className="object-cover inline-block w-[190px] p-3"
-            />
-          </Link>
+    <footer className="bg-white bg-opacity-80 backdrop-blur-lg pt-16 pb-6">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex flex-wrap justify-between">
+          {/* Address Section */}
+          <div className="w-full flex flex-col justify-center items-center sm:items-start lg:w-1/4 mb-6 lg:mb-0">
+            <div className='py-3'>
+              <Image
+                src={HailLogo}
+                alt="logo"
+                className="w-28"
+                width={144}
+                height={36}
+              />
+            </div>
+            <p className="text-gray-900 text-xs">
+              Q2 Hackathon GIAIC KARACHI 2024,
+              <br /> Q2 264840 PK.
+            </p>
+          </div>
+
+          {/* Links Section */}
+          <div className="w-full lg:w-1/4 mb-6 lg:mb-0 text-center sm:text-start hidden md:block">
+            <h3 className="text-gray-500 font-medium mb-2">Links</h3>
+            <ul className="text-gray-900 space-y-2">
+              <li><Link href="#" className="hover:text-gray-900 text-sm">Home</Link></li>
+              <li><Link href="/Shop" className="hover:text-gray-900 text-sm">Shop</Link></li>
+              <li><Link href="/About" className="hover:text-gray-900 text-sm">About</Link></li>
+              <li><Link href="/Contact" className="hover:text-gray-900 text-sm">Contact</Link></li>
+            </ul>
+          </div>
+
+          {/* Help Section */}
+          <div className="w-full lg:w-1/4 mb-6 lg:mb-0 text-center sm:text-start">
+            <h3 className="text-gray-500 font-medium mb-2">Help</h3>
+            <ul className="text-gray-900 space-y-3">
+              <li><Link href="#" className="hover:text-gray-900 text-sm ">Payment Options</Link></li>
+              <li><Link href="#" className="hover:text-gray-900 text-sm ">Returns</Link></li>
+              <li><Link href="#" className="hover:text-gray-900 text-sm ">Privacy Policies</Link></li>
+            </ul>
+          </div>
+
+          {/* Newsletter Section */}
+          <div className="w-full lg:w-1/4">
+            <h3 className="text-gray-700 font-medium mb-2">Newsletter</h3>
+            <form className="flex space-x-2">
+              <input
+                type="email"
+                placeholder="Enter Your Email Address"
+                className="flex-grow text-xs px-3 py-1 border focus:outline-none focus:ring-2"
+              />
+              <button
+                type="submit"
+                className="text-black underline rounded-md"
+              >
+                Subscribe
+              </button>
+            </form>
+          </div>
         </div>
 
-        <p className="text-sm  mt-8 text-gray-700">
-        Welcome to Shop, your ultimate destination for premium tech accessories! From the latest gadets enhance your tech experience!
-               {/* <a href='javascript:void(0)' className="text-sm font-semibold text-blue-500">Read more...</a> */}
-        </p>
-
-        <ul className="flex flex-wrap justify-center gap-6 mt-8">
-      <li>
-        <Link href="https://www.facebook.com" target="_blank" rel="noopener noreferrer">
-          <FaFacebookF className="text-blue-600 text-3xl" />
-        </Link>
-      </li>
-      <li>
-        <Link href="https://www.twitter.com" target="_blank" rel="noopener noreferrer">
-          <FaTwitter className="text-blue-500 text-3xl" />
-        </Link>
-      </li>
-      <li>
-        <Link href="https://www.instagram.com" target="_blank" rel="noopener noreferrer">
-          <FaInstagram className="text-pink-600 text-3xl" />
-        </Link>
-      </li>
-      <li>
-        <Link href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer">
-          <FaLinkedinIn className="text-blue-700 text-3xl" />
-        </Link>
-      </li>
-    </ul>
+        <div className="mt-8 border-t flex justify-around border-gray-300 pt-4">
+          <div className='flex text-lg gap-3'>
+            <BiSupport/>
+            <LiaQuestionCircle/>
+          </div>
+          <div>
+            <p className="text-gray-900 text-center text-xs sm:text-sm">
+              ©2025 hail-shop.vercel.app All rights reserved
+            </p>
+          </div>
+          <div className='flex justify-center items-center text-lg gap-2'>
+            <Link href='https://www.facebook.com' target="_blank" rel="noopener noreferrer">
+              <FaFacebookF className="text-gray-900 text-xl" />
+            </Link>
+            <Link href='https://www.twitter.com' target="_blank" rel="noopener noreferrer">
+              <CiTwitter className="text-gray-900 text-2xl" />
+            </Link>
+            <Link href='https://www.instagram.com/syco_king9935/' target="_blank" rel="noopener noreferrer">
+              <CiInstagram className="text-gray-900 text-2xl" />
+            </Link>
+            <Link href='https://www.linkedin.com/in/tayyab-ilyas-ai-engineer/' target="_blank" rel="noopener noreferrer">
+              <CiLinkedin className="text-gray-900 text-2xl" />
+            </Link>
+          </div>
+        </div>
       </div>
-      
-
-      <hr className="my-10 border-gray-500  md:text-center sm:text-center" />
-
-      <div className="flex max-md:flex-col gap-4 ">
-        <ul className="flex flex-wrap gap-4">
-          <li className="text-sm">
-            <a href='javascript:void(0)' className='text-gray-700 font-semibold hover:underline'>Terms of Service</a>
-          </li>
-      
-          <li className="text-sm">
-            <a href='javascript:void(0)' className='text-gray-700 font-semibold hover:underline'>Security</a>
-          </li>
-        </ul>
-        <p className='text-sm text-gray-700 md:ml-auto'>© HAIL. All rights reserved </p>
-      </div>
-
     </footer>
-  )
-}
+  );
+};
 
-export default Footer
+export default Footer;

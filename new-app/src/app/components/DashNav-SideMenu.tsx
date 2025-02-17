@@ -21,6 +21,8 @@ import { IoMdSettings } from "react-icons/io";
 import { MdLogout } from "react-icons/md";
 import { MdOutlineAnalytics } from "react-icons/md";
 import { BiCommentDetail } from "react-icons/bi";
+import { SignIn } from "@clerk/nextjs";
+import { PiSignIn } from "react-icons/pi";
 
 
 export function DropdownMenuDemo() {
@@ -143,6 +145,12 @@ export function DropdownMenuDemo() {
             <MdLogout/>
           </DropdownMenuShortcut>
         </DropdownMenuItem>
+        {/* <DropdownMenuItem>
+          <SignIn/>
+          <DropdownMenuShortcut>
+            <PiSignIn/>
+          </DropdownMenuShortcut>
+        </DropdownMenuItem> */}
       </DropdownMenuContent>
     </DropdownMenu>
   );

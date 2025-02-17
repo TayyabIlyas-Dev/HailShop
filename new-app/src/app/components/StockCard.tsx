@@ -6,10 +6,12 @@ import Image from "next/image";
 import { urlForImage } from "@/src/sanity/lib/image";
 import { useToast } from "../context/ToastContext";
 import { FiEye, FiTrash2 } from "react-icons/fi";
+import { motion } from "framer-motion";
 
 interface Product {
   _id: string;
   name: string;
+  discount: number;
   slug: { current: string };
   images?: { asset: { _ref: string } }[];
   description: string;
@@ -34,16 +36,29 @@ const StockCard: React.FC<{ product: Product; onDelete: (id: string) => void }> 
       : "/fallback-image.jpg";
 
   const handleDelete = () => {
-    if (window.confirm("Are you sure you want to delete this product?")) {
       onDelete(product._id);
       showToast("Product deleted successfully.");
-    }
+    
   };
 
   return (
     <div className="bg-white pt-4 pb-2 drop-shadow-md rounded-2xl overflow-hidden sm:hover:shadow-lg hover:scale-[1.04] transition-all duration-300">
-      <Link href={`/dashboard2/stockDetails/${product.slug.current}`} prefetch={false}>
-        <Image
+          <Link href={`/dashboard2/stockDetails/${product.slug.current}`} prefetch={false}>
+                {product.discount > 0 && (
+            <div className="absolute z-10 top-2 right-1 ">
+              <motion.span
+                className="relative text-[7px] font-bold px-2 py-0 rounded-md"
+                initial={{ rotate: -5, scale: 0.8, opacity: 0 }}
+                animate={{ rotate: 0, scale: 1, opacity: 1 }}
+                transition={{ duration: 0.3, ease: "easeOut" }}
+              >
+                                <span className="text-gray-700 bg-red-100 px-2 py-[2px] rounded-md shadow-sm shadow-red-300">
+                                {product.discount}% OFF
+                </span>
+              </motion.span>
+            </div>
+          )}
+          <Image
           src={imageUrl}
           alt={product.name}
           width={220}
@@ -55,6 +70,8 @@ const StockCard: React.FC<{ product: Product; onDelete: (id: string) => void }> 
           <h1 className={`text-2xl font-bold ${nameStyle}`}>{product.name}</h1>
           <h1 className="text-xl py-1 text-gray-500 font-semibold">
             <span className="text-green-500">$ </span> {product.price}
+ 
+
           </h1>
           <p className="text-sm text-gray-500">Stock: {product.inventory}</p>
         </div>
@@ -64,7 +81,7 @@ const StockCard: React.FC<{ product: Product; onDelete: (id: string) => void }> 
           className="bg-gray-100 hover:bg-gray-200 w-9 h-9 flex items-center justify-center rounded-full ml-4 hover:scale-110 transition-all duration-300"
           id="view-product"
         >
-          <Link href={`/dashboard2/stockDetails${product.slug.current}`} prefetch={false}>
+          <Link href={`/dashboard2/stockDetails/${product.slug.current}`} prefetch={false}>
             <FiEye />
           </Link>
         </button>

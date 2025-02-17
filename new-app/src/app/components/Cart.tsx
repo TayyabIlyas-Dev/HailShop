@@ -172,13 +172,15 @@ const Cart: React.FC = () => {
                     <span className="text-green-500">$ </span> {totalPrice}
                   </span>
                 </div>
-
+                <Link href={"/checkout"}>
                 <button
                   onClick={handleClose}
                   className="w-full px-6 py-3 mt-2 bg-white text-black border-2 border-black font-bold rounded-lg hover:bg-black hover:text-white transition"
                 >
-                  <Link href={"/checkout"}>Go To Checkout</Link>
+                 Go To Checkout
+
                 </button>
+                 </Link>
               </div>
             </div>
           )}

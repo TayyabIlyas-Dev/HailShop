@@ -31,7 +31,7 @@ export default function SideNavbar({ isCollapsed, setIsCollapsed }: SideNavbarPr
 
   return (
     <div
-      className={`relative px-3 pb-10 pt-24 transition-all duration-300 ${
+      className={`absolute px-3 pb-10 pt-24 transition-all duration-300 ${
         mobileWidth ? "w-[60px]" : isCollapsed ? "w-[60px]" : "w-[15%]"
       }`}
     >

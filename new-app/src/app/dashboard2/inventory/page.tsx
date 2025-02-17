@@ -1,90 +1,114 @@
-"use client";
 
-import React, { useState, useEffect } from "react";
-import { groq } from "next-sanity";
-import { client } from "@/src/sanity/lib/client";
-import StockCard from "../../components/StockCard";
-import AddProductForm from "../../components/AddProductForm";
+import React from "react";
+import { auth, currentUser } from "@clerk/nextjs/server";
+import Inventory from "../../components/Inventory";
+import AddProductFormWrapper from "../../components/AddProductFormWrapper";
 
-interface Product {
-    _id: string;
-    name: string;
-    slug: { current: string };
-    images?: { asset: { _ref: string } }[];
-    description: string;
-    price: number;
-    productType: string;
-    inventory: number;
-}
+// interface Product {
+//   _id: string;
+//   name: string;
+//   slug: { current: string };
+//   images?: { asset: { _ref: string } }[];
+//   description: string;
+//   price: number;
+//   productType: string;
+//   inventory: number;
+//   discount: number;
+// }
 
-const Page = () => {
-    const [products, setProducts] = useState<Product[]>([]);
-    const [loading, setLoading] = useState(false);
-
-    const fetchProducts = async () => {
-        setLoading(true);
-        try {
-            const data = await client.fetch(groq`*[_type=="product"]`);
-            setProducts(data);
-        } catch (error) {
-            console.error("Error fetching products:", error);
-        } finally {
-            setLoading(false);
-        }
-    };
-
-    useEffect(() => {
-        fetchProducts();
-    }, []);
-
-    const handleDeleteProduct = async (productId: string) => {
-        try {
-            const response = await fetch("/api/deleteProduct", {
-                method: "DELETE",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ productId }),
-            });
-
-            if (!response.ok) throw new Error("Failed to delete product");
-
-            setProducts(products.filter((p) => p._id !== productId));
-        } catch (error) {
-            console.error("Product deletion failed:", error);
-            alert("Failed to delete product. Please try again.");
-        }
-    };
-
+const Page = async () => {
+  // const [products, setProducts] = useState<Product[]>([]);
+  // const [loading, setLoading] = useState(false);
+  // const [showMore, setShowMore] = useState(false);
+  const { userId } = await auth(); // Get the authenticated user
+  const user = await currentUser(); // Fetch user data from Clerk
+  const role = user?.publicMetadata?.role; // Get role from metadata
+  // console.log("role=", user);
+  if (!userId || role !== "admin") {
     return (
-        <>
-        <div className="bg-[#f8f8f8] w-full pb-20 pt-8 p-2">
-            <div className="container">
-            <div className="mt-10 p-4 mx-4 bg-white rounded-lg shadow-lg">
-                    <h2 className="text-2xl pt-3 font-bold text-center mb-4">Add New Product</h2>
-                    <AddProductForm onProductAdded={fetchProducts} />
-                </div>
-                <div className="pt-9 px-3 text-start">
-                    <h1 className="text-4xl  px-3 font-bold">Inventory</h1>
-                </div>
-                {loading ? (
-                    <p className="text-center text-gray-600">Loading products...</p>
-                ) : (
-                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-3 mx-3 mt-8">
-  {products.map((product) => (
-    <StockCard key={product._id} product={product} onDelete={handleDeleteProduct} />
-  ))}
-</div>
-
-                )}
-              
-            </div>
-        </div>
-        </>
+      <div className="flex items-center justify-center min-h-screen">
+        <p className="text-red-500 text-lg font-semibold">
+          Access Denied: Admins Only
+        </p>
+      </div>
     );
+  }
+  // const toggleShowMore = () => {
+  //   setShowMore((prev) => !prev);
+  // };
+  // const fetchProducts = async () => {
+  //   setLoading(true);
+  //   try {
+  //     const data = await client.fetch(groq`*[_type=="product"]`);
+  //     setProducts(data);
+  //   } catch (error) {
+  //     console.error("Error fetching products:", error);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   fetchProducts();
+  // }, []);
+
+  // const handleDeleteProduct = async (productId: string) => {
+  //   try {
+  //     const response = await fetch("/api/deleteProduct", {
+  //       method: "DELETE",
+  //       headers: { "Content-Type": "application/json" },
+  //       body: JSON.stringify({ productId }),
+  //     });
+
+  //     if (!response.ok) throw new Error("Failed to delete product");
+
+  //     setProducts(products.filter((p) => p._id !== productId));
+  //   } catch (error) {
+  //     console.error("Product deletion failed:", error);
+  //     alert("Failed to delete product. Please try again.");
+  //   }
+  // };
+
+  return (
+    <>
+      <div className="bg-[#fcfbfbb7] w-full pb-20 pt-8 p-2">
+        <div className="container">
+          <div>
+            <AddProductFormWrapper/>
+          </div>
+          {/* <div className="flex   items-center justify-center">
+            <button
+              className="relative my-6 text-xl mx-10 font-semibold text-gray-800 after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-full after:h-[2px] after:bg-gray-800 after:scale-x-0 after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left"
+              onClick={toggleShowMore}
+            >
+              {showMore ? " Close form" : "Add a new product"}
+            </button>
+          </div>
+          {showMore && (
+            <div className="mt-10 p-4 mx-4 bg-white rounded-lg shadow-lg">
+              <h2 className="text-2xl pt-3 font-bold text-center mb-4">
+                Add New Product
+              </h2>
+              <AddProductForm onProductAdded={fetchProducts} />
+            </div>
+          )} */}
+          <div>
+            {/* <div className="mt-10 p-4 mx-4 bg-white rounded-lg shadow-lg">
+            <h2 className="text-2xl pt-3 font-bold text-center mb-4">
+              Add New Product
+            </h2>
+            <AddProductForm onProductAdded={fetchProducts} />
+           </div> */}
+
+            <Inventory />
+          </div>
+        </div>
+      </div>
+    </>
+  );
 };
 
 export default Page;
-
-
 
 // const ProductForm = ({ onProductAdded }: { onProductAdded: () => void }) => {
 //     const [newProduct, setNewProduct] = useState({
@@ -103,38 +127,37 @@ export default Page;
 
 //     const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
 //         if (!e.target.files || e.target.files.length === 0) return;
-    
+
 //         const files = Array.from(e.target.files).slice(0, 4); // Limit to 4 images
 //         const uploadedImages = [...newProduct.images];
-    
+
 //         for (const file of files) {
 //             if (uploadedImages.length >= 4) break; // Stop if already 4 images uploaded
-    
+
 //             const formData = new FormData();
 //             formData.append("file", file);
-    
+
 //             try {
 //                 const response = await fetch(`/api/uploadImage`, {
 //                     method: "POST",
 //                     body: formData,
 //                 });
-    
+
 //                 if (!response.ok) throw new Error("Failed to upload image");
 //                 const data = await response.json();
-    
+
 //                 uploadedImages.push({ asset: { _ref: data._id } });
 //             } catch (error) {
 //                 console.error("Image upload failed", error);
 //                 alert("Image upload failed. Please try again.");
 //             }
 //         }
-    
+
 //         setNewProduct((prev) => ({
 //             ...prev,
 //             images: uploadedImages,
 //         }));
 //     };
-    
 
 //     const handleSubmit = async (e: React.FormEvent) => {
 //         e.preventDefault();

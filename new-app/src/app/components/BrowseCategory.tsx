@@ -1,13 +1,18 @@
 import Link from "next/link"; // Import Next.js Link
 import React from "react";
+import { BsPlugin } from "react-icons/bs";
 import { 
   FaRegHeart, 
   FaMobileAlt, 
   FaCamera, 
   FaHeadphones, 
   FaLaptop, 
-  FaPlug
+  FaPlug,
+  
 } from "react-icons/fa";
+import { GiDesk, GiHeadphones } from "react-icons/gi";
+import { GiOfficeChair } from "react-icons/gi";
+import { IoWatchSharp } from "react-icons/io5";
 
 type Category = {
   name: string;
@@ -17,11 +22,13 @@ type Category = {
 
 const categories: Category[] = [
   { name: "Phones", icon: <FaMobileAlt className="text-2xl" />, path: "/category/Phones" },
-  { name: "Smart Watches", icon: <FaRegHeart className="text-2xl" />, path: "/category/smartWatches" },
+  { name: "Smart Watches", icon: <IoWatchSharp className="text-2xl" />, path: "/category/smartWatches" },
   { name: "Cameras", icon: <FaCamera className="text-2xl" />, path: "/category/Cameras" },
-  { name: "Headphones", icon: <FaHeadphones className="text-2xl" />, path: "/category/Headphones" },
+  {name: "Headphones", icon: <FaHeadphones className="text-2xl font-bold" />, path: "/category/Headphones"},
   { name: "Computers", icon: <FaLaptop className="text-2xl" />, path: "/category/Computer" },
-  { name: "Accessories", icon: <FaPlug className="text-2xl" />, path: "/category/Accessories" },
+  { name: "Accessories", icon: <BsPlugin className="text-2xl" />, path: "/category/Accessories" },
+  { name: "Tables", icon: <GiDesk className="text-2xl" />, path: "/category/Tables" },
+  { name: "Chairs", icon: <GiOfficeChair className="text-2xl" />, path: "/category/Chairs" },
 ];
 
 const BrowseCategory: React.FC = () => {

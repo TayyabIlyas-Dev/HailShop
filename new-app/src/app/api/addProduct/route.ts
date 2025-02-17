@@ -4,7 +4,7 @@ import { client } from "@/src/sanity/lib/client";
 export async function POST(req: Request) {
     try {
         const body = await req.json();
-        const { name, description, price, productType, inventory, images } = body;
+        const { name, description, price, productType, inventory, images,discount, isFeatured  } = body;
 
         if (!name || !description || !price || !productType || !inventory) {
             return NextResponse.json({ message: "Missing required fields" }, { status: 400 });
@@ -16,6 +16,9 @@ export async function POST(req: Request) {
             description,
             price: parseFloat(price),
             productType,
+            discount: discount ? Number(discount) : 0, // Default 0 if no discount
+        
+            isFeatured: Boolean(isFeatured),
             inventory: parseInt(inventory, 10),
             images,
             slug: {
