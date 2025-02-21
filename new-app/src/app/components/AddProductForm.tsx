@@ -395,7 +395,7 @@ const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
           <input
             type="number"
             name="price"
-            placeholder="Price"
+            placeholder="Price (Without discount)"
             value={newProduct.price}
             onChange={handleChange}
             className="w-full m-1 p-2 border rounded"
@@ -433,7 +433,7 @@ const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
             onChange={handleChange}
             className="w-full m-1 p-2 border rounded"
           />
-          <label className="flex items-center space-x-2 m-1">
+          {/* <label className="flex items-center space-x-2 m-1">
             <input
               type="checkbox"
               name="isFeatured"
@@ -442,7 +442,22 @@ const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
               className="w-4 h-4"
             />
             <span>Featured Product</span>
-          </label>
+          </label> */}
+                <label className="flex items-center m-2 cursor-pointer">
+  <div className="relative">
+    <input
+      type="checkbox"
+      name="isFeatured"
+      checked={newProduct.isFeatured}
+      onChange={handleChange}
+      className="sr-only peer"
+    />
+    <div className="w-10 h-5 bg-gray-400 rounded-full peer-checked:bg-black transition-colors"></div>
+    <div className="absolute top-0.5 left-1 w-4 h-4 bg-white rounded-full transition-transform peer-checked:translate-x-5"></div>
+  </div>
+  <span className="ml-2 text-sm font-medium">Featured</span>
+</label>
+
         </div>
 
         <div className="h-full flex flex-col my-1 px-2 items-center justify-center sm:items-start sm:justify-start py-2 pb-3">

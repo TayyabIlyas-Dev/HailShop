@@ -23,6 +23,7 @@ import { MdOutlineAnalytics } from "react-icons/md";
 import { BiCommentDetail } from "react-icons/bi";
 import { SignIn } from "@clerk/nextjs";
 import { PiSignIn } from "react-icons/pi";
+import Link from "next/link";
 
 
 export function DropdownMenuDemo() {
@@ -120,6 +121,7 @@ export function DropdownMenuDemo() {
             </DropdownMenuPortal>
           </DropdownMenuSub> */}
           <DropdownMenuItem>
+            <Link href='/dashboard2/customerComplains'></Link>
           <div className="py-1 flex gap-2 items-center ">
                 <div>
                     <BiCommentDetail/>

@@ -1,7 +1,8 @@
 // pages/index.tsx
-import { auth, currentUser } from "@clerk/nextjs/server";
-
-import UserProfile from "../../components/Profile";
+import { auth, currentUser, User } from "@clerk/nextjs/server";
+import { UserProfile } from "@clerk/nextjs";
+// import UserProfile from "../../components/Profile";
+import { UserButton } from "@clerk/nextjs";
 
 const Page = async () => {
       const { userId } = await auth(); // Get the authenticated user
@@ -19,7 +20,7 @@ const Page = async () => {
       }
   return (
     <div className="min-h-screen pt-12 flex justify-center items-center bg-gray-50">
-      <UserProfile
+      {/* <UserProfile
         username="webdev_john"
         fullName="Tayyab & Hamza Ilyas"
         bio="I am a passionate Web Developer who loves to create interactive and engaging websites. With a keen eye for design and functionality, I specialize in building seamless user experiences using the latest front-end technologies. My goal is to develop clean, efficient, and scalable code that enhances usability and performance.
@@ -34,7 +35,9 @@ When I’m not coding, I explore new design inspirations, contribute to open-sou
  Check out my portfolio to see my latest projects and innovations!
 "
         profileImage="/images/cartoon-developer.png" // Add your cartoon developer image here
-      />
+      /> */}
+
+<UserProfile />
     </div>
   );
 };

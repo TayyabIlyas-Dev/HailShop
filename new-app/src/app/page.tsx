@@ -46,6 +46,8 @@ export default function Home() {
       <div>
         <HeroTwo />
       </div>
+
+      
     </AppProvider>
   );
 }

@@ -18,35 +18,58 @@ const Favourites = () => {
     useContext(FavouritesContext);
   // const { addProduct: addToCart }: any = useContext(CartContext) || {};
   const [showMore, setShowMore] = useState(false);
-  const { addProduct: addToCart, qty: cartQty }: any =
+  const { addProduct: addToCart,  cartItems:cart,qty: cartQty }: any =
     useContext(CartContext) || {};
   const toggleShowMore = () => {
     setShowMore((prev) => !prev);
   };
   const { showToast } = useToast();
 
+  // const handleClickCart = (product: any) => {
+  //   if (product.inventory <= 0) {
+  //     showToast("This product is out of stock!");
+  //     return;
+  //   }
+
+  //   if (!addToCart) {
+  //     showToast("Cart functionality is unavailable.");
+  //     return;
+  //   }
+
+  //   // Add to cart directly without confirmation
+  //   addToCart(product, cartQty || 1);
+  //   showToast("Item added to the cart!"); // Show toast notification
+  // };
+
   const handleClickCart = (product: any) => {
+    const isInCart = cart?.find((item: any) => item.slug.current === product.slug.current);
+  
     if (product.inventory <= 0) {
       showToast("This product is out of stock!");
       return;
     }
-
+  
     if (!addToCart) {
       showToast("Cart functionality is unavailable.");
       return;
     }
-
-    // Add to cart directly without confirmation
-    addToCart(product, cartQty || 1);
-    showToast("Item added to the cart!"); // Show toast notification
-  };
-  //  Force reload the page on component mount
-  useEffect(() => {
-    if (typeof window !== "undefined" && !window.location.hash) {
-      window.location.hash = "reloaded";
-      window.location.reload();
+  
+    if (isInCart) {
+      showToast("Item already added in your cart");
+      return;
     }
-  }, []);
+  
+    addToCart(product, cartQty || 1);
+    showToast("Item added to the cart!");
+  };
+  
+  //  Force reload the page on component mount
+  // useEffect(() => {
+  //   if (typeof window !== "undefined" && !window.location.hash) {
+  //     window.location.hash = "reloaded";
+  //     window.location.reload();
+  //   }
+  // }, []);
 
   if (loading) {
     return (

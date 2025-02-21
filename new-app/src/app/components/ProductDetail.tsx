@@ -262,7 +262,8 @@ const ProductDetails = ({ product }: any) => {
           </div>
         </motion.div>
       </div>
-      <div className="my-5 mx-2 p-2">
+    
+      <div className=" mt-24 mb-12 p-2">
         <Reviews />
       </div>
       {/* See More Button */}

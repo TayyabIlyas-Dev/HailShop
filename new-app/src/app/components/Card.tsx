@@ -23,7 +23,7 @@ const Card = ({ product }: { product: any }) => {
   const { showToast } = useToast();
 
   // Accessing contexts
-  const { addProduct: addToCart, qty: cartQty }: any =
+  const { addProduct: addToCart, cartItems:cart,qty: cartQty }: any =
     useContext(CartContext) || {};
   const {
     addProduct: addToFavourites,
@@ -50,6 +50,31 @@ const Card = ({ product }: { product: any }) => {
     showToast("Item added to the cart!"); // Show toast notification
   };
 
+ // Check if this specific product is already in the cart
+const isInCart = cart?.find((item: any) => item.slug.current === product.slug.current);
+
+
+   // Add to Cart Function
+   const handleAddToCart = () => {
+     if (product.inventory <= 0) {
+       showToast("This product is out of stock!");
+       return;
+     }
+ 
+     if (!addToCart) {
+       showToast("Cart functionality is unavailable.");
+       return;
+     }
+ 
+     if (isInCart) {
+       showToast("Item already added in your cart");
+       return;
+     }
+ 
+     addToCart(product, 1);
+     showToast("Item added to the cart!");
+   };
+
   // Add/Remove from Favourites
   const handleClickFav = () => {
     if (!addToFavourites || !removeFromFavourites) {
@@ -65,6 +90,9 @@ const Card = ({ product }: { product: any }) => {
       showToast("Item added to favourites!"); // Show toast notification
     }
   };
+  const withoutDiscountPrice = product.discount
+    ? product.price - (product.price * product.discount) / 100
+    : product.price;
 
   return (
     <div className="bg-white pt-4 pb-2 drop-shadow-md rounded-2xl overflow-hidden sm:hover:shadow-lg hover:scale-[1.04] transition-all duration-300">
@@ -89,13 +117,14 @@ const Card = ({ product }: { product: any }) => {
           alt={product.slug}
           width={220}
           height={100}
-          className="object-contain card-image h-32 mx-auto hover:scale-[1.08] transition-transform duration-700"
+          className="object-contain card-image h-32 px-1 mx-auto hover:scale-[1.08] transition-transform duration-700"
           priority={false}
         />
         <div className="text-center pt-4 pb-3">
-          <h1 className={`text-2xl font-bold ${nameStyle}`}>{product.name}</h1>
+          <h1 className={`text-2xl font-bold ${nameStyle}`}>   {product.name}
+          </h1>
           <h1 className="text-xl py-2 text-center text-gray-500 font-semibold">
-            <span className="text-green-500">$ </span> {product.price}
+            <span className="text-green-500">$ </span>             {Math.floor(withoutDiscountPrice)}
             {/* <span className= " mb-3 text-xs text-red-400"> {product.discount}% off</span>  */}
           </h1>
         </div>
@@ -103,7 +132,7 @@ const Card = ({ product }: { product: any }) => {
       <div className="flex items-center justify-between">
         <button
           className={`bg-gray-100 hover:bg-gray-200 w-9 h-9 flex items-center justify-center rounded-full ml-4 hover:scale-110 transition-all duration-300"`}
-          onClick={handleClickCart}
+          onClick={handleAddToCart}
           id="add-to-cart"
         >
           <FiShoppingBag />

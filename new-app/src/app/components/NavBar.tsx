@@ -212,8 +212,8 @@ const Navbar = () => {
                       <HiDotsVertical />
                     </button>
                     {menuOpen && (
-                      <div className="absolute right-0 mt-2 w-32 bg-white shadow-md rounded-lg p-2">
-                        {/* <Link
+                      <div className="absolute right-0 mt-2 w-32 bg-white shadow-md rounded-lg p-2 z-50">
+                      {/* <Link
                           href="/profile"
                           className="block w-full p-2"
                           onClick={closeMenu}

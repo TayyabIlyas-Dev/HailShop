@@ -3,6 +3,7 @@ import React from "react";
 import { auth, currentUser } from "@clerk/nextjs/server";
 import Inventory from "../../components/Inventory";
 import AddProductFormWrapper from "../../components/AddProductFormWrapper";
+import { SignedOut, SignInButton } from "@clerk/nextjs";
 
 // interface Product {
 //   _id: string;
@@ -16,7 +17,7 @@ import AddProductFormWrapper from "../../components/AddProductFormWrapper";
 //   discount: number;
 // }
 
-const Page = async () => {
+const Page =  async () => {
   // const [products, setProducts] = useState<Product[]>([]);
   // const [loading, setLoading] = useState(false);
   // const [showMore, setShowMore] = useState(false);
@@ -26,12 +27,26 @@ const Page = async () => {
   // console.log("role=", user);
   if (!userId || role !== "admin") {
     return (
-      <div className="flex items-center justify-center min-h-screen">
-        <p className="text-red-500 text-lg font-semibold">
-          Access Denied: Admins Only
-        </p>
+      <div className="flex flex-col items-center justify-center h-full text-center">
+        <div>
+          <p className="text-red-500 text-lg font-semibold">
+            Access Denied: Admins Only
+          </p>
+        </div>
+    
+        <SignedOut>
+          <div className="p-2">
+            <button className="text-base underline font-semibold">
+             <span className="underline">
+             <SignInButton />
+             </span>
+            </button>{" "}
+            to Access
+          </div>
+        </SignedOut>
       </div>
     );
+    
   }
   // const toggleShowMore = () => {
   //   setShowMore((prev) => !prev);

@@ -49,7 +49,7 @@ const Cart: React.FC = () => {
         {/* Close Button */}
         <button
           onClick={handleClose}
-          className="sticky top-4 right-4 p-2 backdrop-blur-2xl text-gray-600 hover:text-gray-800 text-2xl"
+          className="sticky top-4 right-4 p-2 backdrop-blur-3xl rounded-md text-gray-600 hover:text-gray-800 text-2xl"
         >
           <IoMdClose />
         </button>
@@ -68,7 +68,7 @@ const Cart: React.FC = () => {
                 Your cart is currently empty.
               </p>
               <Link href="/allProducts" onClick={handleClose}>
-                <p className="mt-6 inline-block border-2 border-black text-black px-6 py-3 rounded-md font-semibold hover:bg-black hover:text-white transition">
+                <p className="mt-6 inline-block border-2 border-black text-black px-6 py-3  font-semibold hover:bg-black hover:text-white transition">
                   Continue Shopping
                 </p>
               </Link>
@@ -101,7 +101,9 @@ const Cart: React.FC = () => {
                       <p className="font-semibold text-gray-700 text-sm">
                         {" "}
                         <span className="text-green-500">$ </span>{" "}
-                        {product.price}
+                                        {Math.floor( product.price - (product.price * product.discount) / 100
+)}
+
                       </p>
 
                       {/* Quantity Controls */}

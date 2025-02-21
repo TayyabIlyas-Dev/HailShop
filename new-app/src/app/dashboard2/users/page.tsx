@@ -1,7 +1,9 @@
+
 import React from 'react'
-import Dashboard from '../../components/Dashboard'
+
 import { auth, currentUser } from '@clerk/nextjs/server';
 import { SignedOut, SignInButton } from '@clerk/nextjs';
+// import RecentSales from '../../components/RecentSales';
 
 const page = async () => {
        const { userId } = await auth(); // Get the authenticated user
@@ -33,8 +35,8 @@ const page = async () => {
         }
   return (
     <div className=' w-full overflow-hidden'>
-        
-      <Dashboard/>
+        users
+      {/* <RecentSales/> */}
     </div>
   )
 }

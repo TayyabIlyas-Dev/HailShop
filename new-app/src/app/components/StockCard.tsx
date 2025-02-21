@@ -40,6 +40,9 @@ const StockCard: React.FC<{ product: Product; onDelete: (id: string) => void }> 
       showToast("Product deleted successfully.");
     
   };
+  const withoutDiscountPrice = product.discount
+    ? product.price - (product.price * product.discount) / 100
+    : product.price;
 
   return (
     <div className="bg-white pt-4 pb-2 drop-shadow-md rounded-2xl overflow-hidden sm:hover:shadow-lg hover:scale-[1.04] transition-all duration-300">
@@ -63,13 +66,15 @@ const StockCard: React.FC<{ product: Product; onDelete: (id: string) => void }> 
           alt={product.name}
           width={220}
           height={100}
-          className="object-contain card-image h-32 mx-auto hover:scale-[1.08] transition-transform duration-700"
+          className="object-contain card-image px-1 h-32 mx-auto hover:scale-[1.08] transition-transform duration-700"
           priority={false}
         />
         <div className="text-center pt-4 pb-3">
           <h1 className={`text-2xl font-bold ${nameStyle}`}>{product.name}</h1>
           <h1 className="text-xl py-1 text-gray-500 font-semibold">
-            <span className="text-green-500">$ </span> {product.price}
+            <span className="text-green-500">$ </span>         
+                {Math.floor(withoutDiscountPrice)}
+
  
 
           </h1>

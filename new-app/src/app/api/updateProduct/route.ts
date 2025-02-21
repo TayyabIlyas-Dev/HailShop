@@ -28,6 +28,35 @@
 
 
 
+// working
+
+// import { NextResponse } from "next/server";
+// import { client } from "../../../sanity/lib/client";
+
+// export async function POST(req: Request) {
+//   try {
+//     const body = await req.json();
+//     console.log("API Request Body:", body); // Debugging ke liye
+
+//     const { id, name, price, inventory, images, discount, isFeatured } = body;
+//     if (!id || !name || price == null || inventory == null) {
+//       return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
+//     }
+
+//     // Update product in Sanity
+//     const updatedProduct = await client
+//       .patch(id)
+//       .set({ name, price, inventory, images, discount, isFeatured })
+//       .commit();
+
+//     return NextResponse.json({ message: "Product updated successfully", updatedProduct });
+//   } catch (error) {
+//     console.error("Sanity Update Error:", error);
+//     return NextResponse.json({ error: "Failed to update product" }, { status: 500 });
+//   }
+// }
+
+
 
 
 import { NextResponse } from "next/server";
@@ -38,15 +67,16 @@ export async function POST(req: Request) {
     const body = await req.json();
     console.log("API Request Body:", body); // Debugging ke liye
 
-    const { id, name, price, inventory, images, discount, isFeatured } = body;
-    if (!id || !name || price == null || inventory == null) {
+    const { id, name, price, inventory, images, discount, isFeatured, productType } = body;
+
+    if (!id || !name || price == null || inventory == null || !productType) {
       return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
     }
 
     // Update product in Sanity
     const updatedProduct = await client
       .patch(id)
-      .set({ name, price, inventory, images, discount, isFeatured })
+      .set({ name, price, inventory, images, discount, isFeatured, productType }) // ✅ ProductType added
       .commit();
 
     return NextResponse.json({ message: "Product updated successfully", updatedProduct });

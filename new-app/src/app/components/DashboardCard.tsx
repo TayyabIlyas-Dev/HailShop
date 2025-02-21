@@ -267,7 +267,27 @@ const DashboardCard = () => {
   const [totalRevenue, setTotalRevenue] = useState(0);
   const [totalSales, setTotalSales] = useState(0);
   const [activeOrders, setActiveOrders] = useState(0);
+  const [totalReviews, setTotalReviews] = useState(0);
 
+  const fetchReviews = async () => {
+    try {
+      const allReviews = await client.fetch(`count(*[_type=="review"])`);
+      setTotalReviews(allReviews);
+    } catch (error) {
+      console.error("Error fetching reviews:", error);
+    }
+  };
+  
+  useEffect(() => {
+    fetchReviews();
+  
+    const subscription = client.listen(`*[_type == "review"]`).subscribe(() => {
+      fetchReviews();
+    });
+  
+    return () => subscription.unsubscribe();
+  }, []);
+  
   // ✅ Fetch All Orders
   const fetchOrders = async () => {
     try {
@@ -322,15 +342,15 @@ const DashboardCard = () => {
       <div className="grid grid-cols-1 mx-4 p-3 md:grid-cols-3 lg:grid-cols-4 mt-5 gap-3">
         <div className="pl-6 pr-3 py-6 mx-1 my-2 text-2xl shadow-md rounded-xl border border-gray-300 hover:scale-[1.02] transition-all duration-500">
           <h1 className="text-xl font-semibold">Total Revenue</h1>
-          <h4 className="text-2xl font-bold">${Math.floor(totalRevenue)}</h4>
+          <h4 className="text-2xl font-bold"><span className="text-green-300">$ </span>{Math.floor(totalRevenue)}</h4>
 
           <h2 className="text-[13px] text-gray-600 font-semibold">
             +20.1% from last month
           </h2>
         </div>
         <div className="pl-6 pr-3 py-6 mx-1 my-2 text-2xl shadow-md rounded-xl border border-gray-300 hover:scale-[1.02] transition-all duration-500">
-          <h1 className="text-xl font-semibold">Subscriptions</h1>
-          <h4 className="text-2xl font-bold">+2350</h4>
+          <h1 className="text-xl font-semibold">Reviews</h1>
+          <h4 className="text-2xl font-bold">+{totalReviews}</h4>
           <h2 className="text-[13px] text-gray-600 font-semibold">
             +18.1% from last month
           </h2>

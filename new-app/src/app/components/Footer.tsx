@@ -7,6 +7,8 @@ import { LiaQuestionCircle } from "react-icons/lia";
 import { CiLinkedin, CiInstagram, CiTwitter } from "react-icons/ci";
 import { FaFacebookF, FaTwitter, FaInstagram, FaLinkedinIn } from 'react-icons/fa';
 import { HailLogo } from '@/public';
+import { visa, mastercard, amex, googlePay, applePay } from "@/public"; // Jo bhi import path ho
+
 
 const Footer = () => {
   return (
@@ -53,7 +55,8 @@ const Footer = () => {
 
           {/* Newsletter Section */}
           <div className="w-full lg:w-1/4">
-            <h3 className="text-gray-700 font-medium mb-2">Newsletter</h3>
+           <div>
+           <h3 className="text-gray-700 font-medium mb-2">Newsletter</h3>
             <form className="flex space-x-2">
               <input
                 type="email"
@@ -67,6 +70,16 @@ const Footer = () => {
                 Subscribe
               </button>
             </form>
+           </div>
+
+           <div className="flex justify-start px-1 items-center space-x-4 py-4">
+      <Image src={visa} alt="Visa" width={40} height={30} />
+      <Image src={mastercard} alt="MasterCard" width={35} height={30} />
+      {/* <Image src={amex} alt="American Express" width={50} height={30} /> */}
+      <Image src={googlePay} alt="Google Pay" width={40} height={30} />
+      <Image src={applePay} alt="Apple Pay" width={40} height={30} />
+    </div>
+
           </div>
         </div>
 
@@ -77,21 +90,21 @@ const Footer = () => {
           </div>
           <div>
             <p className="text-gray-900 text-center text-xs sm:text-sm">
-              ©2025 hail-shop.vercel.app All rights reserved
+              © 2025 hail-shop.vercel.app
             </p>
           </div>
           <div className='flex justify-center items-center text-lg gap-2'>
             <Link href='https://www.facebook.com' target="_blank" rel="noopener noreferrer">
-              <FaFacebookF className="text-gray-900 text-xl" />
+              <FaFacebookF className="text-gray-900 text-md sm:text-xl" />
             </Link>
             <Link href='https://www.twitter.com' target="_blank" rel="noopener noreferrer">
-              <CiTwitter className="text-gray-900 text-2xl" />
+              <CiTwitter className="text-gray-900 text-md sm:text-2xl" />
             </Link>
             <Link href='https://www.instagram.com/syco_king9935/' target="_blank" rel="noopener noreferrer">
-              <CiInstagram className="text-gray-900 text-2xl" />
+              <CiInstagram className="text-gray-900 text-md sm:text-2xl" />
             </Link>
             <Link href='https://www.linkedin.com/in/tayyab-ilyas-ai-engineer/' target="_blank" rel="noopener noreferrer">
-              <CiLinkedin className="text-gray-900 text-2xl" />
+              <CiLinkedin className="text-gray-900 text-md sm:text-2xl" />
             </Link>
           </div>
         </div>

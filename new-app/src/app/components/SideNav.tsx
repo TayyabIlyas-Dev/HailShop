@@ -63,7 +63,7 @@ export default function SideNavbar({ isCollapsed, setIsCollapsed }: SideNavbarPr
             },
             {
               title: "Users",
-              href: "/users",
+              href: "/dashboard2/users",
               icon: UsersRound,
               variant: "ghost",
             },
