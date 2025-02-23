@@ -10,7 +10,7 @@ const page = async () => {
         // console.log("role=", user);
         if (!userId || role !== "admin") {
           return (
-            <div className="flex flex-col items-center justify-center h-full text-center">
+            <div className="flex flex-col items-center justify-center h-full text-center ">
               <div>
                 <p className="text-red-500 text-lg font-semibold">
                   Access Denied: Admins Only
@@ -32,7 +32,7 @@ const page = async () => {
           
         }
   return (
-    <div className=' w-full overflow-hidden'>
+    <div className=' w-full overflow-hidden py-2'>
         
       <Dashboard/>
     </div>

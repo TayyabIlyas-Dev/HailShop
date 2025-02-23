@@ -55,7 +55,7 @@ const Inventory = () => {
   
   return (
     <div>
-      <div className="pt-9 px-3 text-start">
+      <div className="pt-4 px-3 text-start">
         <h1 className="text-4xl  px-3 font-bold">Inventory</h1>
       </div>
       {loading ? (

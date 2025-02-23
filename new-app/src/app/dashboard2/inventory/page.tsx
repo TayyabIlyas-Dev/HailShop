@@ -86,7 +86,7 @@ const Page =  async () => {
 
   return (
     <>
-      <div className="bg-[#fcfbfbb7] w-full pb-20 pt-8 p-2">
+      <div className="bg-[#fcfbfbb7] w-full pb-20  px-2">
         <div className="container">
           <div>
             <AddProductFormWrapper/>

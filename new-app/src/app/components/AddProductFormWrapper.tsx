@@ -44,13 +44,15 @@ const AddProductFormWrapper = () => {
     
   return (
     <div>
-       <div className="flex   items-center justify-center">
-                  <button
-                    className="relative my-6 text-xl mx-10 font-semibold text-gray-800 after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-full after:h-[2px] after:bg-gray-800 after:scale-x-0 after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left"
-                    onClick={toggleShowMore}
-                  >
-                    {showMore ? " Close form" : "Add a new product"}
-                  </button>
+       <div className="">
+       <button
+  className={`relative ${
+    showMore ? "top-24 text-lg px-1 left-[90%]" : "top-14"
+  } left-[83%] text-base font-semibold text-white bg-black hover:bg-white border-2 border-black hover:text-black transition-all px-4 py-1 rounded-full`}
+  onClick={toggleShowMore}
+>
+  {showMore ? "X" : "+ Add product"}
+</button>
                 </div>
                 {showMore && (
                   <div className="mt-10 p-4 mx-4 bg-white rounded-lg shadow-lg">

@@ -23,8 +23,11 @@ const Card = ({ product }: { product: any }) => {
   const { showToast } = useToast();
 
   // Accessing contexts
-  const { addProduct: addToCart, cartItems:cart,qty: cartQty }: any =
-    useContext(CartContext) || {};
+  const {
+    addProduct: addToCart,
+    cartItems: cart,
+    qty: cartQty,
+  }: any = useContext(CartContext) || {};
   const {
     addProduct: addToFavourites,
     removeProduct: removeFromFavourites,
@@ -50,30 +53,31 @@ const Card = ({ product }: { product: any }) => {
     showToast("Item added to the cart!"); // Show toast notification
   };
 
- // Check if this specific product is already in the cart
-const isInCart = cart?.find((item: any) => item.slug.current === product.slug.current);
+  // Check if this specific product is already in the cart
+  const isInCart = cart?.find(
+    (item: any) => item.slug.current === product.slug.current
+  );
 
+  // Add to Cart Function
+  const handleAddToCart = () => {
+    if (product.inventory <= 0) {
+      showToast("This product is out of stock!");
+      return;
+    }
 
-   // Add to Cart Function
-   const handleAddToCart = () => {
-     if (product.inventory <= 0) {
-       showToast("This product is out of stock!");
-       return;
-     }
- 
-     if (!addToCart) {
-       showToast("Cart functionality is unavailable.");
-       return;
-     }
- 
-     if (isInCart) {
-       showToast("Item already added in your cart");
-       return;
-     }
- 
-     addToCart(product, 1);
-     showToast("Item added to the cart!");
-   };
+    if (!addToCart) {
+      showToast("Cart functionality is unavailable.");
+      return;
+    }
+
+    if (isInCart) {
+      showToast("Item already added in your cart");
+      return;
+    }
+
+    addToCart(product, 1);
+    showToast("Item added to the cart!");
+  };
 
   // Add/Remove from Favourites
   const handleClickFav = () => {
@@ -97,20 +101,28 @@ const isInCart = cart?.find((item: any) => item.slug.current === product.slug.cu
   return (
     <div className="bg-white pt-4 pb-2 drop-shadow-md rounded-2xl overflow-hidden sm:hover:shadow-lg hover:scale-[1.04] transition-all duration-300">
       <Link href={`/product/${product.slug.current}`} prefetch={false}>
-      {product.discount > 0 && (
-  <div className="absolute z-10 top-2 right-1 ">
-    <motion.span
-      className="relative text-[7px] font-bold px-2 py-0 rounded-md"
-      initial={{ rotate: -5, scale: 0.8, opacity: 0 }}
-      animate={{ rotate: 0, scale: 1, opacity: 1 }}
-      transition={{ duration: 0.3, ease: "easeOut" }}
-    >
-                      <span className="text-gray-700 bg-red-100 px-2 py-[2px] rounded-md shadow-sm shadow-red-300">
-                      {product.discount}% OFF
-      </span>
-    </motion.span>
-  </div>
-)}
+        {product.discount > 0 && (
+       <div className="absolute z-10 top-2 right-1">
+       <div className="w-7 sm:w-10 group">
+         {/* Upper Box */}
+         <div className="bg-black text-white text-center font-bold px-1 rounded-t-md">
+           <span className="text-[5px] sm:text-[7px]">{product.discount}</span>
+           <span className="text-[5px] sm:text-[7px]"> %OFF</span>
+         </div>
+     
+         {/* Triangle */}
+         <div
+           className="w-0 h-0 
+           border-l-[14px] sm:border-l-[20px] 
+           border-r-[14px] sm:border-r-[20px] 
+           border-t-[7px] sm:border-t-[10px] 
+           border-l-transparent border-r-transparent 
+           border-t-black mx-auto"
+         ></div>
+       </div>
+     </div>
+     
+        )}
 
         <Image
           src={urlForImage(product?.images && product.images[0]).url()}
@@ -121,10 +133,10 @@ const isInCart = cart?.find((item: any) => item.slug.current === product.slug.cu
           priority={false}
         />
         <div className="text-center pt-4 pb-3">
-          <h1 className={`text-2xl font-bold ${nameStyle}`}>   {product.name}
-          </h1>
+          <h1 className={`text-2xl font-bold ${nameStyle}`}> {product.name}</h1>
           <h1 className="text-xl py-2 text-center text-gray-500 font-semibold">
-            <span className="text-green-500">$ </span>             {Math.floor(withoutDiscountPrice)}
+            <span className="text-green-500">$ </span>{" "}
+            {Math.floor(withoutDiscountPrice)}
             {/* <span className= " mb-3 text-xs text-red-400"> {product.discount}% off</span>  */}
           </h1>
         </div>

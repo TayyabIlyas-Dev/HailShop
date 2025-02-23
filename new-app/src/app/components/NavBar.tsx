@@ -102,7 +102,7 @@ import { HailLogo } from "@/public";
 import { motion } from "framer-motion";
 import { BsSuitHeartFill } from "react-icons/bs";
 import { TbCards } from "react-icons/tb";
-import { UserButton } from "@clerk/nextjs";
+import { SignOutButton, UserButton } from "@clerk/nextjs";
 import {
   ClerkProvider,
   SignedIn,
@@ -231,6 +231,17 @@ const Navbar = () => {
                             About
                           </button>
                         </Link>
+                        <SignedIn>
+                        <Link
+                          href="/userProfile"
+                          className="block w-full p-2"
+                          onClick={closeMenu}
+                        >
+                          <button className="text-xl w-full font-semibold flex items-center justify-between">
+                            Profile
+                          </button>
+                        </Link>
+                        </SignedIn>
                         <Link
                           href="/dashboard2"
                           className="block w-full p-2"
@@ -247,6 +258,13 @@ const Navbar = () => {
                             </button>
                           </div>
                         </SignedOut>
+                        <SignedIn>
+                          <div className="block w-full p-2" onClick={closeMenu}>
+                            <button className="text-xl font-bold">
+                              <SignOutButton/>
+                            </button>
+                          </div>
+                        </SignedIn>
                       </div>
                     )}
                   </div>

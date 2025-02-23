@@ -81,6 +81,23 @@ const ProductDetails = ({ product }: any) => {
           transition={{ type: "spring", stiffness: 100, damping: 10 }}
         >
           <div>
+            {product.discount > 0 && (
+              <div className="relative top-11 left-7 ">
+                <div className="w-12 group">
+                  {/* Upper Box */}
+                  <div className="bg-black  text-white text-center font-bold px-1 rounded-t-md">
+                    <span className="text-[8px]">{product.discount}</span>
+                    <span className="text-[9px]"> %OFF</span>
+                  </div>
+
+                  {/* Triangle */}
+                  <div
+                    className="w-0 h-0 border-l-[24px] border-r-[24px] border-t-[12px] border-l-transparent border-r-transparent 
+               border-t-black   mx-auto"
+                  ></div>
+                </div>
+              </div>
+            )}
             {/* Main Image */}
             <div className="h-[260px] flex items-center mb-[24px] border rounded-lg mx-5 hover:shadow-md">
               <Image
@@ -149,7 +166,6 @@ const ProductDetails = ({ product }: any) => {
                 {/* Original Price with Neon Glow */}
                 {product.discount > 0 && (
                   <div className=" ">
-                  
                     <s className="text-gray-400 text-[10px] px-1 relative">
                       <span className="text-green-200">$</span>
                       {product.price}
@@ -161,16 +177,15 @@ const ProductDetails = ({ product }: any) => {
                       animate={{ rotate: 0, scale: 1, opacity: 1 }}
                       transition={{ duration: 0.3, ease: "easeOut" }}
                     >
-                      <span className="text-gray-700 bg-red-100 px-2 py-[2px] rounded-md shadow-sm shadow-red-300">
+                      <span className="text-white bg-black px-2 py-[3px] rounded-lg shadow-sm shadow-red-100 ">
                         {product.discount}% OFF
                       </span>
                     </motion.span>
-
                   </div>
                 )}
               </div>
 
-              <div className={` pb-2 font-medium ${descriptionStyle}`}>
+              <div className={` pb-2 text-gray-600 font-medium ${descriptionStyle}`}>
                 {product.description}
               </div>
             </div>
@@ -262,12 +277,12 @@ const ProductDetails = ({ product }: any) => {
           </div>
         </motion.div>
       </div>
-    
-      <div className=" mt-24 mb-12 p-2">
+
+      <div className=" mt-24 pb-0 p-2">
         <Reviews />
       </div>
       {/* See More Button */}
-      <div className="flex pt-6 items-center justify-center">
+      <div className="flex pt-6 items-center border-y-2 bg-[#f0eeeec8] justify-center">
         <button
           className="relative my-6 mx-10 font-semibold text-gray-800 after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-full after:h-[2px] after:bg-gray-800 after:scale-x-0 after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left"
           onClick={toggleShowMore}
@@ -278,9 +293,9 @@ const ProductDetails = ({ product }: any) => {
 
       {/* Conditional rendering of extra information */}
       {showMore && (
-        <div className="more-info my-1">
+        <div className="more-info ">
           <div>
-            <div className="bg-[#FAFAFA] pt-8 pb-0 mt-10 text-center">
+            <div className="bg-[#FAFAFA]  pb-0 pt-16 text-center">
               <h1 className="text-3xl font-bold">Best Selling Products</h1>
               <h1 className="">Enjoy Up To 50%</h1>
             </div>

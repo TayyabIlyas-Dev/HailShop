@@ -3,9 +3,14 @@
 import React, { useState, useEffect } from "react";
 import { useUser } from "@clerk/nextjs";
 import { useParams } from "next/navigation";
-import { AiFillStar, AiOutlineStar } from "react-icons/ai";
 import { useToast } from "../context/ToastContext";
 import { client } from "../lib/sanityClient";
+import {
+  AiFillStar,
+  AiOutlineStar,
+  AiOutlineLeft,
+  AiOutlineRight,
+} from "react-icons/ai";
 
 const Reviews = () => {
   const { user } = useUser();
@@ -26,6 +31,8 @@ const Reviews = () => {
   const [error, setError] = useState("");
   // const [showForm, setShowForm] = useState(true); // 👈 Form ko control karne ke liye state
   const { showToast } = useToast();
+
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   // ✅ Fetch reviews from API
   useEffect(() => {
@@ -116,6 +123,29 @@ const Reviews = () => {
     }
   };
 
+  const getSlidesToShow = () => {
+    if (window.innerWidth >= 1024) return 4;
+    if (window.innerWidth >= 768) return 3;
+    if (window.innerWidth >= 640) return 2;
+    return 1;
+  };
+  const [slideWidth, setSlideWidth] = useState(100 / getSlidesToShow());
+
+  useEffect(() => {
+    const handleResize = () => setSlideWidth(100 / getSlidesToShow());
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  const prevSlide = () => {
+    setCurrentIndex((prev) => (prev === 0 ? reviews.length - 1 : prev - 1));
+  };
+
+  const nextSlide = () => {
+    setCurrentIndex((prev) => (prev === reviews.length - 1 ? 0 : prev + 1));
+
+  };
+
   return (
     <>
       <div className="w-full mx-auto p-6 bg-gray-100 backdrop-blur-md rounded-lg shadow-sm">
@@ -169,60 +199,152 @@ const Reviews = () => {
         {/* ✅ Review List */}
       </div>
       <div className="h-[300px] bg-gray-100 relative overflow-hidden">
-        <div className="mt-3 gap-3 animate-slide flex items-center justify-center">
-          {reviews.length > 0 ? (
-            reviews.map((review) => (
+      <div className="relative w-full overflow-hidden">
+        <div className="relative w-full p-4 bg-gray-100 rounded-lg">
+          <div
+            className="flex gap-3 flex-row transition-transform ease-out px-12 duration-500"
+            style={{ transform: `translateX(-${currentIndex * slideWidth}%)` }}
+          >
+            {reviews.map((review) => (
               <div
                 key={review._id}
-                className="p-4 border border-white/20 w-[320px] hover:shadow-lg bg-black hover:bg-[#000000d9] rounded-lg transition-transform hover:scale-[1.02] h-[230px] flex flex-col justify-between"
+                className="w-[300px] p-4 rounded-xl border border-white/20 bg-[#1a1a1a] hover:bg-[#2a2a2a] transition-all duration-300 shadow-sm hover:shadow-md hover:scale-[1.02] h-[180px] flex flex-col justify-between"
               >
-                <div>
+                <div className="p-2 flex flex-col h-[200px]">
                   <div className="flex justify-between items-center mb-2">
                     <h4 className="text-white font-bold">{review.name}</h4>
-                    <p className="text-xs text-white">
+                    <p className="text-xs text-gray-500">
                       {new Date(review._createdAt).toLocaleDateString()}
                     </p>
                   </div>
-
-                  {/* Rating */}
                   <div className="flex gap-1 mb-2">
                     {[1, 2, 3, 4, 5].map((i) => (
                       <span key={i}>
                         {i <= review.rating ? (
                           <AiFillStar className="text-yellow-400" />
                         ) : (
-                          <AiOutlineStar className="text-gray-500" />
+                          <AiOutlineStar className="text-gray-300" />
                         )}
                       </span>
                     ))}
                   </div>
-
-                  {/* Comment (Fixed Height with Scroll) */}
                   <p className="text-white mx-2 text-sm h-[60px] w-auto overflow-y-auto custom-review-scrollbar">
                     {review.comment}
                   </p>
                 </div>
-
-                {/* Delete Button - Always at the Bottom */}
-                {user?.id === review.userId && (
-                  <button
-                    className="mt-4 w-full bg-white text-black px-3 py-2 border-2 border-black hover:border-white text-xs font-semibold transition hover:bg-black hover:text-white active:scale-95"
-                    onClick={() => deleteReview(review._id)}
-                  >
-                    Delete Review
-                  </button>
-                )}
               </div>
-            ))
-          ) : (
-            <p className="text-gray-300 text-center">
-              No reviews yet. Be the first to review!
-            </p>
+            ))}
+          </div>
+          {reviews.length > 1 && (
+            <>
+              <div className="absolute inset-0 flex justify-between items-center pointer-events-none">
+                <div className="sm:w-24 h-full bg-gradient-to-r from-white opacity-95"></div>
+                <div className="sm:w-28 h-full bg-gradient-to-l from-white opacity-95"></div>
+              </div>
+              <button
+                className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-black text-white p-2 rounded-full hover:bg-white hover:text-black transition-all duration-300 border-2 border-black opacity-80 z-10"
+                onClick={prevSlide}
+              >
+                <AiOutlineLeft size={24} />
+              </button>
+              <button
+                className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-black text-white p-2 rounded-full hover:bg-white hover:text-black transition-opacity duration-300 border-2 border-black opacity-80 z-10"
+                onClick={nextSlide}
+              >
+                <AiOutlineRight size={24} />
+              </button>
+            </>
           )}
         </div>
       </div>
+    </div>
+  
     </>
   );
 };
 
 export default Reviews;
+
+      // <div className="h-[300px] bg-gray-100 relative overflow-hidden">
+      //   <div className="relative w-full overflow-hidden">
+      //     <div className="relative w-full p-4 bg-gray-100 rounded-lg">
+      //       <div
+      //             className="sm:min-w-[100%] md:min-w-[50%] lg:min-w-[33%] w-[300px] p-4 rounded-xl border border-white/20 bg-[#1a1a1a] hover:bg-[#2a2a2a] transition-all duration-300 shadow-sm hover:shadow-md hover:scale-[1.02] h-[180px] flex flex-col justify-between"
+
+      //         // className="flex gap-3 flex-row transition-transform ease-out px-12 duration-500"
+      //         style={{ transform: `translateX(-${currentIndex * 33.33}%)` }}
+      //       >
+      //         {reviewList.map((review) => (
+      //           <div
+      //             key={review._id}
+      //              className=" w-[300px] p-4 rounded-xl border border-white/20 bg-[#1a1a1a] hover:bg-[#2a2a2a] transition-all duration-300 shadow-sm hover:shadow-md hover:scale-[1.02] h-[180px] flex flex-col justify-between"
+
+      //             // className="   min-w-[33%] p-2 transition-all duration-700 ease-out shadow-md  w-[300px] hover:shadow-lg bg-black hover:bg-[#696565de] rounded-lg  hover:scale-[1.02] h-[180px] flex flex-col justify-between"
+      //           >
+      //             <div className=" p-2 flex flex-col h-[200px]">
+      //               <div className="flex justify-between items-center mb-2">
+      //                 <h4 className="text-white font-bold">{review.name}</h4>
+      //                 <p className="text-xs text-gray-500">
+      //                   {new Date(review._createdAt).toLocaleDateString()}
+      //                 </p>
+      //               </div>
+
+      //               <div className="flex gap-1 mb-2">
+      //                 {[1, 2, 3, 4, 5].map((i) => (
+      //                   <span key={i}>
+      //                     {i <= review.rating ? (
+      //                       <AiFillStar className="text-yellow-400" />
+      //                     ) : (
+      //                       <AiOutlineStar className="text-gray-300" />
+      //                     )}
+      //                   </span>
+      //                 ))}
+      //               </div>
+
+      //               <p className="text-white mx-2 text-sm h-[60px] w-auto overflow-y-auto custom-review-scrollbar">
+      //                 {review.comment}
+      //               </p>
+      //             </div>
+      //           </div>
+      //         ))}
+      //       </div>
+      //       {/* {reviewList.length > 1 && (
+      //           <>
+      //             <button
+      //               className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-black text-white p-2 rounded-full hover:bg-white hover:text-black transition-opacity duration-300 hover:opacity-100 opacity-50"
+      //               onClick={prevSlide}
+      //             >
+      //               <AiOutlineLeft size={24} />
+      //             </button>
+      //             <button
+      //               className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-black text-white p-2 rounded-full hover:bg-white hover:text-black transition-opacity duration-300 hover:opacity-100 opacity-50"
+      //               onClick={nextSlide}
+      //             >
+      //               <AiOutlineRight size={24} />
+      //             </button>
+      //           </>
+      //         )} */}
+      //       {reviewList.length > 1 && (
+      //         <>
+      //           <div className="absolute inset-0 flex justify-between items-center pointer-events-none">
+      //           <div className="sm:w-24 h-full bg-gradient-to-r from-white opacity-95"></div>
+      //           <div className="sm:w-28 h-full bg-gradient-to-l from-white opacity-95"></div>
+      //           </div>
+
+      //           <button
+      //             className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-black text-white p-2 rounded-full hover:bg-white hover:text-black transition-all duration-300 border-2 border-black opacity-80 z-10"
+      //             onClick={prevSlide}
+      //           >
+      //             <AiOutlineLeft size={24} />
+      //           </button>
+      //           <button
+      //             className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-black text-white p-2 rounded-full hover:bg-white hover:text-black transition-opacity duration-300 border-2 border-black opacity-80 z-10"
+      //             onClick={nextSlide}
+      //           >
+      //             <AiOutlineRight size={24} />
+      //           </button>
+      //         </>
+      //       )}
+      //     </div>
+      //   </div>
+      // </div>
