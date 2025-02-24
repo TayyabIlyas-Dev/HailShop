@@ -12,6 +12,7 @@ import { ThankyouToastProvider } from "./ThankyouToast";
 import { BsFillSendExclamationFill } from "react-icons/bs";
 import Link from "next/link";
 import ValuePoints from "./ValuePoints";
+import { TbMessageCircleFilled } from "react-icons/tb";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname(); // Get the current route path
@@ -33,12 +34,13 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               <PageLoader />
               {children}
 
-              {!isAddComplain &&  
-              <Link href="/addComplain">
-                <div className="fixed bottom-3 text-center right-4 px-3 py-3 rounded-full border-2 border-black  bg-black hover:bg-white text-white hover:text-black transition-all hover:scale-110">
-                  <BsFillSendExclamationFill className=" h-4 w-4  " />
-                </div>
-              </Link>
+              {!isAddComplain &&
+                <Link href="/addComplain">
+                  <div className="fixed bottom-3 text-center right-4 px-2 py-2 rounded-full border-2 border-black  bg-black hover:bg-white text-white hover:text-black transition-all hover:scale-110">
+                    <TbMessageCircleFilled
+                      className=" h-5 w-5  " />
+                  </div>
+                </Link>
               }
               {!isDashboard && <ValuePoints />}
               {!isDashboard && <Footer />}

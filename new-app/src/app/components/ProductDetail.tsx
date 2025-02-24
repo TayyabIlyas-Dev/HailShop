@@ -133,8 +133,8 @@ const ProductDetails = ({ product }: any) => {
           transition={{ type: "spring", stiffness: 100, damping: 10 }}
         >
           <div className="flex flex-col gap-8 md:pt-3 pt-0">
-            <div className="flex flex-col gap-2">
-              <div className="text-3xl p-1 font-bold">{product.name}</div>
+            <div className="flex px-4 flex-col gap-2">
+              <div className="text-3xl  font-bold">{product.name}</div>
               {/* <div className="text-xl font-medium">
                 <span className="text-green-500">$ </span>{" "}
                 {Math.floor(withoutDiscountPrice)}
@@ -146,9 +146,9 @@ const ProductDetails = ({ product }: any) => {
                 </s>
               </div> */}
 
-              <div className="text-xl font-medium flex items-center gap-2 relative">
+              <div className="text-xl  font-medium flex items-center gap-2 relative">
                 {/* Current Price */}
-                <span className="text-green-500">$</span>
+                <span className="text-green-500 p-1">$</span>
                 {Math.floor(withoutDiscountPrice)}
 
                 {/* Unique Discount Design */}
@@ -166,10 +166,10 @@ const ProductDetails = ({ product }: any) => {
                 {/* Original Price with Neon Glow */}
                 {product.discount > 0 && (
                   <div className=" ">
-                    <s className="text-gray-400 text-[10px] px-1 relative">
-                      <span className="text-green-200">$</span>
+                    <s className="text-red-500 text-[10px] px-1 relative">
+                      <span className="text-green-400">$</span>
                       {product.price}
-                      <span className="absolute -bottom-1 left-1/2 w-8 h-[1px] bg-pink-400 blur-sm"></span>
+                      {/* <span className="absolute -bottom-1 left-1/2 w-8 h-[1px] bg-pink-400 blur-sm"></span> */}
                     </s>
                     <motion.span
                       className="relative text-[9px] font-bold px-2 py-0 rounded-md"
@@ -177,7 +177,7 @@ const ProductDetails = ({ product }: any) => {
                       animate={{ rotate: 0, scale: 1, opacity: 1 }}
                       transition={{ duration: 0.3, ease: "easeOut" }}
                     >
-                      <span className="text-white bg-black px-2 py-[3px] rounded-lg shadow-sm shadow-red-100 ">
+                      <span className="text-white bg-black px-2 py-[3px] rounded-lg shadow-sm ">
                         {product.discount}% OFF
                       </span>
                     </motion.span>
@@ -185,14 +185,14 @@ const ProductDetails = ({ product }: any) => {
                 )}
               </div>
 
-              <div className={` pb-2 text-gray-600 font-medium ${descriptionStyle}`}>
+              <div className={`p-1 pb-2 text-gray-600 font-medium ${descriptionStyle}`}>
                 {product.description}
               </div>
             </div>
 
             {/* Quantity Section */}
             <p
-              className={`mb-1 font-medium text-[12px] ${
+              className={`mb-1 px-4 font-medium text-[12px] ${
                 product.inventory > 8
                   ? "text-green-600"
                   : product.inventory > 0
@@ -223,7 +223,7 @@ const ProductDetails = ({ product }: any) => {
               </p>
             </div> */}
             {product.inventory > 0 && (
-              <div id="qty-section" className="flex gap-3 items-center">
+              <div id="qty-section" className="flex gap-3 px-4 items-center">
                 <h3 className="text-lg font-semibold text-gray-700">
                   Quantity
                 </h3>
@@ -279,7 +279,7 @@ const ProductDetails = ({ product }: any) => {
       </div>
 
       <div className=" mt-24 pb-0 p-2">
-        <Reviews />
+        {/* <Reviews /> */}
       </div>
       {/* See More Button */}
       <div className="flex pt-6 items-center border-y-2 bg-[#f0eeeec8] justify-center">

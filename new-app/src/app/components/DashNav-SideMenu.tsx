@@ -13,7 +13,7 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { MdOutlineMenu } from "react-icons/md";
+import { MdLogin, MdOutlineMenu } from "react-icons/md";
 import { FaUser } from "react-icons/fa6";
 import { TbLayoutDashboardFilled } from "react-icons/tb";
 import { HiHome } from "react-icons/hi";
@@ -21,7 +21,7 @@ import { IoMdSettings } from "react-icons/io";
 import { MdLogout } from "react-icons/md";
 import { MdOutlineAnalytics } from "react-icons/md";
 import { BiCommentDetail } from "react-icons/bi";
-import { SignIn } from "@clerk/nextjs";
+import { SignedIn, SignedOut, SignIn, SignInButton, SignOutButton } from "@clerk/nextjs";
 import { PiSignIn } from "react-icons/pi";
 import Link from "next/link";
 
@@ -142,10 +142,20 @@ export function DropdownMenuDemo() {
         </div>
         <DropdownMenuSeparator />
         <DropdownMenuItem>
-          Log out
-          <DropdownMenuShortcut>
+            <SignedIn>
+      <SignOutButton/>
+      <DropdownMenuShortcut>
             <MdLogout/>
           </DropdownMenuShortcut>
+            </SignedIn>
+
+            <SignedOut>
+      <SignInButton/>
+      <DropdownMenuShortcut>
+            <MdLogin/>
+          </DropdownMenuShortcut>
+            </SignedOut>
+          
         </DropdownMenuItem>
         {/* <DropdownMenuItem>
           <SignIn/>

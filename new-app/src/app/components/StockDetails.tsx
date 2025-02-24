@@ -411,6 +411,8 @@ import { motion } from "framer-motion";
 import Reviews from "./Reviews";
 import { useToast } from "../context/ToastContext";
 import UpdateProductForm from "./UpdateProductDetails";
+import Link from "next/link";
+import { ArrowLeft } from "lucide-react";
 
 const StockDetail = ({ product }: any) => {
   // ✅ Hooks sabse pehle define karo  
@@ -485,6 +487,14 @@ const StockDetail = ({ product }: any) => {
 
   return (
     <div className="product-details-section mt-5">
+      <div className="fixed top-20 hidden md:block px-4 py-2">
+      <Link href={'/dashboard2/inventory'}>
+      <button>
+        <ArrowLeft/>
+        </button>
+      </Link>
+      </div>
+
       {isEditing ? (
         <UpdateProductForm
           product={updatedProduct}

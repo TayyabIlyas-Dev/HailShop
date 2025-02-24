@@ -522,10 +522,12 @@ const CheckOut: React.FC = () => {
             <h1 className="text-3xl font-bold mb-6 text-center">
               Thanks For Shopping
             </h1>
-            <p className="sm:text-lg text-base mx-3 text-gray-700 max-w-2xl ">
+            <div className="text-center">
+            <p className="text-base   mx-3 text-gray-700 max-w-2xl ">
               We truly appreciate your support! Your order is being processed,
-              and we can’t wait to serve you again with more amazing products.
+              and we can&apos;t wait to serve you again with more amazing products.
             </p>
+            </div>
             <Link href="/">
               <p className="mt-6 inline-block border-2 border-black text-black px-6 py-3 font-semibold hover:bg-black hover:text-white transition">
                 Return Home
