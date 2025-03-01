@@ -47,20 +47,29 @@ const StockCard: React.FC<{ product: Product; onDelete: (id: string) => void }> 
   return (
     <div className="bg-white pt-4 pb-2 drop-shadow-md rounded-2xl overflow-hidden sm:hover:shadow-lg hover:scale-[1.04] transition-all duration-300">
           <Link href={`/dashboard2/stockDetails/${product.slug.current}`} prefetch={false}>
-                {product.discount > 0 && (
-            <div className="absolute z-10 top-2 right-1 ">
-              <motion.span
-                className="relative text-[7px] font-bold px-2 py-0 rounded-md"
-                initial={{ rotate: -5, scale: 0.8, opacity: 0 }}
-                animate={{ rotate: 0, scale: 1, opacity: 1 }}
-                transition={{ duration: 0.3, ease: "easeOut" }}
-              >
-                                <span className="text-gray-700 bg-red-100 px-2 py-[2px] rounded-md shadow-sm shadow-red-300">
-                                {product.discount}% OFF
-                </span>
-              </motion.span>
-            </div>
-          )}
+          {product.discount > 0 && (
+       <div className="absolute z-10 top-2 right-1">
+       <div className="w-7 sm:w-10 group">
+         {/* Upper Box */}
+         <div className="bg-black text-white text-center font-bold px-1 rounded-t-md">
+           <span className="text-[5px] sm:text-[7px]">{product.discount}</span>
+           <span className="text-[5px] sm:text-[7px]"> %OFF</span>
+         </div>
+     
+         {/* Triangle */}
+         <div
+           className="w-0 h-0 
+           border-l-[14px] sm:border-l-[20px] 
+           border-r-[14px] sm:border-r-[20px] 
+           border-t-[7px] sm:border-t-[10px] 
+           border-l-transparent border-r-transparent 
+           border-t-black mx-auto"
+         ></div>
+       </div>
+     </div>
+     
+        )}
+
           <Image
           src={imageUrl}
           alt={product.name}

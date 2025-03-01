@@ -13,8 +13,13 @@ import { BsFillSendExclamationFill } from "react-icons/bs";
 import Link from "next/link";
 import ValuePoints from "./ValuePoints";
 import { TbMessageCircleFilled } from "react-icons/tb";
+import ChatSupport from "./ChatSupport";
+import { useState } from "react";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
+  const [showChat, setShowChat] = useState(false);
+
+
   const pathname = usePathname(); // Get the current route path
 
   // Check if the user is on any page inside "/dashboard2"
@@ -33,15 +38,28 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               {!isDashboard && <Navbar />}
               <PageLoader />
               {children}
+            
+              {/* Chat Support Box - Only Show When "showChat" is true */}
+              {showChat && (
+               <div className="">
+               <ChatSupport />
+             </div>
+              )}
 
-              {!isAddComplain &&
-                <Link href="/addComplain">
+           
+                 {/* {!isAddComplain && */}
+                <div
+                onClick={() => setShowChat(!showChat)}
+>
                   <div className="fixed bottom-3 text-center right-4 px-2 py-2 rounded-full border-2 border-black  bg-black hover:bg-white text-white hover:text-black transition-all hover:scale-110">
                     <TbMessageCircleFilled
                       className=" h-5 w-5  " />
                   </div>
-                </Link>
-              }
+                </div>
+              {/* } */}
+
+
+          
               {!isDashboard && <ValuePoints />}
               {!isDashboard && <Footer />}
             </ThankyouToastProvider>

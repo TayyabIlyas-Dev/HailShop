@@ -13,7 +13,7 @@ import {
 } from "react-icons/ai";
 import { RiDeleteBin6Line } from "react-icons/ri";
 
-const Reviews = () => {
+const AdminReviews = () => {
   const { user } = useUser();
   const { slug } = useParams();
 
@@ -154,12 +154,11 @@ const Reviews = () => {
   return (
     <>
       <div className="w-full mx-auto p-6 bg-white backdrop-blur-md rounded-lg shadow-sm">
-        <div className="bg-[#f5f5f5] dark:bg-[#1a1a1a] p-6 rounded-lg shadow-md">
+        {/* <div className="bg-[#f5f5f5] dark:bg-[#1a1a1a] p-6 rounded-lg shadow-md">
           <h2 className="text-center text-2xl font-bold mb-4 text-black">
             Add Review
           </h2>
 
-          {/* ✅ Review Form (Hide after submission) */}
           {user && (
             <div className="flex flex-col gap-4 p-4  rounded-lg">
               <div className="flex gap-2">
@@ -195,7 +194,7 @@ const Reviews = () => {
               {error && <p className="text-red-500 text-sm">{error}</p>}
             </div>
           )}
-        </div>
+        </div> */}
         <div>
           <h2 className="text-center text-2xl font-bold mt-12 text-black mb-5">
             Customer Reviews
@@ -204,17 +203,17 @@ const Reviews = () => {
         {/* ✅ Review List */}
       </div>
 
-     <div className="h-[300px] flex justify-center items-center  bg-gray-100 relative overflow-hidden">
-      <div className="w-full overflow-hidden relative">
+     <div className="h-[300px] flex flex-shrink-0 justify-center items-center  bg-gray-100 relative overflow-hidden">
+      <div className="w-[1000px] overflow-hidden relative">
         <div
           ref={containerRef}
-          className="flex gap-4  custom-review-scrollbar overflow-x-auto px-9 scroll-smooth no-scrollbar p-4"
+          className="flex gap-4  custom-review-scrollbar overflow-x-auto px-11 scroll-smooth no-scrollbar p-4"
           style={{ whiteSpace: "nowrap" }}
         >
           {reviews.map((review) => (
             <div
               key={review._id}
-              className="w-[300px] flex-shrink-0 p-4 rounded-xl border border-white/20 bg-[#1a1a1a] hover:bg-[#2a2a2a] transition-all duration-300 shadow-sm hover:shadow-md hover:scale-[1.02] h-[190px] flex flex-col justify-between"
+              className="w-[300px] flex-shrink-0 p-4 rounded-xl border border-white/20 bg-[#1a1a1a] hover:bg-[#2a2a2a] transition-all duration-300 shadow-sm hover:shadow-md hover:scale-[1.02] h-[200px] flex flex-col justify-between"
             >
               <div className="p-2 flex flex-col h-[200px]">
                 <div className="flex justify-between items-center mb-2">
@@ -238,7 +237,14 @@ const Reviews = () => {
                 <p className="text-white mx-2 text-sm w-auto h-[60px] overflow-y-auto overflow-hidden custom-scrollbar2">
                   {review.comment}
                 </p>
-
+                {isAdmin && (
+        <button
+          onClick={() => deleteReview(review._id)}
+          className="mb-3 w-9 px-2 py-2 bg-white text-black hover:bg-black hover:text-white rounded-full hover:scale-105 duration-700 font-semibold border-2 border-black hover:border-white"
+        >
+          <RiDeleteBin6Line />
+        </button>
+      )}
 
               </div>
             </div>
@@ -251,13 +257,13 @@ const Reviews = () => {
               className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-black text-white p-2 rounded-full hover:bg-white hover:text-black transition-all duration-300 border-2 border-black opacity-80 z-10"
               onClick={scrollLeft}
             >
-              <AiOutlineLeft size={24} />
+              <AiOutlineLeft size={22} />
             </button>
             <button
               className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-black text-white p-2 rounded-full hover:bg-white hover:text-black transition-opacity duration-300 border-2 border-black opacity-80 z-10"
               onClick={scrollRight}
             >
-              <AiOutlineRight size={24} />
+              <AiOutlineRight size={22} />
             </button>
           </>
         )}
@@ -268,7 +274,7 @@ const Reviews = () => {
   );
 };
 
-export default Reviews;
+export default AdminReviews;
 
 // <div className="h-[300px] bg-gray-100 relative overflow-hidden">
 //   <div className="relative w-full overflow-hidden">

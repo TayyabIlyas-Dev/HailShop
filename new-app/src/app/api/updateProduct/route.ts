@@ -67,16 +67,16 @@ export async function POST(req: Request) {
     const body = await req.json();
     console.log("API Request Body:", body); // Debugging ke liye
 
-    const { id, name, price, inventory, images, discount, isFeatured, productType } = body;
+    const { id,  price, inventory, images, discount, isFeatured, productType } = body;
 
-    if (!id || !name || price == null || inventory == null || !productType) {
+    if (!id  || price == null || inventory == null || !productType) {
       return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
     }
 
     // Update product in Sanity
     const updatedProduct = await client
       .patch(id)
-      .set({ name, price, inventory, images, discount, isFeatured, productType }) // ✅ ProductType added
+      .set({  price, inventory, images, discount, isFeatured, productType }) // ✅ ProductType added
       .commit();
 
     return NextResponse.json({ message: "Product updated successfully", updatedProduct });

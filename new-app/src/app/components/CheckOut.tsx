@@ -342,6 +342,8 @@ import Link from "next/link";
 import { useThankyouToast } from "./ThankyouToast";
 // import { useThankyouToast } from "./ThankyouToast";
 import { useRouter } from "next/navigation";
+import Thanks from "./Thanks";
+import { useToast } from "../context/ToastContext";
 
 const CheckOut: React.FC = () => {
   const {
@@ -381,54 +383,6 @@ const CheckOut: React.FC = () => {
   });
   const { showToast } = useThankyouToast();
 
-  const handlePlaceOrder = async () => {
-    const orderData = {
-      _type: "order",
-      fullName: formData.fullName,
-      address: formData.address,
-      city: formData.city,
-      zipCode: formData.postalCode,
-      email: formData.email,
-      cartItems: cartItems.map((item: any) => ({
-        _type: "orderItem",
-        productId: item._id, // Product ID for tracking (optional)
-        name: item.name, // Copy Product Name
-        price: item.price, // Copy Product Price
-        discount: item.discount || 0, // Copy Discount
-        finalPrice: item.price - (item.price * (item.discount || 0)) / 100, // Calculate final price
-        productQty: item.quantity, // Copy Quantity
-        image: item.images?.[0] || null, // Copy First Image
-        _key: item._id || crypto.randomUUID(),
-      })),
-      totalPrice: totalPrice,
-      totalQuantity: totalQuantity,
-      orderDate: new Date().toISOString(),
-    };
-
-    try {
-      const response = await client.create(orderData);
-
-      await Promise.all(
-        cartItems.map((item: any) =>
-          client.patch(item._id).inc({ inventory: -item.quantity }).commit()
-        )
-      );
-
-      localStorage.removeItem("cartItems");
-      console.log("Order saved successfully:", response);
-      showToast("Order Placed Successfully!"); // Success toast
-    } catch (error) {
-      console.error("Error saving order or updating inventory:", error);
-      showToast("Something went wrong!"); // Error toast
-    }
-    try {
-      // Order place karne ka logic
-      setOrderCompleted(true); // Order complete hone pe UI change hoga
-    } catch (error) {
-      console.error("Order placement failed:", error);
-    }
-  };
-
   // const handlePlaceOrder = async () => {
   //   const orderData = {
   //     _type: "order",
@@ -439,8 +393,13 @@ const CheckOut: React.FC = () => {
   //     email: formData.email,
   //     cartItems: cartItems.map((item: any) => ({
   //       _type: "orderItem",
-  //       product: { _type: "reference", _ref: item._id },
-  //       productQty: item.quantity,
+  //       productId: item._id, // Product ID for tracking (optional)
+  //       name: item.name, // Copy Product Name
+  //       price: item.price, // Copy Product Price
+  //       discount: item.discount || 0, // Copy Discount
+  //       finalPrice: item.price - (item.price * (item.discount || 0)) / 100, // Calculate final price
+  //       productQty: item.quantity, // Copy Quantity
+  //       image: item.images?.[0] || null, // Copy First Image
   //       _key: item._id || crypto.randomUUID(),
   //     })),
   //     totalPrice: totalPrice,
@@ -457,14 +416,6 @@ const CheckOut: React.FC = () => {
   //       )
   //     );
 
-  //     //   localStorage.removeItem("cartItems");
-  //     //   console.log("Order saved successfully:", response);
-  //     //   alert("Order Placed Successfully!");
-  //     // } catch (error) {
-  //     //   console.error("Error saving order or updating inventory:", error);
-  //     //   alert("Something went wrong!");
-  //     // }
-
   //     localStorage.removeItem("cartItems");
   //     console.log("Order saved successfully:", response);
   //     showToast("Order Placed Successfully!"); // Success toast
@@ -472,14 +423,81 @@ const CheckOut: React.FC = () => {
   //     console.error("Error saving order or updating inventory:", error);
   //     showToast("Something went wrong!"); // Error toast
   //   }
+  //   try {
+  //     // Order place karne ka logic
+  //     setOrderCompleted(true); // Order complete hone pe UI change hoga
+  //   } catch (error) {
+  //     console.error("Order placement failed:", error);
+  //   }
   // };
+
+
+  // new
+  const handlePlaceOrder = async () => {
+    if (!/^\d{11}$/.test(formData.postalCode)) {
+      alert("Postal code must be exactly 11 digits");
+      return; // Stop execution if postal code is invalid
+    }
+    const orderData = {
+      _type: "order",
+      fullName: formData.fullName,
+      address: formData.address,
+      city: formData.city,
+      zipCode: formData.postalCode,
+      email: formData.email,
+      cartItems: cartItems.map((item: any) => ({
+        _type: "orderItem",
+        productId: item._id,
+        name: item.name,
+        price: item.price,
+        discount: item.discount || 0,
+        finalPrice: item.price - (item.price * (item.discount || 0)) / 100,
+        productQty: item.quantity,
+        image: item.images?.[0] || null,
+        _key: item._id || crypto.randomUUID(),
+      })),
+      paymentMethod: paymentMethod, // 🔥 Fix applied
+
+      totalPrice: totalPrice,
+      totalQuantity: totalQuantity,
+      orderDate: new Date().toISOString(),
+    };
+  
+    try {
+      const response = await client.create(orderData);
+      console.log("Order saved successfully:", response);
+  
+      try {
+        await Promise.all(
+          cartItems.map((item: any) =>
+            client
+              .patch(item._id)
+              .inc({ inventory: -Number(item.quantity) }) // Convert to number
+              .commit()
+          )
+        );
+        
+        
+        console.log("Inventory updated successfully.");
+      } catch (inventoryError) {
+        console.error("Error updating inventory:", inventoryError);
+        showToast("Inventory update failed!"); // Alag se toast dikhao
+      }
+  
+      localStorage.removeItem("cartItems");
+      showToast("Order Placed Successfully!"); // Success toast
+      setOrderCompleted(true); // UI update
+    } catch (error) {
+      console.error("Error saving order:", error);
+      showToast("Something went wrong!"); // Error toast
+    }
+  };
+  
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   setFormData({ ...formData, [e.target.name]: e.target.value });
-  // };
+
 
   const validateForm = () => {
     let newErrors = {
@@ -518,22 +536,9 @@ const CheckOut: React.FC = () => {
     <>
       <div>
         {orderCompleted ? (
-          <div className="text-center backdrop-blur-xl mt-32 mb-40">
-            <h1 className="text-3xl font-bold mb-6 text-center">
-              Thanks For Shopping
-            </h1>
-            <div className="text-center">
-            <p className="text-base   mx-3 text-gray-700 max-w-2xl ">
-              We truly appreciate your support! Your order is being processed,
-              and we can&apos;t wait to serve you again with more amazing products.
-            </p>
-            </div>
-            <Link href="/">
-              <p className="mt-6 inline-block border-2 border-black text-black px-6 py-3 font-semibold hover:bg-black hover:text-white transition">
-                Return Home
-              </p>
-            </Link>
-          </div>
+         <div>
+          <Thanks/>
+         </div>
         ) : (
           <div>
             {cartItems.length === 0 ? (
@@ -614,9 +619,9 @@ const CheckOut: React.FC = () => {
                         )}
 
                         <input
-                          type="text"
+                          type="number"
                           name="postalCode"
-                          placeholder="Postal Code"
+                          placeholder="Phone Number"
                           className="p-3 border border-gray-300 rounded w-full sm:w-1/2"
                           value={formData.postalCode}
                           onChange={handleChange}
@@ -692,11 +697,10 @@ const CheckOut: React.FC = () => {
                         onClick={handlePlaceOrder}
                         disabled={isDisabled}
                         className={`mt-6 p-3  w-full font-semibold border-2 border-gray-800 transition-all 
-                    ${
-                      isDisabled
-                        ? "bg-[#000000] hover:bg-[#ffffff]  text-[#ffffff] hover:text-[#000000] cursor-not-allowed border-gray-400"
-                        : "bg-white text-black hover:text-white hover:bg-black border-black"
-                    }
+                    ${isDisabled
+                            ? "bg-[#000000] hover:bg-[#ffffff]  text-[#ffffff] hover:text-[#000000] cursor-not-allowed border-gray-400"
+                            : "bg-white text-black hover:text-white hover:bg-black border-black"
+                          }
                   `}
                       >
                         Complete Order
@@ -713,7 +717,7 @@ const CheckOut: React.FC = () => {
                         {cartItems.map((product: any) => {
                           const withoutDiscountPrice = product.discount
                             ? product.price -
-                              (product.price * product.discount) / 100
+                            (product.price * product.discount) / 100
                             : product.price;
 
                           return (
@@ -746,22 +750,11 @@ const CheckOut: React.FC = () => {
                                         <div>
                                           <motion.span
                                             className="relative text-[9px] font-bold px-2 py-0 rounded-md"
-                                            initial={{
-                                              rotate: -5,
-                                              scale: 0.8,
-                                              opacity: 0,
-                                            }}
-                                            animate={{
-                                              rotate: 0,
-                                              scale: 1,
-                                              opacity: 1,
-                                            }}
-                                            transition={{
-                                              duration: 0.3,
-                                              ease: "easeOut",
-                                            }}
+                                            initial={{ rotate: -5, scale: 0.8, opacity: 0 }}
+                                            animate={{ rotate: 0, scale: 1, opacity: 1 }}
+                                            transition={{ duration: 0.3, ease: "easeOut" }}
                                           >
-                                            <span className="text-gray-700 bg-red-100 px-2 py-[2px] rounded-md shadow-sm shadow-red-300">
+                                            <span className="text-white bg-black px-2 py-[3px] rounded-lg shadow-sm ">
                                               {product.discount}% OFF
                                             </span>
                                           </motion.span>
@@ -781,11 +774,10 @@ const CheckOut: React.FC = () => {
                                             "minus"
                                           )
                                         }
-                                        className={`text-red-500 text-sm hover:text-red-700 ${
-                                          product.quantity === 1
+                                        className={`text-red-500 text-sm hover:text-red-700 ${product.quantity === 1
                                             ? "opacity-50 cursor-not-allowed"
                                             : ""
-                                        }`}
+                                          }`}
                                         disabled={product.quantity === 1}
                                       >
                                         <AiOutlineMinus />
@@ -797,11 +789,10 @@ const CheckOut: React.FC = () => {
                                         onClick={() =>
                                           toggleCartItemQty(product._id, "plus")
                                         }
-                                        className={`text-green-500 text-sm hover:text-green-700 ${
-                                          product.quantity >= product.inventory
+                                        className={`text-green-500 text-sm hover:text-green-700 ${product.quantity >= product.inventory
                                             ? "opacity-50 cursor-not-allowed"
                                             : ""
-                                        }`}
+                                          }`}
                                         disabled={
                                           product.quantity >= product.inventory
                                         }

@@ -408,11 +408,11 @@ import { urlForImage } from "../../sanity/lib/image";
 import Image from "next/image";
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import Reviews from "./Reviews";
 import { useToast } from "../context/ToastContext";
 import UpdateProductForm from "./UpdateProductDetails";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
+import AdminReviews from "./AdminReviews";
 
 const StockDetail = ({ product }: any) => {
   // ✅ Hooks sabse pehle define karo  
@@ -509,6 +509,23 @@ const StockDetail = ({ product }: any) => {
             transition={{ type: "spring", stiffness: 100, damping: 10 }}
           >
             <div>
+            {product.discount > 0 && (
+              <div className="relative top-11 left-7 ">
+                <div className="w-12 group">
+                  {/* Upper Box */}
+                  <div className="bg-black  text-white text-center font-bold px-1 rounded-t-md">
+                    <span className="text-[8px]">{product.discount}</span>
+                    <span className="text-[9px]"> %OFF</span>
+                  </div>
+
+                  {/* Triangle */}
+                  <div
+                    className="w-0 h-0 border-l-[24px] border-r-[24px] border-t-[12px] border-l-transparent border-r-transparent 
+               border-t-black   mx-auto"
+                  ></div>
+                </div>
+              </div>
+            )}
               <div className="h-[260px] flex items-center mb-[24px] border rounded-lg mx-5 hover:shadow-md">
                 <Image
                   src={urlForImage(product.images[first]).url()}
@@ -564,25 +581,25 @@ const StockDetail = ({ product }: any) => {
                     </span>
                   </motion.div> */}
                   {/* Original Price with Neon Glow */}
-                  {product.discount > 0 && (
-                    <div className=" ">
-                      <s className="text-gray-400 text-[10px] px-1 relative">
-                        <span className="text-green-200">$</span>
-                        {product.price}
-                        <span className="absolute -bottom-1 left-1/2 w-8 h-[1px] bg-pink-400 blur-sm"></span>
-                      </s>
-                      <motion.span
-                        className="relative text-[9px] font-bold px-2 py-0 rounded-md"
-                        initial={{ rotate: -5, scale: 0.8, opacity: 0 }}
-                        animate={{ rotate: 0, scale: 1, opacity: 1 }}
-                        transition={{ duration: 0.3, ease: "easeOut" }}
-                      >
-                        <span className="text-gray-700 bg-red-100 px-2 py-[2px] rounded-md shadow-sm shadow-red-300">
-                          {product.discount}% OFF
-                        </span>
-                      </motion.span>
-                    </div>
-                  )}
+               {product.discount > 0 && (
+                               <div className=" ">
+                                 <s className="text-red-500 text-[10px] px-1 relative">
+                                   <span className="text-green-400">$</span>
+                                   {product.price}
+                                   {/* <span className="absolute -bottom-1 left-1/2 w-8 h-[1px] bg-pink-400 blur-sm"></span> */}
+                                 </s>
+                                 <motion.span
+                                   className="relative text-[9px] font-bold px-2 py-0 rounded-md"
+                                   initial={{ rotate: -5, scale: 0.8, opacity: 0 }}
+                                   animate={{ rotate: 0, scale: 1, opacity: 1 }}
+                                   transition={{ duration: 0.3, ease: "easeOut" }}
+                                 >
+                                   <span className="text-white bg-black px-2 py-[3px] rounded-lg shadow-sm ">
+                                     {product.discount}% OFF
+                                   </span>
+                                 </motion.span>
+                               </div>
+                             )}
                 </div>
               </div>
               <p className="mb-1 font-medium text-[12px]">
@@ -605,7 +622,7 @@ const StockDetail = ({ product }: any) => {
         </div>
       )}
       <div className="my-5 mx-2 p-2">
-        <Reviews />
+        <AdminReviews />
       </div>
     </div>
   );

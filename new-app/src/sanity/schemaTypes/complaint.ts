@@ -33,5 +33,24 @@ export default {
       title: "City",
       validation: (Rule: any) => Rule.required(),
     },
+    {
+      name: "phoneNumber",
+      type: "string",
+      title: "Phone Number",
+      validation: (Rule: any) => Rule.required().min(11).max(11),
+    },
+    {
+      name: "complainStatus",
+      title: "Status",
+      type: "string",
+      options: {
+        list: [
+          { title: "Pending", value: "Pending" },
+          { title: "In Progress", value: "In_Progress" },
+          { title: "Resolved", value: "Resolved" },
+          { title: "Rejected", value: "Rejected" },
+        ],
+      },
+    },
   ],
 };

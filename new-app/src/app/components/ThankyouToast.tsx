@@ -29,17 +29,17 @@ export const ThankyouToastProvider = ({ children }: { children: React.ReactNode 
       exit={{ opacity: 0, y: -20 }} // Fade-out & slide up
       transition={{ duration: 0.4, ease: "easeInOut" }} // Smooth transition
       
-      className="fixed top-52 left-[30%] sm:left-[38%] border-2 border-gray-700 md:left-[40%] lg:left-[38%] transform -translate-x-1/2 bg-white hover:bg-gray-100  text-black  px-7 py-3 shadow-xl hover:shadow-[30px] z-50 text-[10px] sm:text-sm max-w-[90%] flex flex-col items-center justify-center sm:max-w-md text-center  gap-3 "
+      className="fixed top-52 left-[30%] sm:left-[38%] border-[3px] border-black md:left-[40%] lg:left-[39%] transform -translate-x-1/2 bg-white   text-black rounded-lg  px-7 py-3 shadow-xl hover:shadow-[30px] z-50 text-[10px] sm:text-sm max-w-[90%] flex flex-col items-center justify-center sm:max-w-md text-center  gap-3 "
     
 
     >
       <motion.div
-        className="bg-green-100 rounded-full my-3 flex items-center justify-center p-3 shadow-sm w-12 text-center "
+        className="bg-black rounded-full my-3 flex items-center justify-center p-3 shadow-sm w-12 text-center "
         initial={{ scale: 0.8, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         transition={{ duration: 0.5, ease: "easeOut" }}
       >
-        <FaCheck className="text-green-500 w-6 h-6" />
+        <FaCheck className="text-white w-7 h-6" />
       </motion.div>
     
       <span className=" text-lg font-semibold ">Thankyou For Shopping</span>

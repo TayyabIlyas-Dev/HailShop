@@ -47,8 +47,8 @@ const Footer = () => {
           <div className="w-full lg:w-1/4 mb-6 lg:mb-0 text-center sm:text-start">
             <h3 className="text-gray-500 font-medium mb-2">Help</h3>
             <ul className="text-gray-900 space-y-3">
+              <li><Link href="/addComplain" className="hover:text-gray-900 text-sm ">Complain</Link></li>
               <li><Link href="#" className="hover:text-gray-900 text-sm ">Payment Options</Link></li>
-              <li><Link href="#" className="hover:text-gray-900 text-sm ">Returns</Link></li>
               <li><Link href="#" className="hover:text-gray-900 text-sm ">Privacy Policies</Link></li>
             </ul>
           </div>

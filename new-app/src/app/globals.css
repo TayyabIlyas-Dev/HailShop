@@ -82,7 +82,8 @@ color: #000;
 }
 
 .custom-review-scrollbar::-webkit-scrollbar {
-  width: 2px;
+  width: 0px;
+  height: 0px;
  /* Width of the scrollbar */
 }
 

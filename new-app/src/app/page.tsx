@@ -1,11 +1,10 @@
 "use client";
 import { BrowseCategory, Hero, IconSlider, Products } from "./components";
+import ChatBot from "./components/ChatSupport";
 import FeaturedProducts from "./components/FeaturedProducts";
 // import Footer from '@/components/Footer';
 import HeroTwo from "./components/HeroTwo";
 import { AppProvider } from "./context/AppContext"; // Import AppProvider
-import { CartProvider } from "./context/CartContext"; // Import CartProvider
-import { FavouritesProvider } from "./context/FavouritesContext"; // Import FavouritesProvider
 
 export default function Home() {
   return (
@@ -46,6 +45,7 @@ export default function Home() {
       <div>
         <HeroTwo />
       </div>
+  
 
       
     </AppProvider>

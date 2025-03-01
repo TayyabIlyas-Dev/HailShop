@@ -279,7 +279,7 @@ const ProductDetails = ({ product }: any) => {
       </div>
 
       <div className=" mt-24 pb-0 p-2">
-        {/* <Reviews /> */}
+        <Reviews />
       </div>
       {/* See More Button */}
       <div className="flex pt-6 items-center border-y-2 bg-[#f0eeeec8] justify-center">

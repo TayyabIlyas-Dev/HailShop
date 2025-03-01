@@ -114,7 +114,7 @@ export default function UpdateProductForm({ product, onUpdate, onCancel }: {
   onCancel: () => void 
 }) {
   const [updatedProduct, setUpdatedProduct] = useState({
-    name: product.name,
+    // name: product.name,
     description: product.description,
     price: product.price,
     discount: product.discount || "",
@@ -152,7 +152,7 @@ export default function UpdateProductForm({ product, onUpdate, onCancel }: {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4 px-10 pt-3">
-      <input type="text" name="name" placeholder="Product Name" value={updatedProduct.name} onChange={handleChange} className="w-full p-2 border rounded" required />
+      {/* <input type="text" name="name" placeholder="Product Name" value={updatedProduct.name} onChange={handleChange} className="w-full p-2 border rounded" required /> */}
       <input type="text" name="description" placeholder="Description" value={updatedProduct.description} onChange={handleChange} className="w-full p-2 border rounded" required />
       <input type="number" name="price" placeholder="Price" value={updatedProduct.price} onChange={handleChange} className="w-full p-2 border rounded" required />
       <input type="number" name="discount" placeholder="Discount (%)" value={updatedProduct.discount} onChange={handleChange} className="w-full p-2 border rounded" />

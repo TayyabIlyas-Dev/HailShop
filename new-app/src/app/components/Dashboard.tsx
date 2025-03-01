@@ -35,6 +35,8 @@ interface Order {
   totalQuantity: number;
   orderDate: string;
   orderTime: string;
+  zipCode: number,
+  paymentMethod: string;
   address: string;
   cartItems: {
     name?: string;
@@ -63,7 +65,7 @@ const Dashboard: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const filters = [
-  
+
     "All",
     "Today",
     "1 Week",
@@ -80,7 +82,7 @@ const Dashboard: React.FC = () => {
       try {
         const data = await client.fetch(
           `*[_type=="order"]{
-            _id, fullName, email, productStatus, city, totalPrice, totalQuantity, orderDate,"orderTime": orderDate[11..18],  address,
+            _id, fullName, email, productStatus,  paymentMethod,zipCode, city, totalPrice, totalQuantity, orderDate,"orderTime": orderDate[11..18],  address,
             cartItems[] {
     name,
     "image": image.asset._ref,
@@ -142,10 +144,10 @@ const Dashboard: React.FC = () => {
   // }, [selectedFilter, orders]);
 
   const statusOptions = [
-    { label: "All", color: "text-black hover:text-white" },
-    { label: "Pending", color: "text-red-600" },
-    { label: "Dispatch", color: "text-blue-600" },
-    { label: "Delivered", color: "text-green-600" },
+    { label: "All", color: "text-black hover:text-white font-semibold" },
+    { label: "Pending", color: "text-red-600 font-semibold" },
+    { label: "Dispatch", color: "text-blue-600 font-semibold" },
+    { label: "Delivered", color: "text-green-600 font-semibold" },
   ];
   useEffect(() => {
     let filtered = [...orders];
@@ -173,7 +175,7 @@ const Dashboard: React.FC = () => {
     } else if (selectedFilter === "Custom Date" && startDate && endDate) {
       // const start = new Date(startDate);
       const start = new Date(startDate);
-start.setDate(start.getDate() - 1);
+      start.setDate(start.getDate() - 1);
       const end = new Date(endDate);
       filtered = orders.filter((order) => {
         const orderDate = new Date(order.orderDate);
@@ -303,101 +305,104 @@ start.setDate(start.getDate() - 1);
       <Card className="overflow-y-auto py-3 shadow-sm text-xs h-full">
         <div className="">
 
-        <div className="flex justify-between items-center pl-9 px-6 py-5">
-          <h2 className="font-semibold text-3xl">Order Details</h2>
-          <Button
-            className="flex items-center gap-2 bg-black text-white px-4 py-2 rounded-md hover:bg-gray-800 transition"
-            onClick={() => setFilterOpen(!filterOpen)}
-          >
-            <FaFilter /> Filter
-          </Button>
-        </div>
+          <div className="flex justify-between items-center pl-9 px-6 py-5">
+            <h2 className="font-semibold text-3xl">Order Details</h2>
+            <Button
+              className="flex items-center gap-2 bg-black text-white px-4 py-2 rounded-md hover:bg-gray-800 transition"
+              onClick={() => setFilterOpen(!filterOpen)}
+            >
+              <FaFilter /> Filter
+            </Button>
+          </div>
 
-        {filterOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            className="flex gap-2 px-6 py-2 flex-wrap"
-          >
-             <div className="relative w-28 ">
-              <div
-               
-                onClick={() => setIsOpen(!isOpen)}
-                // className={` text-sm flex items-center bg-gray-300 hover:bg-gray-400 text-black hover:text-white justify-between border rounded-md border-gray-300 px-2 py-2  cursor-pointer ${statusOptions.find(s => s.label === selectedStatus)?.color} rounded-md transition ${selectedFilter === selectedStatus
-                //   ? "bg-gray-800 text-white"
-                //   : "bg-gray-300 text-black"
-                //   }`}
-                className={`text-sm flex  items-center justify-between border rounded-md  px-2 py-2 cursor-pointer 
-                  ${selectedStatus === "All" 
-                    ? "bg-gray-300 text-black" 
-                    : statusOptions.find(s => s.label === selectedStatus)?.color} 
+          {filterOpen && (
+            <motion.div
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              className="flex gap-2 px-6 py-2 flex-wrap"
+            >
+              <div className="relative w-28 ">
+                <div
+
+                  onClick={() => setIsOpen(!isOpen)}
+                  // className={` text-sm flex items-center bg-gray-300 hover:bg-gray-400 text-black hover:text-white justify-between border rounded-md border-gray-300 px-2 py-2  cursor-pointer ${statusOptions.find(s => s.label === selectedStatus)?.color} rounded-md transition ${selectedFilter === selectedStatus
+                  //   ? "bg-gray-800 text-white"
+                  //   : "bg-gray-300 text-black"
+                  //   }`}
+                  className={`text-sm flex  items-center justify-between border rounded-md  px-2 py-2 cursor-pointer 
+                  ${selectedStatus === "All"
+                      ? "bg-gray-300 text-black"
+                      : statusOptions.find(s => s.label === selectedStatus)?.color} 
                   rounded-md transition 
                   ${selectedFilter === selectedStatus ? "bg-gray-300 hover:bg-slate-300 text-black" : "border-black border-2 bg-[#c6c7c7a9]"}`}
-                
-              >
-                {/* <p className="text-sm font-semibold text-black text-center">By Status :</p> */}
 
-
-                {selectedStatus}
-                <ChevronDown className="px-1 text-black" />
-              </div>
-              {isOpen && (
-                <motion.ul
-                  initial={{ opacity: 0, y: -10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
-                  className="absolute w-full mt-1 bg-gray-200 shadow-md border py-1  rounded-md  overflow-hidden"
                 >
-                  {statusOptions.map((option) => (
-                    <li
-                      key={option.label}
-                      className={`px-3 py-1 cursor-pointer hover:bg-gray-800 ${option.color}`}
-                      onClick={() => handleSelect(option.label)}
-                    >
-                      {option.label}
-                    </li>
-                  ))}
-                </motion.ul>
-              )}
-            </div>
+                  {/* <p className="text-sm font-semibold text-black text-center">By Status :</p> */}
 
-            {filters.map((filter) => (
-              <Button
-                key={filter}
-                onClick={() => setSelectedFilter(filter)}
-                className={`px-3 py-0 text-sm rounded-md transition ${selectedFilter === filter
-                  ? "bg-gray-800 text-white"
-                  : "bg-gray-300 text-black"
-                  }`}
-              >
-                {filter}
-              </Button>
-            ))}
 
-            {/* Custom Date Input */}
-            {selectedFilter === "Custom Date" && (
-              <div className="flex gap-2">
-                <input
-                  type="date"
-                  value={startDate}
-                  onChange={(e) => setStartDate(e.target.value)}
-                  className="border border-gray-300  rounded px-2 py-1 text-black"
-                />{" "}
-                :
-                <input
-                  type="date"
-                  value={endDate}
-                  onChange={(e) => setEndDate(e.target.value)}
-                  className="border border-gray-300 rounded px-2 py-1 text-black"
-                />
+                  {selectedStatus}
+                  <ChevronDown className="px-1 text-black" />
+                </div>
+                {isOpen && (
+                  <motion.ul
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    className="absolute w-full mt-1 bg-gray-200 shadow-md border py-1  rounded-md  overflow-hidden"
+                  >
+                    {statusOptions.map((option) => (
+                      <li
+                        key={option.label}
+                        className={`px-3 py-1 cursor-pointer hover:bg-gray-800 ${option.color}`}
+                        onClick={() => handleSelect(option.label)}
+                      >
+                        {option.label}
+                      </li>
+                    ))}
+                  </motion.ul>
+                )}
               </div>
 
-            )}
-           
+              {filters.map((filter) => (
+                <Button
+                  key={filter}
+                  onClick={() => setSelectedFilter(filter)}
+                  className={`px-3 py-0 text-sm rounded-md transition ${selectedFilter === filter
+                    ? "bg-gray-800 text-white"
+                    : "bg-gray-300 text-black"
+                    }`}
+                >
+                  {filter}
+                </Button>
+              ))}
 
-          </motion.div>
-        )}
+              {/* Custom Date Input */}
+              {selectedFilter === "Custom Date" && (
+                <div className="flex gap-2 items-center  text-center">
+                  <input
+                    type="date"
+                    value={startDate}
+                    onChange={(e) => setStartDate(e.target.value)}
+                    className="border border-gray-300  rounded px-2 py-2 mb-1 text-black"
+                  />{" "}
+                  <span className="  mb-1 font-extrabold text-base px-1 py-1 text-black"
+                  >
+                    :
+                  </span>
+                  <input
+                    type="date"
+                    value={endDate}
+                    onChange={(e) => setEndDate(e.target.value)}
+                    className="border border-gray-300 rounded px-2  mb-1 py-2 text-black"
+                  />
+                </div>
+
+              )}
+
+
+            </motion.div>
+          )}
         </div>
 
 
@@ -420,7 +425,7 @@ start.setDate(start.getDate() - 1);
                       Email
                     </TableHead>
                     <TableHead className="text-center font-bold">
-                      City
+                      Contact Num
                     </TableHead>
                     <TableHead className="text-center font-bold">
                       Total Price
@@ -439,7 +444,7 @@ start.setDate(start.getDate() - 1);
                     </TableHead>
                   </TableRow>
                 </TableHeader>
-                <TableBody className="overflow-scroll">
+                <TableBody className="overflow-scroll empty:h-32">
                   {filteredOrders.map((order) => (
                     <React.Fragment key={order._id}>
                       <TableRow
@@ -470,12 +475,14 @@ start.setDate(start.getDate() - 1);
                         <TableCell className="text-start">
                           {order.fullName}
                         </TableCell>
-                        <TableCell className="text-start break-words max-w-[150px]">
+                        <TableCell className="text-start break-words max-w-[140px]">
                           {order.email}
                         </TableCell>
+
                         <TableCell className="text-center">
-                          {order.city}
+                          {order.zipCode}
                         </TableCell>
+
                         <TableCell className="text-center">
                           <span className="text-green-500">$ </span>
                           {order.totalPrice}
@@ -524,7 +531,10 @@ start.setDate(start.getDate() - 1);
                           <TableCell colSpan={9} className="text-center">
                             <div className="text-start flex justify-between px-2 break-words text-xs">
                               <div>
-                                <span className="font-semibold">Address :</span>{" "}
+                                <span className="font-semibold px-1"> City :
+                                </span>
+                                {order.city}
+                                <span className="font-semibold px-1 pl-2">Address : </span>{" "}
                                 {order.address}
                               </div>
 
@@ -538,6 +548,8 @@ start.setDate(start.getDate() - 1);
                                     hour12: true,
                                   }
                                 )}
+                                <span className="font-semibold px-1 pl-2">Payment Method : </span>{" "}
+                                {order.paymentMethod.toUpperCase()}
                               </div>
                             </div>
                             <div className="flex flex-col md:flex-row md:flex-wrap gap-4 p-2">
@@ -549,7 +561,7 @@ start.setDate(start.getDate() - 1);
                                   return (
                                     <div
                                       key={index}
-                                      className="flex items-center space-x-4 p-2 border-b w-full sm:w-1/2 lg:w-1/3"
+                                      className="flex items-center space-x-4 p-2 border-b last:border-none w-full sm:w-1/2 lg:w-1/3"
                                     >
                                       {item?.image ? (
                                         <Image

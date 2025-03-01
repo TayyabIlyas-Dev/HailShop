@@ -10,6 +10,12 @@ export const order = defineType({
     defineField({ name: "city", title: "City", type: "string" }),
     defineField({ name: "zipCode", title: "Zip Code", type: "string" }),
     defineField({
+      name: "paymentMethod",
+      title: "Payment Method",
+      type: "string",
+    }),
+
+    defineField({
       name: "productStatus",
       title: "Product Status",
       type: "string",
