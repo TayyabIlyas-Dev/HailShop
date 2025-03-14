@@ -90,8 +90,8 @@ export default function ChatSupport() {
             </div>
         </div> */}
             <div className="flex items-center fixed bottom-12 right-2 sm:bottom-14 sm:right-5 min-h-[60px] justify-center text-white px-2 sm:px-7">
-                <div className="w-full max-w-[240px] sm:max-w-sm backdrop-blur-xl sm:p-6 p-3 rounded-2xl shadow-xl">
-                    <h2 className="text-xl font-bold text-center mb-4">Chat with HAIL💬</h2>
+                <div className="w-full max-w-[240px] sm:max-w-sm backdrop-blur-2xl sm:p-6 p-3 rounded-2xl shadow-xl">
+                    <h2 className="text-xl font-bold text-gray-700 text-center mb-4">Chat with HAIL💬</h2>
                     <div className="mb-4  max-h-60 overflow-y-auto border-2 border-black/5 rounded-2xl backdrop-blur-3xl custom-scrollbar2">
                         {history.map((chat, index) => (
                             <motion.div
@@ -120,9 +120,11 @@ export default function ChatSupport() {
                             type="text"
                             value={message}
                             onChange={(e) => setMessage(e.target.value)}
+                            onKeyDown={(e) => e.key === "Enter" && sendMessage()} // Enter key press support
                             placeholder="Ask something..."
                             className="w-full p-3 rounded-lg hover:bg-black text-black hover:text-white border-2 border-gray-800 focus:outline-none focus:border-gray-700"
                         />
+
                         <button
                             onClick={sendMessage}
                             disabled={loading}
@@ -133,7 +135,7 @@ export default function ChatSupport() {
                     </div>
                 </div>
             </div>
-            
+
 
         </>
     );

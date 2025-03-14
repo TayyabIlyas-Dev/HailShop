@@ -131,15 +131,17 @@ export default function UpdateProductForm({ product, onUpdate, onCancel }: {
     const { name, value, type, checked } = e.target;
     setUpdatedProduct((prev) => ({
       ...prev,
-      [name]: type === "checkbox" ? checked : value,
+      [name]: type === "checkbox" ? checked : ["inventory", "discount", "price"].includes(name) ? Number(value) : value,
     }));
   };
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     try {
-      await onUpdate(updatedProduct);
+      await onUpdate({ 
+        ...updatedProduct, 
+        inventory: Number(updatedProduct.inventory) // Ensure inventory is a number
+      });
       showToast("Product updated successfully!");
     } catch (error) {
       console.log(error);

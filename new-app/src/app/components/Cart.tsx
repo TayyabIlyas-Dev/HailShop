@@ -7,6 +7,7 @@ import Image from "next/image";
 import { urlForImage } from "@/src/sanity/lib/image";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
+import StripeCheckOutButton from "./StripeCheckOutButton";
 
 const Cart: React.FC = () => {
   const {
@@ -174,6 +175,7 @@ const Cart: React.FC = () => {
                     <span className="text-green-500">$ </span> {totalPrice}
                   </span>
                 </div>
+                {/* <StripeCheckOutButton/> */}
                 <Link href={"/checkout"}>
                 <button
                   onClick={handleClose}

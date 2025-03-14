@@ -45,7 +45,21 @@ export const CartContext = createContext<CartContextValue | undefined>(undefined
 export const CartProvider = ({ children }: { children: React.ReactNode }) => {
   const [isHydrated, setIsHydrated] = useState(false); // 👈 New state to track hydration
 
-  const [cartItems, setCartItems] = useState<Product[]>([]);
+  const [cartItems, setCartItems] = useState<Product[]>([]);useEffect(() => {
+    const handleStorageChange = () => {
+      const updatedCartItems = JSON.parse(localStorage.getItem("cartItems") || "[]");
+      const updatedTotalPrice = JSON.parse(localStorage.getItem("totalPrice") || "0");
+      const updatedTotalQuantity = JSON.parse(localStorage.getItem("totalQuantity") || "0");
+  
+      setCartItems(updatedCartItems);
+      setTotalPrice(updatedTotalPrice);
+      setTotalQuantity(updatedTotalQuantity);
+    };
+  
+    window.addEventListener("storage", handleStorageChange);
+    return () => window.removeEventListener("storage", handleStorageChange);
+  }, []);
+  
   const [totalPrice, setTotalPrice] = useState(0);
   const [totalQuantity, setTotalQuantity] = useState(0);
   const [showCart, setShowCart] = useState(false);
@@ -57,13 +71,14 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
       const storedCartItems = JSON.parse(localStorage.getItem("cartItems") || "[]");
       const storedTotalPrice = JSON.parse(localStorage.getItem("totalPrice") || "0");
       const storedTotalQuantity = JSON.parse(localStorage.getItem("totalQuantity") || "0");
-
+  
       setCartItems(storedCartItems);
       setTotalPrice(storedTotalPrice);
       setTotalQuantity(storedTotalQuantity);
-      setIsHydrated(true); // 👈 Now mark hydration as complete
+      setIsHydrated(true); // ✅ Hydration complete mark karo
     }
   }, []);
+  
 
   // Save cart data to localStorage whenever it changes
   useEffect(() => {
@@ -73,6 +88,17 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
       localStorage.setItem("totalQuantity", JSON.stringify(totalQuantity));
     }
   }, [cartItems, totalPrice, totalQuantity, isHydrated]);
+
+  useEffect(() => {
+    if (isHydrated) {
+      const newTotalPrice = cartItems.reduce(
+        (total, item) => total + getDiscountedPrice(item) * (item.quantity || 0),
+        0
+      );
+      setTotalPrice(Math.floor(newTotalPrice));
+    }
+  }, [cartItems, isHydrated]);
+
 
   // Increase quantity
   const incQty = () => setQty((prevQty) => prevQty + 1);

@@ -4,6 +4,7 @@ import ChatBot from "./components/ChatSupport";
 import FeaturedProducts from "./components/FeaturedProducts";
 // import Footer from '@/components/Footer';
 import HeroTwo from "./components/HeroTwo";
+// import Chat from "./components/producttest";
 import { AppProvider } from "./context/AppContext"; // Import AppProvider
 
 export default function Home() {
@@ -45,6 +46,8 @@ export default function Home() {
       <div>
         <HeroTwo />
       </div>
+
+ 
   
 
       
