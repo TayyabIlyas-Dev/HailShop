@@ -9,7 +9,7 @@ import { AppProvider } from "./context/AppContext"; // Import AppProvider
 
 export default function Home() {
   return (
-    <AppProvider>
+    <AppProvider >
       {/* Hero */}
       <Hero />
       {/* Products */}

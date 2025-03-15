@@ -24,7 +24,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
   // Check if the user is on any page inside "/dashboard2"
   const isDashboard = pathname.startsWith("/dashboard2");
-  const isAddComplain = pathname.startsWith("/addComplain");
+  const isHome = pathname === "/"; // Sirf home page ke liye true hoga
 
   return (
     <ClerkProvider>
@@ -36,18 +36,18 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
               {/* Show Navbar only if NOT on a dashboard page */}
               {!isDashboard && <Navbar />}
-              <PageLoader />
+              {/* <PageLoader /> */}
+              {!isHome && <PageLoader/>}
+
               {children}
             
-              {/* Chat Support Box - Only Show When "showChat" is true */}
-              {showChat && (
+              {/* {showChat && ( */}
                <div className="">
                <ChatSupport />
              </div>
-              )}
+              {/* )} */}
 
            
-                 {/* {!isAddComplain && */}
                 <div
                 onClick={() => setShowChat(!showChat)}
 >
